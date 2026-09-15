@@ -4,9 +4,9 @@
 
 | Property | Value |
 | :--- | :--- |
-| **Repository Name** | `curx` (or `curx-platform`) |
+| **Repository URL** | [https://github.com/mrprofessional1010-sudo/curx](https://github.com/mrprofessional1010-sudo/curx) |
 | **Default Branch** | `main` |
-| **Target Remote** | `origin` |
+| **Commit History** | 4 clean, structured logical feature commits |
 | **License Status** | Unlicensed (Proprietary Clinical Research & Decision Support) |
 | **Framework** | Next.js 14 (App Router) + Supabase PostgreSQL + NVIDIA NIM |
 
