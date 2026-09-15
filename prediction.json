@@ -1,0 +1,53 @@
+{
+  "model_version": "v001",
+  "prediction": {
+    "label": "Drug Reaction",
+    "probability": 0.1898648589849472
+  },
+  "top_predictions": [
+    {
+      "label": "Drug Reaction",
+      "probability": 0.1898648589849472
+    },
+    {
+      "label": "Impetigo",
+      "probability": 0.14570482075214386
+    },
+    {
+      "label": "Urinary tract infection",
+      "probability": 0.11621742695569992
+    },
+    {
+      "label": "Heart attack",
+      "probability": 0.10921839624643326
+    },
+    {
+      "label": "Gastroenteritis",
+      "probability": 0.10282517224550247
+    }
+  ],
+  "confidence": "LOW",
+  "calibration": {
+    "method": "temperature_scaling",
+    "temperature": 0.7828364372253418,
+    "status": "calibrated"
+  },
+  "input_completeness": 1.0,
+  "prediction_validity": "LOW_CONFIDENCE",
+  "matched_symptoms": [
+    "chest pain",
+    "breathlessness"
+  ],
+  "unmatched_symptoms": [],
+  "explanation": {
+    "top_features": [
+      "chest pain",
+      "breathlessness"
+    ]
+  },
+  "warnings": [
+    "Very low prediction confidence \u2014 result should not be relied upon"
+  ],
+  "model_status": "research_only",
+  "timestamp": "2026-09-15T06:51:13.016412+00:00"
+}

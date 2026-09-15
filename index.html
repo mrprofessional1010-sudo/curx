@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CURX — Clinical Risk Intelligence & Medication Decision Support</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            graphite: '#06080B',
+            'surface-dark': '#0B0F14',
+            'surface-card': 'rgba(16, 22, 30, 0.75)',
+            'surface-border': 'rgba(255, 255, 255, 0.08)',
+            'curx-cyan': '#00F0D0',
+            'curx-cyan-dim': 'rgba(0, 240, 208, 0.15)',
+            'curx-amber': '#FFB020',
+            'curx-orange': '#FF6B00',
+            'curx-red': '#E63946',
+            'curx-text-dim': '#8E9BAE',
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'spin-slow': 'spin 30s linear infinite',
+            'spin-reverse': 'spin 24s linear infinite reverse',
+            'float': 'float 6s ease-in-out infinite',
+            'radar': 'radar 3s ease-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            radar: {
+              '0%': { transform: 'scale(0.8)', opacity: '0.8' },
+              '100%': { transform: 'scale(2.2)', opacity: '0' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom scanlines & noise background overlay */
+    body {
+      background-color: #06080B;
+      color: #EDF2F7;
+      overflow-x: hidden;
+      selection-background-color: #00F0D0;
+      selection-color: #06080B;
+    }
+    ::selection {
+      background: rgba(0, 240, 208, 0.3);
+      color: #00F0D0;
+    }
+    .grid-glow {
+      background-image: radial-gradient(circle at center, rgba(0, 240, 208, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .blur-glow-cyan {
+      filter: drop-shadow(0 0 25px rgba(0, 240, 208, 0.35));
+    }
+    .blur-glow-amber {
+      filter: drop-shadow(0 0 20px rgba(255, 176, 32, 0.35));
+    }
+    .blur-glow-orange {
+      filter: drop-shadow(0 0 25px rgba(255, 107, 0, 0.45));
+    }
+    .glass-panel {
+      background: rgba(12, 17, 23, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .glass-panel-active {
+      background: rgba(14, 22, 32, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 240, 208, 0.3);
+      box-shadow: 0 0 30px rgba(0, 240, 208, 0.08);
+    }
+    /* Hide scrollbar for clean aesthetic */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #06080B;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1C2633;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00F0D0;
+    }
+  </style>
+</head>
+<body class="bg-[#06080B] text-slate-100 font-sans antialiased selection:bg-curx-cyan selection:text-black">
+
+  <!-- TOP MINIMAL NAVIGATION -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-5 px-6 lg:px-16 flex items-center justify-between border-b border-white/[0.04] bg-[#06080B]/40 backdrop-blur-md">
+    <!-- Brand Logo -->
+    <div class="flex items-center gap-3">
+      <div class="relative flex items-center justify-center w-8 h-8 rounded-lg bg-surface-dark border border-curx-cyan/40">
+        <span class="w-2.5 h-2.5 rounded-full bg-curx-cyan shadow-[0_0_12px_#00F0D0]"></span>
+        <span class="absolute inset-0 rounded-lg border border-curx-cyan/30 animate-ping opacity-25"></span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-display tracking-[0.25em] text-lg font-bold text-white flex items-center gap-1.5">
+          CURX
+          <span class="inline-block w-1.5 h-1.5 rounded-full bg-curx-cyan"></span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Center Navigation Links -->
+    <nav class="hidden md:flex items-center gap-8 text-xs font-mono tracking-widest text-slate-400">
+      <a href="#core-intelligence" class="hover:text-curx-cyan transition-colors">INTELLIGENCE</a>
+      <a href="#problem" class="hover:text-curx-cyan transition-colors">THE DISCONNECT</a>
+      <a href="#how-curx-thinks" class="hover:text-curx-cyan transition-colors">ARCHITECTURE</a>
+      <a href="#medication-intelligence" class="hover:text-curx-cyan transition-colors">MEDICATION RISK</a>
+      <a href="#symptom-reasoning" class="hover:text-curx-cyan transition-colors">SYMPTOMS</a>
+      <a href="#explainability" class="hover:text-curx-cyan transition-colors">TRACEABILITY</a>
+      <a href="#safety-protocol" class="hover:text-curx-cyan transition-colors">SAFETY</a>
+      <a href="#nearby-care" class="hover:text-curx-cyan transition-colors">FACILITY CARE</a>
+    </nav>
+
+    <!-- Right Side Actions -->
+    <div class="flex items-center gap-5">
+      <a href="story.html" class="px-3.5 py-1.5 rounded bg-curx-cyan/10 hover:bg-curx-cyan/20 border border-curx-cyan/40 text-xs font-mono text-curx-cyan tracking-wider transition-colors flex items-center gap-1.5">
+        <i data-lucide="play-circle" class="w-3.5 h-3.5"></i>
+        <span>CINEMATIC STORY</span>
+      </a>
+      <a href="#how-curx-thinks" class="hidden sm:inline-block text-xs font-mono text-slate-300 hover:text-white transition-colors tracking-wider">
+        SYSTEM SPEC
+      </a>
+      <a href="#cta" class="relative group overflow-hidden px-4 py-2 rounded-md bg-white/[0.06] hover:bg-curx-cyan/10 border border-curx-cyan/40 text-xs font-mono text-curx-cyan tracking-wider transition-all duration-300 flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-curx-cyan animate-pulse"></span>
+        <span>ACCESS CONSOLE</span>
+        <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- BACKGROUND SUBTLE ATMOSPHERE -->
+  <div class="fixed inset-0 pointer-events-none z-0">
+    <div class="absolute -top-[20%] left-1/2 -translate-x-1/2 w-[1000px] h-[700px] bg-gradient-to-b from-curx-cyan/[0.05] via-transparent to-transparent blur-[140px] rounded-full"></div>
+    <div class="absolute top-[45%] -left-[10%] w-[600px] h-[600px] bg-curx-cyan/[0.02] blur-[160px] rounded-full"></div>
+    <div class="absolute top-[70%] -right-[10%] w-[700px] h-[700px] bg-curx-orange/[0.02] blur-[180px] rounded-full"></div>
+    <div class="absolute inset-0 grid-glow opacity-30"></div>
+  </div>
+
+  <main class="relative z-10">
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 01: CINEMATIC HERO                                                -->
+    <!-- ========================================================================= -->
+    <section id="hero" class="relative min-h-screen pt-32 pb-20 px-6 lg:px-16 flex flex-col justify-center border-b border-white/[0.05] overflow-hidden">
+      <!-- Ambient coordinate indicators -->
+      <div class="absolute top-28 left-8 lg:left-16 font-mono text-[10px] text-slate-500 tracking-widest flex items-center gap-4">
+        <span>LATENCY: 12ms</span>
+        <span class="w-1 h-1 bg-slate-700 rounded-full"></span>
+        <span>ENGINE v4.2 // DETERMINISTIC CORE</span>
+        <span class="w-1 h-1 bg-slate-700 rounded-full"></span>
+        <span class="text-curx-cyan flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-curx-cyan inline-block"></span> REASONING ACTIVE</span>
+      </div>
+
+      <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Left Column: High-contrast Editorial Typography -->
+        <div class="lg:col-span-6 z-20 space-y-7">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] text-[11px] font-mono tracking-widest text-curx-cyan uppercase">
+            <span class="w-2 h-2 rounded-full bg-curx-cyan shadow-[0_0_8px_#00F0D0]"></span>
+            CURX / INTELLIGENCE ENGINE
+          </div>
+
+          <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.05]">
+            SEE THE <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-400">WHOLE PICTURE.</span>
+          </h1>
+
+          <p class="text-lg lg:text-xl text-slate-400 font-light max-w-xl leading-relaxed">
+            Medication intelligence that connects symptoms, genetics, medications, and the deterministic evidence behind clinical risk.
+          </p>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#core-intelligence" class="px-7 py-3.5 rounded-md bg-curx-cyan text-[#06080B] font-mono text-xs font-semibold tracking-wider hover:bg-white hover:shadow-[0_0_30px_rgba(0,240,208,0.5)] transition-all flex items-center gap-2.5">
+              <span>EXPLORE CURX</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </a>
+            <a href="#how-curx-thinks" class="px-7 py-3.5 rounded-md bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.1] text-xs font-mono text-slate-300 hover:text-white tracking-wider transition-all flex items-center gap-2">
+              <i data-lucide="layers" class="w-4 h-4 text-curx-cyan"></i>
+              <span>SEE HOW IT WORKS</span>
+            </a>
+          </div>
+
+          <!-- Micro specs stats -->
+          <div class="pt-8 border-t border-white/[0.06] grid grid-cols-3 gap-6 max-w-lg">
+            <div>
+              <div class="font-mono text-xs text-slate-500">KNOWLEDGE GRAPH</div>
+              <div class="text-xl font-display font-semibold text-white mt-1">1.4M+</div>
+              <div class="text-[11px] text-slate-400">Gene-drug pairs indexed</div>
+            </div>
+            <div>
+              <div class="font-mono text-xs text-slate-500">EXPLAINABILITY</div>
+              <div class="text-xl font-display font-semibold text-curx-cyan mt-1">100%</div>
+              <div class="text-[11px] text-slate-400">Traceable evidence nodes</div>
+            </div>
+            <div>
+              <div class="font-mono text-xs text-slate-500">DECISION PLANE</div>
+              <div class="text-xl font-display font-semibold text-white mt-1">DETERMINISTIC</div>
+              <div class="text-[11px] text-slate-400">CPIC & FDA Rule-grounded</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive 3D Cinematic Core Visualization (SVG + CSS procedural particles + orbiting satellites) -->
+        <div class="lg:col-span-6 relative flex items-center justify-center min-h-[520px] lg:min-h-[580px]">
+          <!-- Core outer glow ring -->
+          <div class="absolute w-[440px] h-[440px] rounded-full border border-curx-cyan/15 animate-spin-slow"></div>
+          <div class="absolute w-[360px] h-[360px] rounded-full border border-dashed border-white/10 animate-spin-reverse"></div>
+          <div class="absolute w-[480px] h-[480px] rounded-full bg-radial from-curx-cyan/[0.08] to-transparent blur-2xl"></div>
+
+          <!-- Central Intelligence Core Spherical Visual -->
+          <div class="relative w-72 h-72 rounded-full p-1 bg-gradient-to-br from-curx-cyan/40 via-surface-dark to-curx-cyan/10 shadow-[0_0_80px_rgba(0,240,208,0.2)] flex items-center justify-center">
+            <!-- Inner Orb -->
+            <div class="w-full h-full rounded-full bg-[#080D12] relative overflow-hidden flex items-center justify-center border border-white/10">
+              <!-- Geometric Wireframe Globe Simulation -->
+              <svg viewBox="0 0 200 200" class="w-full h-full opacity-60 animate-spin-slow">
+                <circle cx="100" cy="100" r="90" fill="none" stroke="#00F0D0" stroke-width="0.75" stroke-dasharray="2 4"/>
+                <circle cx="100" cy="100" r="70" fill="none" stroke="#FFFFFF" stroke-width="0.5" stroke-dasharray="4 6"/>
+                <ellipse cx="100" cy="100" rx="90" ry="30" fill="none" stroke="#00F0D0" stroke-width="0.75"/>
+                <ellipse cx="100" cy="100" rx="30" ry="90" fill="none" stroke="#00F0D0" stroke-width="0.75"/>
+                <ellipse cx="100" cy="100" rx="80" ry="50" fill="none" stroke="#4FD1C5" stroke-width="0.5" stroke-dasharray="1 3"/>
+                <ellipse cx="100" cy="100" rx="50" ry="80" fill="none" stroke="#4FD1C5" stroke-width="0.5" stroke-dasharray="1 3"/>
+              </svg>
+
+              <!-- Pulsing Center Nucleus -->
+              <div class="absolute w-28 h-28 rounded-full bg-gradient-to-tr from-curx-cyan/20 to-curx-cyan/40 backdrop-blur-sm border border-curx-cyan/50 flex flex-col items-center justify-center shadow-[0_0_35px_rgba(0,240,208,0.4)]">
+                <i data-lucide="cpu" class="w-7 h-7 text-curx-cyan animate-pulse"></i>
+                <span class="font-mono text-[9px] text-white tracking-widest mt-1">CURX CORE</span>
+                <span class="font-mono text-[8px] text-curx-cyan tracking-wider">CONNECTED</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating Orbiting Satellite Nodes around Core -->
+          <!-- Satellite 1: Genetics -->
+          <div class="absolute -top-4 left-10 glass-panel px-3.5 py-2 rounded-lg border border-white/10 flex items-center gap-2.5 shadow-xl animate-float" style="animation-delay: 0s;">
+            <div class="w-2.5 h-2.5 rounded-full bg-curx-cyan shadow-[0_0_8px_#00F0D0]"></div>
+            <div>
+              <div class="text-[10px] font-mono text-slate-400">GENETICS</div>
+              <div class="text-xs font-semibold text-white">CYP2C9 *3/*3</div>
+            </div>
+          </div>
+
+          <!-- Satellite 2: Medication -->
+          <div class="absolute top-12 right-2 glass-panel px-3.5 py-2 rounded-lg border border-curx-amber/30 flex items-center gap-2.5 shadow-xl animate-float" style="animation-delay: 1.5s;">
+            <div class="w-2.5 h-2.5 rounded-full bg-curx-amber shadow-[0_0_8px_#FFB020]"></div>
+            <div>
+              <div class="text-[10px] font-mono text-slate-400">MEDICATION</div>
+              <div class="text-xs font-semibold text-white">Warfarin 5mg</div>
+            </div>
+          </div>
+
+          <!-- Satellite 3: Symptom Node -->
+          <div class="absolute bottom-16 -left-4 glass-panel px-3.5 py-2 rounded-lg border border-white/10 flex items-center gap-2.5 shadow-xl animate-float" style="animation-delay: 2.2s;">
+            <div class="w-2.5 h-2.5 rounded-full bg-curx-cyan/80"></div>
+            <div>
+              <div class="text-[10px] font-mono text-slate-400">SYMPTOM CLUSTER</div>
+              <div class="text-xs font-semibold text-white">Epistaxis & Hematuria</div>
+            </div>
+          </div>
+
+          <!-- Satellite 4: High Risk Flag -->
+          <div class="absolute -bottom-6 right-8 glass-panel px-4 py-2.5 rounded-lg border border-curx-orange/40 flex items-center gap-3 shadow-2xl animate-float" style="animation-delay: 3s;">
+            <div class="w-3 h-3 rounded-full bg-curx-orange shadow-[0_0_12px_#FF6B00]"></div>
+            <div>
+              <div class="text-[9px] font-mono text-curx-orange tracking-wider uppercase font-semibold">HIGH RISK DETECTED</div>
+              <div class="text-xs font-semibold text-white">Bleeding Index: 89/100</div>
+            </div>
+          </div>
+
+          <!-- Connecting Network Dashed Lines (SVG Canvas layer) -->
+          <svg class="absolute inset-0 w-full h-full pointer-events-none stroke-current text-white/15" fill="none">
+            <line x1="120" y1="40" x2="250" y2="220" stroke-dasharray="3 3" stroke-width="1" class="text-curx-cyan/40" />
+            <line x1="390" y1="80" x2="280" y2="220" stroke-dasharray="3 3" stroke-width="1" class="text-curx-amber/40" />
+            <line x1="80" y1="360" x2="240" y2="280" stroke-dasharray="3 3" stroke-width="1" />
+            <line x1="380" y1="420" x2="300" y2="300" stroke-dasharray="3 3" stroke-width="1" class="text-curx-orange/50" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Bottom subtle scroll indicator -->
+      <div class="w-full flex flex-col items-center justify-center pt-16 text-slate-500">
+        <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-slate-500 mb-2">SCROLL TO UNPACK CLINICAL REASONING</span>
+        <div class="w-5 h-9 rounded-full border border-white/20 flex items-start justify-center p-1">
+          <span class="w-1 h-2 rounded-full bg-curx-cyan animate-bounce"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 02: THE PROBLEM (Disconnected Information)                        -->
+    <!-- ========================================================================= -->
+    <section id="problem" class="py-28 px-6 lg:px-16 border-b border-white/[0.05] relative bg-gradient-to-b from-[#06080B] to-[#0A0E13]">
+      <div class="max-w-6xl mx-auto space-y-16">
+        <!-- Section Header -->
+        <div class="max-w-3xl space-y-4">
+          <span class="text-xs font-mono tracking-widest text-curx-cyan uppercase">02 / THE ARCHITECTURAL FLAW</span>
+          <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+            Healthcare information is connected. <br>
+            <span class="text-slate-500">Your tools aren't.</span>
+          </h2>
+          <p class="text-slate-400 text-base lg:text-lg leading-relaxed font-light">
+            In modern clinical environments, critical signals live in isolated silos. When an adverse event occurs, the relevant evidence almost always existed — the connection between systems was simply absent.
+          </p>
+        </div>
+
+        <!-- Four Disconnected Information Silos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+          <!-- Silo 1: Symptoms -->
+          <div class="glass-panel p-6 rounded-xl border border-white/[0.06] hover:border-white/20 transition-all group relative overflow-hidden">
+            <div class="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-slate-300 mb-6 group-hover:text-curx-cyan transition-colors">
+              <i data-lucide="activity" class="w-5 h-5"></i>
+            </div>
+            <div class="font-mono text-[11px] text-slate-500 tracking-wider">SILO 01</div>
+            <h3 class="font-display text-lg font-semibold text-white mt-1 mb-2">SYMPTOMS</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Subjective patient logs, episodic clinical notes, and ambulatory wearable telemetry without genetic context.
+            </p>
+            <div class="mt-6 pt-4 border-t border-white/[0.05] flex items-center justify-between text-[11px] font-mono text-slate-500">
+              <span>STATUS: ISOLATED</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-red-400/50"></span>
+            </div>
+          </div>
+
+          <!-- Silo 2: Genetics -->
+          <div class="glass-panel p-6 rounded-xl border border-white/[0.06] hover:border-white/20 transition-all group relative overflow-hidden">
+            <div class="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-slate-300 mb-6 group-hover:text-curx-cyan transition-colors">
+              <i data-lucide="dna" class="w-5 h-5"></i>
+            </div>
+            <div class="font-mono text-[11px] text-slate-500 tracking-wider">SILO 02</div>
+            <h3 class="font-display text-lg font-semibold text-white mt-1 mb-2">GENETICS</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Pharmacogenomic sequencing reports buried in 30-page static PDFs rarely matched against live prescribed drugs.
+            </p>
+            <div class="mt-6 pt-4 border-t border-white/[0.05] flex items-center justify-between text-[11px] font-mono text-slate-500">
+              <span>STATUS: UNREFERENCED</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-red-400/50"></span>
+            </div>
+          </div>
+
+          <!-- Silo 3: Medications -->
+          <div class="glass-panel p-6 rounded-xl border border-white/[0.06] hover:border-white/20 transition-all group relative overflow-hidden">
+            <div class="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-slate-300 mb-6 group-hover:text-curx-cyan transition-colors">
+              <i data-lucide="pill" class="w-5 h-5"></i>
+            </div>
+            <div class="font-mono text-[11px] text-slate-500 tracking-wider">SILO 03</div>
+            <h3 class="font-display text-lg font-semibold text-white mt-1 mb-2">MEDICATIONS</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Polypharmacy regimens scattered across retail pharmacies, compounding centers, and OTC supplements.
+            </p>
+            <div class="mt-6 pt-4 border-t border-white/[0.05] flex items-center justify-between text-[11px] font-mono text-slate-500">
+              <span>STATUS: UNCONSOLIDATED</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-red-400/50"></span>
+            </div>
+          </div>
+
+          <!-- Silo 4: Conditions -->
+          <div class="glass-panel p-6 rounded-xl border border-white/[0.06] hover:border-white/20 transition-all group relative overflow-hidden">
+            <div class="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-slate-300 mb-6 group-hover:text-curx-cyan transition-colors">
+              <i data-lucide="shield-alert" class="w-5 h-5"></i>
+            </div>
+            <div class="font-mono text-[11px] text-slate-500 tracking-wider">SILO 04</div>
+            <h3 class="font-display text-lg font-semibold text-white mt-1 mb-2">CONDITIONS</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              EHR diagnostic codes and comorbidities rarely synchronized with real-time contraindication guidelines.
+            </p>
+            <div class="mt-6 pt-4 border-t border-white/[0.05] flex items-center justify-between text-[11px] font-mono text-slate-500">
+              <span>STATUS: FRAGMENTED</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-red-400/50"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- The Missing Link Manifesto Box -->
+        <div class="p-8 rounded-2xl bg-white/[0.02] border border-white/[0.07] flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="space-y-1">
+            <div class="text-xs font-mono text-curx-cyan uppercase tracking-wider flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-curx-cyan"></span>
+              THE SYSTEMIC FAILURE
+            </div>
+            <div class="text-xl font-display font-medium text-white">The information exists. The connection is missing.</div>
+            <p class="text-sm text-slate-400 max-w-2xl">
+              Curx bridges these disjointed domains using a deterministic graph network that models multi-variable physiological interactions in real time.
+            </p>
+          </div>
+          <a href="#core-intelligence" class="shrink-0 px-6 py-3 rounded-md bg-white/[0.05] hover:bg-curx-cyan hover:text-black border border-white/[0.1] text-xs font-mono tracking-wider text-slate-200 transition-all flex items-center gap-2">
+            <span>SEE CURX GRAPH</span>
+            <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 03: THE CURX CONNECTION (Central Intelligence Network)             -->
+    <!-- ========================================================================= -->
+    <section id="core-intelligence" class="py-28 px-6 lg:px-16 border-b border-white/[0.05] relative overflow-hidden">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto space-y-4 mb-16">
+          <span class="text-xs font-mono tracking-widest text-curx-cyan uppercase">03 / THE UNIFIED GRAPH</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-bold text-white tracking-tight">
+            The Curx Intelligence Network
+          </h2>
+          <p class="text-slate-400 text-sm sm:text-base font-light">
+            Every clinical entity is modeled as a verified node with typed, causal edges. Hover over nodes to inspect specific contextual reasoning pathways.
+          </p>
+        </div>
+
+        <!-- Interactive 3D Network Graph Canvas/Interactive Diagram -->
+        <div class="relative w-full aspect-[16/10] sm:aspect-[16/8] max-h-[640px] rounded-2xl glass-panel p-8 flex items-center justify-center border border-white/[0.08] overflow-hidden">
+          
+          <!-- Background Grid & Waveguides -->
+          <div class="absolute inset-0 grid-glow opacity-20"></div>
+          
+          <!-- Central CURX Core Hub -->
+          <div class="z-20 flex flex-col items-center justify-center w-36 h-36 rounded-full bg-[#080C12] border-2 border-curx-cyan shadow-[0_0_50px_rgba(0,240,208,0.25)] relative group cursor-pointer">
+            <div class="w-3 h-3 rounded-full bg-curx-cyan shadow-[0_0_12px_#00F0D0] mb-2 animate-ping opacity-75"></div>
+            <span class="font-display font-bold tracking-[0.2em] text-white text-base">CURX</span>
+            <span class="font-mono text-[9px] text-curx-cyan tracking-widest mt-0.5">REASONING CORE</span>
+            <div class="text-[9px] text-slate-500 font-mono mt-1">ACTIVE</div>
+          </div>
+
+          <!-- Connected Peripheral Nodes with Explanatory tooltips -->
+          
+          <!-- Node: GENETICS -->
+          <div class="absolute top-[12%] left-[18%] group cursor-pointer z-20">
+            <div class="glass-panel px-4 py-3 rounded-xl border border-white/10 group-hover:border-curx-cyan group-hover:shadow-[0_0_20px_rgba(0,240,208,0.3)] transition-all flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-white/[0.04] flex items-center justify-center text-curx-cyan">
+                <i data-lucide="dna" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="text-xs font-semibold text-white font-display">GENETICS</div>
+                <div class="text-[10px] text-curx-cyan font-mono">Understand gene–drug factors</div>
+              </div>
+            </div>
+            <!-- Node pulse ring -->
+            <span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-curx-cyan"></span>
+          </div>
+
+          <!-- Node: MEDICATIONS -->
+          <div class="absolute top-[10%] right-[18%] group cursor-pointer z-20">
+            <div class="glass-panel px-4 py-3 rounded-xl border border-white/10 group-hover:border-curx-cyan group-hover:shadow-[0_0_20px_rgba(0,240,208,0.3)] transition-all flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-white/[0.04] flex items-center justify-center text-curx-amber">
+                <i data-lucide="pill" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="text-xs font-semibold text-white font-display">MEDICATIONS</div>
+                <div class="text-[10px] text-slate-400 font-mono">See medication-specific risk</div>
+              </div>
+            </div>
+            <span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-curx-amber"></span>
+          </div>
+
+          <!-- Node: INTERACTIONS -->
+          <div class="absolute top-[50%] -translate-y-1/2 right-[6%] group cursor-pointer z-20">
+            <div class="glass-panel px-4 py-3 rounded-xl border border-white/10 group-hover:border-curx-orange group-hover:shadow-[0_0_20px_rgba(255,107,0,0.3)] transition-all flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-white/[0.04] flex items-center justify-center text-curx-orange">
+                <i data-lucide="zap" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="text-xs font-semibold text-white font-display">INTERACTIONS</div>
+                <div class="text-[10px] text-curx-orange font-mono">Surface drug–drug interactions</div>
+              </div>
+            </div>
+            <span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-curx-orange"></span>
+          </div>
+
+          <!-- Node: EVIDENCE -->
+          <div class="absolute bottom-[12%] right-[20%] group cursor-pointer z-20">
+            <div class="glass-panel px-4 py-3 rounded-xl border border-white/10 group-hover:border-curx-cyan group-hover:shadow-[0_0_20px_rgba(0,240,208,0.3)] transition-all flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-white/[0.04] flex items-center justify-center text-curx-cyan">
+                <i data-lucide="file-check" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="text-xs font-semibold text-white font-display">EVIDENCE</div>
+                <div class="text-[10px] text-slate-400 font-mono">CPIC, PharmGKB & FDA label citations</div>
+              </div>
+            </div>
+            <span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-curx-cyan"></span>
+          </div>
+
+          <!-- Node: CONDITIONS -->
+          <div class="absolute bottom-[12%] left-[18%] group cursor-pointer z-20">
+            <div class="glass-panel px-4 py-3 rounded-xl border border-white/10 group-hover:border-curx-cyan group-hover:shadow-[0_0_20px_rgba(0,240,208,0.3)] transition-all flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-white/[0.04] flex items-center justify-center text-slate-200">
+                <i data-lucide="heart-pulse" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="text-xs font-semibold text-white font-display">CONDITIONS</div>
+                <div class="text-[10px] text-slate-400 font-mono">Correlate underlying pathologies</div>
+              </div>
+            </div>
+            <span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-slate-400"></span>
+          </div>
+
+          <!-- Node: SYMPTOMS -->
+          <div class="absolute top-[50%] -translate-y-1/2 left-[6%] group cursor-pointer z-20">
+            <div class="glass-panel px-4 py-3 rounded-xl border border-white/10 group-hover:border-curx-cyan group-hover:shadow-[0_0_20px_rgba(0,240,208,0.3)] transition-all flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-white/[0.04] flex items-center justify-center text-curx-cyan">
+                <i data-lucide="activity" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <div class="text-xs font-semibold text-white font-display">SYMPTOMS</div>
+                <div class="text-[10px] text-curx-cyan font-mono">Trace patient complaints</div>
+              </div>
+            </div>
+            <span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-curx-cyan"></span>
+          </div>
+
+          <!-- Vector Connecting Paths between Nodes & Core -->
+          <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1000 500" fill="none">
+            <!-- Central Rays -->
+            <path d="M 280 90 Q 380 180 440 220" stroke="#00F0D0" stroke-width="1.5" stroke-opacity="0.6" stroke-dasharray="4 4" />
+            <path d="M 720 90 Q 620 180 560 220" stroke="#FFB020" stroke-width="1.5" stroke-opacity="0.6" stroke-dasharray="4 4" />
+            <path d="M 780 250 L 580 250" stroke="#FF6B00" stroke-width="1.5" stroke-opacity="0.7" stroke-dasharray="4 4" />
+            <path d="M 720 410 Q 620 320 560 280" stroke="#00F0D0" stroke-width="1.5" stroke-opacity="0.6" stroke-dasharray="4 4" />
+            <path d="M 280 410 Q 380 320 440 280" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0.3" stroke-dasharray="4 4" />
+            <path d="M 220 250 L 420 250" stroke="#00F0D0" stroke-width="1.5" stroke-opacity="0.6" stroke-dasharray="4 4" />
+
+            <!-- Orbital Conduits -->
+            <circle cx="500" cy="250" r="180" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="6 8" />
+            <circle cx="500" cy="250" r="280" stroke="rgba(0,240,208,0.1)" stroke-width="1" stroke-dasharray="8 12" />
+          </svg>
+
+          <!-- Status telemetry badge at bottom -->
+          <div class="absolute bottom-4 left-6 right-6 flex items-center justify-between text-[11px] font-mono text-slate-500 border-t border-white/[0.04] pt-3">
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-curx-cyan"></span>
+              <span>SYNAPTIC NODES: 6 ACTIVE CORES</span>
+            </div>
+            <div class="hidden sm:block text-slate-400">
+              CLICK OR HOVER ANY REGION TO ISOLATE SIGNAL
+            </div>
+            <div class="text-curx-cyan">
+              GRAPH TOPOLOGY: DETERMINISTIC DAG
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 04: HOW CURX THINKS (System Architecture Sequence)                -->
+    <!-- ========================================================================= -->
+    <section id="how-curx-thinks" class="py-28 px-6 lg:px-16 border-b border-white/[0.05] bg-[#070A0F]">
+      <div class="max-w-6xl mx-auto space-y-16">
+        <!-- Section Header -->
+        <div class="max-w-3xl space-y-4">
+          <span class="text-xs font-mono tracking-widest text-curx-cyan uppercase">04 / THE SYSTEM PIPELINE</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-bold text-white tracking-tight">
+            How Curx Thinks: Dual-Plane Architecture
+          </h2>
+          <p class="text-slate-400 text-base lg:text-lg font-light leading-relaxed">
+            Curx is fundamentally split into two isolated, verifiable layers. The LLM does <span class="text-white font-medium">not</span> calculate clinical risk; it translates structured deterministic outputs into human-readable narratives.
+          </p>
+        </div>
+
+        <!-- Visual Chamber Sequence Pipeline -->
+        <div class="space-y-8">
+          <!-- Plane 01: The Safety Plane (Deterministic, Auditable, Rule-Driven) -->
+          <div class="p-8 rounded-2xl bg-gradient-to-r from-surface-dark to-[#0F1520] border border-curx-cyan/20 relative overflow-hidden">
+            <div class="absolute top-0 right-0 px-4 py-1.5 bg-curx-cyan/10 border-b border-l border-curx-cyan/30 text-[10px] font-mono tracking-widest text-curx-cyan font-semibold">
+              PRIMARY TIER: DETERMINISTIC SAFETY PLANE
+            </div>
+
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-3 h-3 rounded-full bg-curx-cyan shadow-[0_0_10px_#00F0D0]"></div>
+              <h3 class="font-display text-xl font-bold text-white">Deterministic Clinical Rules Engine</h3>
+            </div>
+
+            <!-- Pipeline Step Chambers -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              <!-- Chamber 1: Ingestion -->
+              <div class="p-4 rounded-xl bg-black/40 border border-white/[0.06] space-y-2">
+                <div class="flex items-center justify-between text-[10px] font-mono text-slate-500">
+                  <span>STAGE 01</span>
+                  <i data-lucide="database" class="w-3.5 h-3.5 text-curx-cyan"></i>
+                </div>
+                <div class="text-sm font-semibold text-white">Ingestion & FHIR</div>
+                <p class="text-[11px] text-slate-400">Structured patient history, labs, VCF genomic variants, & active Rx.</p>
+              </div>
+
+              <!-- Chamber 2: Normalization -->
+              <div class="p-4 rounded-xl bg-black/40 border border-white/[0.06] space-y-2">
+                <div class="flex items-center justify-between text-[10px] font-mono text-slate-500">
+                  <span>STAGE 02</span>
+                  <i data-lucide="filter" class="w-3.5 h-3.5 text-curx-cyan"></i>
+                </div>
+                <div class="text-sm font-semibold text-white">Ontology Mapping</div>
+                <p class="text-[11px] text-slate-400">RxNorm, SNOMED-CT, HGVS variant standardization & outlier exclusion.</p>
+              </div>
+
+              <!-- Chamber 3: Rules Execution -->
+              <div class="p-4 rounded-xl bg-black/40 border border-curx-cyan/30 space-y-2 shadow-[0_0_20px_rgba(0,240,208,0.1)]">
+                <div class="flex items-center justify-between text-[10px] font-mono text-curx-cyan">
+                  <span>STAGE 03</span>
+                  <i data-lucide="cpu" class="w-3.5 h-3.5 text-curx-cyan"></i>
+                </div>
+                <div class="text-sm font-semibold text-white">CPIC Rules Exec</div>
+                <p class="text-[11px] text-slate-300">Pure programmatic logic: No probabilistic guessing. 100% reproducible.</p>
+              </div>
+
+              <!-- Chamber 4: Risk Scoring -->
+              <div class="p-4 rounded-xl bg-black/40 border border-white/[0.06] space-y-2">
+                <div class="flex items-center justify-between text-[10px] font-mono text-slate-500">
+                  <span>STAGE 04</span>
+                  <i data-lucide="activity" class="w-3.5 h-3.5 text-curx-orange"></i>
+                </div>
+                <div class="text-sm font-semibold text-white">Severity Vector</div>
+                <p class="text-[11px] text-slate-400">Risk classification: Low, Moderate, High, or Immediate Escalation.</p>
+              </div>
+
+              <!-- Chamber 5: Evidence Grounding -->
+              <div class="p-4 rounded-xl bg-black/40 border border-white/[0.06] space-y-2">
+                <div class="flex items-center justify-between text-[10px] font-mono text-slate-500">
+                  <span>STAGE 05</span>
+                  <i data-lucide="file-check" class="w-3.5 h-3.5 text-curx-cyan"></i>
+                </div>
+                <div class="text-sm font-semibold text-white">Evidence Binding</div>
+                <p class="text-[11px] text-slate-400">Explicit clinical citation IDs matched to each risk score component.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Flow Conduit Arrow -->
+          <div class="flex items-center justify-center py-2">
+            <div class="flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/[0.03] border border-white/10 text-xs font-mono text-slate-400">
+              <span>STRUCTURED REASONING GRAPH</span>
+              <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-curx-cyan"></i>
+              <span>ZERO HALLUCINATION INGEST</span>
+            </div>
+          </div>
+
+          <!-- Plane 02: The Language Plane (Explainable, Grounded, Human-Readable) -->
+          <div class="p-8 rounded-2xl bg-gradient-to-r from-surface-dark to-[#10141D] border border-white/[0.08] relative overflow-hidden">
+            <div class="absolute top-0 right-0 px-4 py-1.5 bg-white/[0.05] border-b border-l border-white/10 text-[10px] font-mono tracking-widest text-slate-300">
+              SECONDARY TIER: LANGUAGE & EXPLANATION PLANE
+            </div>
+
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-3 h-3 rounded-full bg-white/70"></div>
+              <h3 class="font-display text-xl font-bold text-white">Explainability & Natural Language Synthesis</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div class="p-4 rounded-xl bg-black/30 border border-white/[0.05] space-y-2">
+                <div class="font-mono text-xs text-curx-cyan">CONSTRAINT 01</div>
+                <div class="text-sm font-semibold text-white">Strict Constrained Synthesis</div>
+                <p class="text-xs text-slate-400">The LLM can only mention clinical entities and risks surfaced by the deterministic rules plane.</p>
+              </div>
+              <div class="p-4 rounded-xl bg-black/30 border border-white/[0.05] space-y-2">
+                <div class="font-mono text-xs text-curx-cyan">CONSTRAINT 02</div>
+                <div class="text-sm font-semibold text-white">Granular Attribution</div>
+                <p class="text-xs text-slate-400">Every single sentence output includes direct interactive citations to primary peer-reviewed literature.</p>
+              </div>
+              <div class="p-4 rounded-xl bg-black/30 border border-white/[0.05] space-y-2">
+                <div class="font-mono text-xs text-curx-cyan">CONSTRAINT 03</div>
+                <div class="text-sm font-semibold text-white">Clinical Guardrails</div>
+                <p class="text-xs text-slate-400">Refuses autonomous prescribing or dosing instructions; frames insights strictly for clinician review.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 05: MEDICATION INTELLIGENCE (3D Capsule / Molecular Triad)        -->
+    <!-- ========================================================================= -->
+    <section id="medication-intelligence" class="py-28 px-6 lg:px-16 border-b border-white/[0.05] relative">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Left: Editorial Content -->
+        <div class="lg:col-span-5 space-y-6">
+          <span class="text-xs font-mono tracking-widest text-curx-cyan uppercase">05 / MULTI-FACTOR VECTOR</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-bold text-white tracking-tight leading-tight">
+            Know what is influencing the risk.
+          </h2>
+          <p class="text-slate-400 text-base leading-relaxed font-light">
+            Traditional drug alerts focus solely on pairwise drug-drug flags, resulting in overwhelming alert fatigue. Curx computes the intersection of three fundamental biological dimensions simultaneously.
+          </p>
+
+          <div class="space-y-3 pt-2">
+            <div class="p-3.5 rounded-lg glass-panel border-l-2 border-curx-cyan flex items-center justify-between">
+              <div>
+                <div class="text-xs font-semibold text-white">GENE–DRUG FACTOR</div>
+                <div class="text-[11px] text-slate-400">Metabolic clearance rate modulation</div>
+              </div>
+              <span class="text-xs font-mono text-curx-cyan">42% WEIGHT</span>
+            </div>
+
+            <div class="p-3.5 rounded-lg glass-panel border-l-2 border-curx-amber flex items-center justify-between">
+              <div>
+                <div class="text-xs font-semibold text-white">DRUG–DRUG FACTOR</div>
+                <div class="text-[11px] text-slate-400">Competitive protein-binding displacement</div>
+              </div>
+              <span class="text-xs font-mono text-curx-amber">36% WEIGHT</span>
+            </div>
+
+            <div class="p-3.5 rounded-lg glass-panel border-l-2 border-curx-orange flex items-center justify-between">
+              <div>
+                <div class="text-xs font-semibold text-white">CONDITION–DRUG FACTOR</div>
+                <div class="text-[11px] text-slate-400">Renal clearance impairment (eGFR &lt; 45)</div>
+              </div>
+              <span class="text-xs font-mono text-curx-orange">22% WEIGHT</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Integrated 3D Medication Risk Console -->
+        <div class="lg:col-span-7 glass-panel rounded-2xl p-6 sm:p-8 border border-white/[0.08] shadow-2xl relative">
+          <!-- Header Bar of the Clinical Risk Card -->
+          <div class="flex flex-wrap items-center justify-between pb-6 border-b border-white/[0.06] gap-4">
+            <div>
+              <div class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">INDEXED PHARMACOLOGIC AGENT</div>
+              <div class="text-2xl font-display font-bold text-white flex items-center gap-3">
+                Warfarin Sodium
+                <span class="text-xs font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300 font-normal">5 mg / oral</span>
+              </div>
+            </div>
+
+            <!-- Risk Badge Indicator -->
+            <div class="flex items-center gap-3 bg-curx-orange/10 border border-curx-orange/30 px-3.5 py-1.5 rounded-lg">
+              <span class="w-2.5 h-2.5 rounded-full bg-curx-orange shadow-[0_0_8px_#FF6B00]"></span>
+              <div>
+                <div class="text-[9px] font-mono text-curx-orange font-bold tracking-wider">AGGREGATE RISK</div>
+                <div class="text-sm font-bold text-white">HIGH // 84 / 100</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Risk Scale -->
+          <div class="py-6 border-b border-white/[0.06]">
+            <div class="flex justify-between text-[10px] font-mono text-slate-500 mb-2">
+              <span>LOW</span>
+              <span>MODERATE</span>
+              <span class="text-curx-orange font-bold">HIGH RISK THRESHOLD</span>
+              <span>SEVERE / EMERGENCY</span>
+            </div>
+            <div class="h-2 w-full bg-white/[0.04] rounded-full overflow-hidden flex gap-1">
+              <div class="h-full w-1/4 bg-slate-700"></div>
+              <div class="h-full w-1/4 bg-curx-amber/40"></div>
+              <div class="h-full w-1/4 bg-curx-orange shadow-[0_0_12px_#FF6B00]"></div>
+              <div class="h-full w-1/4 bg-curx-red/30"></div>
+            </div>
+          </div>
+
+          <!-- Contributing Factors Deep Dive -->
+          <div class="pt-6 space-y-4">
+            <div class="text-[11px] font-mono text-slate-400 tracking-wider">ISOLATED CLINICAL CONTRIBUTING FACTORS</div>
+            
+            <!-- Factor 1 -->
+            <div class="p-3.5 rounded-xl bg-black/40 border border-white/[0.06] hover:border-curx-cyan transition-all">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-mono text-curx-cyan">GENE–DRUG INTERACTION</span>
+                <span class="text-[10px] font-mono text-slate-400">ALLELE: CYP2C9 *3/*3 & VKORC1 -1639G&gt;A</span>
+              </div>
+              <p class="text-xs text-slate-300">
+                Poor metabolizer phenotype. Clearance of active S-warfarin is reduced by ~75%. Standard 5mg starting dose presents acute hemorrhagic probability.
+              </p>
+            </div>
+
+            <!-- Factor 2 -->
+            <div class="p-3.5 rounded-xl bg-black/40 border border-white/[0.06] hover:border-curx-amber transition-all">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-mono text-curx-amber">DRUG–DRUG CONCOMITANT</span>
+                <span class="text-[10px] font-mono text-slate-400">CO-PRESCRIBED: Fluconazole 150mg</span>
+              </div>
+              <p class="text-xs text-slate-300">
+                Potent CYP2C9 enzyme inhibition further compounds metabolic half-life extension. Predicted INR spike exceeds 4.5.
+              </p>
+            </div>
+
+            <!-- Factor 3 -->
+            <div class="p-3.5 rounded-xl bg-black/40 border border-white/[0.06] hover:border-curx-orange transition-all">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-mono text-curx-orange">CONDITION FACTOR</span>
+                <span class="text-[10px] font-mono text-slate-400">DX: Chronic Kidney Disease Stage 3b</span>
+              </div>
+              <p class="text-xs text-slate-300">
+                Decreased baseline coagulation factor synthesis; elevated baseline microvascular fragility.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 06: SYMPTOM INTELLIGENCE (Branching Graph & Human Intake)         -->
+    <!-- ========================================================================= -->
+    <section id="symptom-reasoning" class="py-28 px-6 lg:px-16 border-b border-white/[0.05] bg-[#07090D]">
+      <div class="max-w-6xl mx-auto">
+        <div class="max-w-3xl space-y-4 mb-16">
+          <span class="text-xs font-mono tracking-widest text-curx-cyan uppercase">06 / ADAPTIVE SYMPTOM REASONING</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-bold text-white tracking-tight">
+            Start with what you're experiencing.
+          </h2>
+          <p class="text-slate-400 text-base font-light leading-relaxed">
+            Curx conducts guided dynamic intake. Rather than static checkbox questionnaires, every question answered prunes the diagnostic differential graph in real-time.
+          </p>
+        </div>
+
+        <!-- Conversational + Reasoning Split Interface -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          <!-- Left: Conversational Stream -->
+          <div class="lg:col-span-5 glass-panel rounded-2xl p-6 border border-white/[0.08] flex flex-col justify-between space-y-6">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between pb-3 border-b border-white/[0.06] text-[11px] font-mono text-slate-500">
+                <span>INTAKE THREAD // SESSION #9482</span>
+                <span class="text-curx-cyan flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-curx-cyan"></span> LIVE REASONING</span>
+              </div>
+
+              <!-- User message -->
+              <div class="flex items-start gap-3 justify-end">
+                <div class="p-3.5 rounded-2xl rounded-tr-none bg-curx-cyan/10 border border-curx-cyan/30 text-xs text-white max-w-[85%] leading-relaxed">
+                  "I've been experiencing sudden dizziness, dark bruising on my arms, and slight shortness of breath since yesterday."
+                </div>
+              </div>
+
+              <!-- Curx adaptive response -->
+              <div class="flex items-start gap-3">
+                <div class="w-7 h-7 rounded-lg bg-surface-dark border border-curx-cyan/40 flex items-center justify-center shrink-0">
+                  <span class="w-2 h-2 rounded-full bg-curx-cyan"></span>
+                </div>
+                <div class="p-3.5 rounded-2xl rounded-tl-none bg-white/[0.04] border border-white/[0.08] text-xs text-slate-200 max-w-[85%] space-y-2">
+                  <p>
+                    Analyzing symptom triad against active regimens (Warfarin + Fluconazole).
+                  </p>
+                  <p class="text-curx-cyan font-mono text-[11px]">
+                    Differential narrowed from 48 possibilities to 3 candidates.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Curx follow-up question -->
+              <div class="flex items-start gap-3">
+                <div class="w-7 h-7 rounded-lg bg-surface-dark border border-curx-cyan/40 flex items-center justify-center shrink-0">
+                  <span class="w-2 h-2 rounded-full bg-curx-cyan"></span>
+                </div>
+                <div class="p-3.5 rounded-2xl rounded-tl-none bg-white/[0.04] border border-white/[0.08] text-xs text-slate-300 max-w-[85%]">
+                  "Have you observed any dark or reddish discoloration in your urine or stool in the past 24 hours?"
+                </div>
+              </div>
+            </div>
+
+            <!-- Disclaimer note -->
+            <div class="pt-4 border-t border-white/[0.05] text-[10px] text-slate-500 font-mono leading-relaxed">
+              Curx provides informational risk ranking based on decision trees — not an autonomous clinical diagnosis.
+            </div>
+          </div>
+
+          <!-- Right: Pruned Reasoning Graph & Ranked Candidates -->
+          <div class="lg:col-span-7 glass-panel rounded-2xl p-6 sm:p-8 border border-white/[0.08] space-y-6">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-400">ACTIVE PROBABILISTIC PRUNING</span>
+              <span class="text-curx-cyan">CONFIDENCE INDEX: 91.4%</span>
+            </div>
+
+            <!-- Visual Node Graph Representation -->
+            <div class="py-4 px-6 rounded-xl bg-black/40 border border-white/[0.06] relative">
+              <div class="text-[10px] font-mono text-slate-500 mb-3">DIFFERENTIAL CONVERGENCE MAP</div>
+              <div class="flex items-center justify-around gap-2 text-center">
+                <div class="opacity-30 flex flex-col items-center">
+                  <div class="w-8 h-8 rounded-full border border-slate-700 flex items-center justify-center text-[10px] text-slate-600">D1</div>
+                  <span class="text-[9px] font-mono text-slate-600 mt-1 line-through">Vestibular</span>
+                </div>
+                <i data-lucide="chevrons-right" class="w-4 h-4 text-slate-700"></i>
+                <div class="opacity-30 flex flex-col items-center">
+                  <div class="w-8 h-8 rounded-full border border-slate-700 flex items-center justify-center text-[10px] text-slate-600">D2</div>
+                  <span class="text-[9px] font-mono text-slate-600 mt-1 line-through">Orthostatic</span>
+                </div>
+                <i data-lucide="chevrons-right" class="w-4 h-4 text-curx-cyan"></i>
+                <div class="flex flex-col items-center">
+                  <div class="w-10 h-10 rounded-full border border-curx-orange bg-curx-orange/10 flex items-center justify-center text-xs text-curx-orange font-bold shadow-[0_0_15px_#FF6B00]">C1</div>
+                  <span class="text-[10px] font-mono text-white mt-1">Anticoagulant Coagulopathy</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ranked Shortlist -->
+            <div class="space-y-3">
+              <div class="text-xs font-mono text-slate-400">INFORMATIONAL PHENOTYPE RANKING</div>
+
+              <!-- Item 01 -->
+              <div class="p-4 rounded-xl bg-curx-orange/10 border border-curx-orange/30 flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-mono text-curx-orange font-semibold">01 — SUPRATHERAPEUTIC ANTICOAGULATION / HEMORRHAGE RISK</div>
+                  <div class="text-xs text-slate-300 mt-0.5">High concordance with CYP2C9 phenotype + concurrent Fluconazole exposure</div>
+                </div>
+                <span class="text-xs font-mono font-bold text-white bg-curx-orange/20 px-2.5 py-1 rounded">MATCH: 92%</span>
+              </div>
+
+              <!-- Item 02 -->
+              <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-mono text-slate-300">02 — MICROVASCULAR PURPURA</div>
+                  <div class="text-xs text-slate-400 mt-0.5">Moderate correlation with age-adjusted endothelial friability</div>
+                </div>
+                <span class="text-xs font-mono text-slate-400 bg-white/5 px-2.5 py-1 rounded">MATCH: 34%</span>
+              </div>
+
+              <!-- Item 03 -->
+              <div class="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-mono text-slate-400">03 — IDIOPATHIC THROMBOCYTOPENIA</div>
+                  <div class="text-xs text-slate-500 mt-0.5">Low baseline probability without previous platelet dyscrasia history</div>
+                </div>
+                <span class="text-xs font-mono text-slate-500 bg-white/5 px-2.5 py-1 rounded">MATCH: 11%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 07: EXPLAINABILITY (Traceable Evidence Graph)                     -->
+    <!-- ========================================================================= -->
+    <section id="explainability" class="py-28 px-6 lg:px-16 border-b border-white/[0.05] relative">
+      <div class="max-w-6xl mx-auto space-y-16">
+        <div class="max-w-3xl space-y-4">
+          <span class="text-xs font-mono tracking-widest text-curx-cyan uppercase">07 / TRACEABLE EVIDENCE</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-bold text-white tracking-tight">
+            Don't just get a result. <br>
+            <span class="text-curx-cyan">Understand why.</span>
+          </h2>
+          <p class="text-slate-400 text-base lg:text-lg font-light leading-relaxed">
+            Every alert generated by Curx is anchored in a bi-directional causality graph: <br>
+            <span class="font-mono text-xs text-slate-300 bg-white/5 px-2 py-1 rounded">RISK RESULT → INFLUENCING FACTOR → PEER-REVIEWED CITATION</span>
+          </p>
+        </div>
+
+        <!-- Interactive Visual Traceability Flow Chart -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+          <!-- Column 1: The Result -->
+          <div class="glass-panel p-6 rounded-2xl border border-curx-orange/40 shadow-[0_0_30px_rgba(255,107,0,0.1)] flex flex-col justify-between">
+            <div class="space-y-3">
+              <span class="text-[10px] font-mono text-curx-orange uppercase tracking-wider font-semibold">STAGE 01 // COMPUTED RISK</span>
+              <div class="text-2xl font-display font-bold text-white">HIGH RISK</div>
+              <div class="text-xs text-slate-300 leading-relaxed">
+                Warfarin-associated extreme bleeding vulnerability index calculated.
+              </div>
+            </div>
+            <div class="pt-6 mt-6 border-t border-white/[0.06] text-[11px] font-mono text-slate-500 flex items-center justify-between">
+              <span>OUTPUT CONFIRMED</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-curx-cyan"></i>
+            </div>
+          </div>
+
+          <!-- Column 2: The Influencing Factor -->
+          <div class="glass-panel p-6 rounded-2xl border border-white/[0.08] flex flex-col justify-between">
+            <div class="space-y-3">
+              <span class="text-[10px] font-mono text-curx-cyan uppercase tracking-wider font-semibold">STAGE 02 // CAUSAL FACTORS</span>
+              <div class="text-xl font-display font-bold text-white">Gene–Drug Interaction</div>
+              <div class="space-y-2">
+                <div class="p-2.5 rounded bg-black/40 border border-white/5 text-[11px] text-slate-300">
+                  <span class="text-curx-cyan font-mono">VKORC1 (-1639G&gt;A):</span> Enhanced receptor sensitivity to vitamin K antagonists.
+                </div>
+                <div class="p-2.5 rounded bg-black/40 border border-white/5 text-[11px] text-slate-300">
+                  <span class="text-curx-cyan font-mono">CYP2C9 (*3/*3):</span> 80% decrease in clearance velocity.
+                </div>
+              </div>
+            </div>
+            <div class="pt-6 mt-6 border-t border-white/[0.06] text-[11px] font-mono text-slate-500 flex items-center justify-between">
+              <span>MAPPED TO CITATION</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-curx-cyan"></i>
+            </div>
+          </div>
+
+          <!-- Column 3: The Hard Evidence Citation -->
+          <div class="glass-panel p-6 rounded-2xl border border-white/[0.08] flex flex-col justify-between bg-gradient-to-br from-surface-dark to-[#0E151F]">
+            <div class="space-y-3">
+              <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">STAGE 03 // CLINICAL CITATIONS</span>
+              <div class="text-xl font-display font-bold text-white">CPIC Guidelines v3</div>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                "Clinical Pharmacogenetics Implementation Consortium (CPIC) Guideline for Pharmacogenetics-Guided Warfarin Dosing."
+              </p>
+              <div class="p-2.5 rounded bg-white/[0.03] border border-white/5 font-mono text-[10px] text-slate-400 space-y-1">
+                <div>PMID: 28198005</div>
+                <div>EVIDENCE LEVEL: 1A (Definitive)</div>
+                <div>RECOMMENDATION: Reduce initial dose by 50–70%</div>
+              </div>
+            </div>
+            <a href="#how-curx-thinks" class="pt-4 mt-4 border-t border-white/[0.06] text-xs font-mono text-curx-cyan hover:underline flex items-center gap-1.5">
+              <span>VERIFY VIA PHARMGKB &rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 08: SAFETY PROTOCOL (Emergency Halting State)                      -->
+    <!-- ========================================================================= -->
+    <section id="safety-protocol" class="py-28 px-6 lg:px-16 border-b border-white/[0.05] bg-[#040608] relative overflow-hidden">
+      <!-- Quiet Minimal Emergency Threshold Atmosphere -->
+      <div class="max-w-4xl mx-auto text-center space-y-10 py-12 relative z-10">
+        <!-- Safety Badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-curx-red/10 border border-curx-red/30 text-xs font-mono text-red-300">
+          <span class="w-2 h-2 rounded-full bg-curx-red animate-ping"></span>
+          SAFETY SHUTOFF PROTOCOL
+        </div>
+
+        <h2 class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
+          When it matters, <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-white to-slate-400">Curx knows when to stop.</span>
+        </h2>
+
+        <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+          Artificial intelligence should never debate probabilities during a critical medical emergency. When predefined red-line symptom thresholds are crossed, Curx halts conversational inference and transitions immediately to life-safety protocol.
+        </p>
+
+        <!-- Emergency Transition State UI Card -->
+        <div class="p-8 rounded-2xl bg-[#0B0D11] border border-curx-red/40 max-w-xl mx-auto text-left shadow-[0_0_60px_rgba(230,57,70,0.15)] space-y-6">
+          <div class="flex items-center gap-3">
+            <div class="w-4 h-4 rounded-full bg-curx-red flex items-center justify-center">
+              <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+            </div>
+            <span class="font-mono text-xs font-bold text-red-400 tracking-wider">POTENTIAL EMERGENCY PATTERN DETECTED</span>
+          </div>
+
+          <p class="text-sm text-slate-200 leading-relaxed">
+            The combination of acute anticoagulant exposure, severe epistaxis, and neurological dizziness indicates potential acute hemorrhage.
+          </p>
+
+          <div class="p-4 rounded-xl bg-red-950/30 border border-red-800/40 text-xs text-red-200 font-mono flex items-center justify-between">
+            <span>SEEK IMMEDIATE EMERGENCY CARE</span>
+            <span class="font-bold underline cursor-pointer">CALL 911 / EMS</span>
+          </div>
+
+          <div class="text-[10px] text-slate-500 font-mono">
+            CRITICAL THRESHOLD: PROBABILISTIC DIALOGUE CEASED // ROUTING TO FACILITY DISCOVERY
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 09: NEARBY CARE (Facility & Specialty Proximity)                  -->
+    <!-- ========================================================================= -->
+    <section id="nearby-care" class="py-28 px-6 lg:px-16 border-b border-white/[0.05] relative">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Left Column: Editorial context -->
+        <div class="lg:col-span-5 space-y-6">
+          <span class="text-xs font-mono tracking-widest text-curx-cyan uppercase">09 / THE IMMEDIATE NEXT STEP</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-bold text-white tracking-tight leading-tight">
+            From understanding to the next step.
+          </h2>
+          <p class="text-slate-400 text-base leading-relaxed font-light">
+            Risk intelligence is useless if it leaves the patient stranded with anxiety. Curx directly surfaces accredited clinical facilities equipped with the precise specialty needed to handle the specific risk vector.
+          </p>
+
+          <div class="pt-4 space-y-3 font-mono text-xs">
+            <div class="flex items-center gap-2 text-slate-300">
+              <i data-lucide="check" class="w-4 h-4 text-curx-cyan"></i>
+              <span>Specialty-matched triage (Cardiology & Hematology)</span>
+            </div>
+            <div class="flex items-center gap-2 text-slate-300">
+              <i data-lucide="check" class="w-4 h-4 text-curx-cyan"></i>
+              <span>Live emergency department proximity tracking</span>
+            </div>
+            <div class="flex items-center gap-2 text-slate-300">
+              <i data-lucide="check" class="w-4 h-4 text-curx-cyan"></i>
+              <span>One-tap cryptographic clinical summary packet export</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Minimal Dark Map & Care Facility Nodes -->
+        <div class="lg:col-span-7 glass-panel rounded-2xl p-6 sm:p-8 border border-white/[0.08] relative overflow-hidden">
+          <!-- Top Telemetry header -->
+          <div class="flex items-center justify-between pb-4 border-b border-white/[0.06] text-xs font-mono text-slate-400">
+            <span class="flex items-center gap-2">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-curx-cyan"></i>
+              GEO-TRIAGE // RADIUS 15 MILES
+            </span>
+            <span class="text-curx-cyan">SPECIALTY: HEMATOLOGY / VASCULAR</span>
+          </div>
+
+          <!-- Abstract Dark Tactical Map Visual -->
+          <div class="relative h-64 rounded-xl bg-[#090D13] my-4 border border-white/[0.05] overflow-hidden flex items-center justify-center">
+            <!-- Map grid styling -->
+            <div class="absolute inset-0 grid-glow opacity-40"></div>
+
+            <!-- Radar sweeps -->
+            <div class="w-40 h-40 rounded-full border border-curx-cyan/20 animate-ping opacity-25"></div>
+            <div class="w-20 h-20 rounded-full border border-curx-cyan/40"></div>
+
+            <!-- User Origin Pin -->
+            <div class="absolute z-10 flex flex-col items-center">
+              <div class="w-3 h-3 rounded-full bg-curx-cyan shadow-[0_0_12px_#00F0D0]"></div>
+              <span class="text-[9px] font-mono text-white mt-1 bg-black/70 px-1.5 py-0.5 rounded border border-white/10">USER LOCATION</span>
+            </div>
+
+            <!-- Facility Pin 1 (North-East) -->
+            <div class="absolute top-10 right-14 flex items-center gap-2">
+              <div class="w-2.5 h-2.5 rounded-full bg-curx-cyan"></div>
+              <span class="text-[9px] font-mono text-slate-300 bg-black/80 px-2 py-0.5 rounded border border-white/10">University Medical Center (1.8 mi)</span>
+            </div>
+
+            <!-- Facility Pin 2 (South-West) -->
+            <div class="absolute bottom-10 left-12 flex items-center gap-2">
+              <div class="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
+              <span class="text-[9px] font-mono text-slate-300 bg-black/80 px-2 py-0.5 rounded border border-white/10">Memorial Acute Center (4.2 mi)</span>
+            </div>
+          </div>
+
+          <!-- Recommended Care Facilities List -->
+          <div class="space-y-3 pt-2">
+            <!-- Card 1 -->
+            <div class="p-3.5 rounded-xl bg-black/40 border border-curx-cyan/30 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-semibold text-white">University Comprehensive Medical Center</div>
+                <div class="text-[11px] text-slate-400">Level 1 Trauma • 24/7 Coagulation Lab • 1.8 miles away</div>
+              </div>
+              <button class="px-3 py-1.5 rounded bg-curx-cyan/10 hover:bg-curx-cyan text-curx-cyan hover:text-black border border-curx-cyan/30 text-[11px] font-mono transition-all">
+                DIRECTIONS &rarr;
+              </button>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="p-3.5 rounded-xl bg-black/40 border border-white/[0.06] flex items-center justify-between">
+              <div>
+                <div class="text-xs font-semibold text-slate-300">Memorial Vascular Specialty Clinic</div>
+                <div class="text-[11px] text-slate-400">Outpatient Anticoagulation Management • 4.2 miles away</div>
+              </div>
+              <button class="px-3 py-1.5 rounded bg-white/5 hover:bg-white/10 text-slate-300 text-[11px] font-mono transition-all">
+                VIEW HOURS
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 10: TRUST & GOVERNANCE PRINCIPLES                                 -->
+    <!-- ========================================================================= -->
+    <section id="trust-principles" class="py-28 px-6 lg:px-16 border-b border-white/[0.05] bg-[#070A0E]">
+      <div class="max-w-6xl mx-auto space-y-16">
+        <div class="text-center max-w-2xl mx-auto space-y-3">
+          <span class="text-xs font-mono tracking-widest text-curx-cyan uppercase">10 / ARCHITECTURAL GOVERNANCE</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            Built for Clinical Trust
+          </h2>
+          <p class="text-slate-400 text-sm sm:text-base font-light">
+            We adhere to rigorous software-as-a-medical-device (SaMD) and clinical decision support principles.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Principle 1 -->
+          <div class="glass-panel p-8 rounded-2xl border border-white/[0.07] space-y-4 hover:border-curx-cyan/50 transition-all group">
+            <div class="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-curx-cyan group-hover:scale-110 transition-transform">
+              <i data-lucide="binary" class="w-6 h-6"></i>
+            </div>
+            <div class="font-mono text-xs text-curx-cyan tracking-wider">PRINCIPLE 01</div>
+            <h3 class="font-display text-xl font-bold text-white">DETERMINISTIC</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Clinical safety decisions are strictly governed by reproducible algorithmic logic and structured pharmacopeial knowledge bases. We never use generative models to guess clinical risk.
+            </p>
+          </div>
+
+          <!-- Principle 2 -->
+          <div class="glass-panel p-8 rounded-2xl border border-white/[0.07] space-y-4 hover:border-curx-cyan/50 transition-all group">
+            <div class="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-curx-cyan group-hover:scale-110 transition-transform">
+              <i data-lucide="git-branch" class="w-6 h-6"></i>
+            </div>
+            <div class="font-mono text-xs text-curx-cyan tracking-wider">PRINCIPLE 02</div>
+            <h3 class="font-display text-xl font-bold text-white">EXPLAINABLE</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Black boxes have no place in medicine. Every generated recommendation contains an unbroken audit trail back to peer-reviewed guidelines, FDA labels, and patient-specific biomarkers.
+            </p>
+          </div>
+
+          <!-- Principle 3 -->
+          <div class="glass-panel p-8 rounded-2xl border border-white/[0.07] space-y-4 hover:border-curx-cyan/50 transition-all group">
+            <div class="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-curx-cyan group-hover:scale-110 transition-transform">
+              <i data-lucide="shield-check" class="w-6 h-6"></i>
+            </div>
+            <div class="font-mono text-xs text-curx-cyan tracking-wider">PRINCIPLE 03</div>
+            <h3 class="font-display text-xl font-bold text-white">RESPONSIBLE</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Curx does not diagnose, prescribe, or replace clinicians. We augment the physician-patient relationship with structured risk intelligence to prevent avoidable adverse drug reactions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 11: FINAL CINEMATIC CLIMAX & CTA                                  -->
+    <!-- ========================================================================= -->
+    <section id="cta" class="py-32 px-6 lg:px-16 relative overflow-hidden border-b border-white/[0.05]">
+      <!-- Background Core Ambient Radial Glow -->
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div class="w-[800px] h-[800px] rounded-full bg-curx-cyan/[0.06] blur-[150px]"></div>
+      </div>
+
+      <div class="max-w-4xl mx-auto text-center space-y-8 relative z-10">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.03] border border-white/10 text-xs font-mono text-curx-cyan">
+          <span class="w-2 h-2 rounded-full bg-curx-cyan"></span>
+          CURX INTELLIGENCE SYSTEM
+        </div>
+
+        <h2 class="font-display text-4xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.08]">
+          SEE THE <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-curx-cyan via-white to-slate-300">WHOLE PICTURE.</span>
+        </h2>
+
+        <p class="text-slate-400 text-base sm:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+          Connected medication intelligence that synthesizes genomics, polypharmacy, and symptoms into a clear, traceable understanding of risk.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+          <button class="px-8 py-4 rounded-md bg-curx-cyan text-[#06080B] font-mono text-xs font-semibold tracking-wider hover:bg-white hover:shadow-[0_0_40px_rgba(0,240,208,0.6)] transition-all flex items-center gap-2.5">
+            <span>GET STARTED WITH CURX</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+          <button class="px-8 py-4 rounded-md bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] text-xs font-mono text-slate-300 hover:text-white tracking-wider transition-all flex items-center gap-2">
+            <span>REQUEST INSTITUTIONAL DEMO</span>
+          </button>
+        </div>
+
+        <div class="text-[11px] font-mono text-slate-500 pt-6">
+          HIPAA & SOC-2 TYPE II READY // CPIC EVIDENCE INTEGRATED
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- FOOTER                                                                    -->
+  <!-- ========================================================================= -->
+  <footer class="py-16 px-6 lg:px-16 bg-[#040608] border-t border-white/[0.05] relative">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10">
+      <!-- Brand & Bio -->
+      <div class="md:col-span-5 space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center w-7 h-7 rounded bg-surface-dark border border-curx-cyan/40">
+            <span class="w-2 h-2 rounded-full bg-curx-cyan"></span>
+          </div>
+          <span class="font-display tracking-[0.25em] text-lg font-bold text-white">CURX</span>
+        </div>
+        <p class="text-xs text-slate-400 max-w-sm leading-relaxed">
+          Medication intelligence. Built for clinical clarity, deterministic safety, and zero-compromise explainability.
+        </p>
+        <div class="text-[10px] font-mono text-slate-600">
+          &copy; 2025 CURX TECHNOLOGIES INC. ALL RIGHTS RESERVED.
+        </div>
+      </div>
+
+      <!-- Navigation Columns -->
+      <div class="md:col-span-7 grid grid-cols-3 gap-8 text-xs font-mono">
+        <div class="space-y-3">
+          <div class="text-white font-semibold tracking-wider">PRODUCT</div>
+          <ul class="space-y-2 text-slate-400">
+            <li><a href="#core-intelligence" class="hover:text-curx-cyan transition-colors">Intelligence Engine</a></li>
+            <li><a href="#how-curx-thinks" class="hover:text-curx-cyan transition-colors">Dual Plane Arch</a></li>
+            <li><a href="#medication-intelligence" class="hover:text-curx-cyan transition-colors">Medication Risk</a></li>
+            <li><a href="#symptom-reasoning" class="hover:text-curx-cyan transition-colors">Symptom Pruning</a></li>
+          </ul>
+        </div>
+
+        <div class="space-y-3">
+          <div class="text-white font-semibold tracking-wider">STANDARDS</div>
+          <ul class="space-y-2 text-slate-400">
+            <li><a href="#explainability" class="hover:text-curx-cyan transition-colors">CPIC Guidelines</a></li>
+            <li><a href="#safety-protocol" class="hover:text-curx-cyan transition-colors">Safety Protocol</a></li>
+            <li><a href="#trust-principles" class="hover:text-curx-cyan transition-colors">Trust Principles</a></li>
+            <li><a href="#nearby-care" class="hover:text-curx-cyan transition-colors">Facility Network</a></li>
+          </ul>
+        </div>
+
+        <div class="space-y-3">
+          <div class="text-white font-semibold tracking-wider">LEGAL & REGULATORY</div>
+          <ul class="space-y-2 text-slate-400">
+            <li><a href="#" class="hover:text-curx-cyan transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-curx-cyan transition-colors">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-curx-cyan transition-colors">SaMD Disclaimer</a></li>
+            <li><a href="#" class="hover:text-curx-cyan transition-colors">Security Disclosures</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Initialize Lucide Icons -->
+  <script>
+    lucide.createIcons();
+
+    // Scroll Navbar Transparency Effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('bg-[#06080B]/90', 'border-white/[0.08]', 'shadow-2xl');
+        navbar.classList.remove('bg-[#06080B]/40', 'border-white/[0.04]');
+      } else {
+        navbar.classList.remove('bg-[#06080B]/90', 'border-white/[0.08]', 'shadow-2xl');
+        navbar.classList.add('bg-[#06080B]/40', 'border-white/[0.04]');
+      }
+    });
+  </script>
+</body>
+</html>

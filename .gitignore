@@ -1,0 +1,72 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Next.js Build Output
+.next/
+out/
+build/
+dist/
+
+# TypeScript & Cache
+*.tsbuildinfo
+.eslintcache
+.cache/
+
+# Environment Variables (CRITICAL: Never commit secrets)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+!.env.example
+
+# Python Artifacts & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+ENV/
+env/
+
+# Playwright & Testing Artifacts
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
+
+# Large External Datasets & Temporary Archives
+curx datasets/
+curx-jpg (1).zip
+frames/
+scratch/
+
+# Operating System & IDE Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

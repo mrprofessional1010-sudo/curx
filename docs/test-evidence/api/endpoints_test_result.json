@@ -1,0 +1,42 @@
+{
+  "GET /api/pipeline/status": {
+    "status": 200,
+    "ok": true,
+    "total_tables": 0
+  },
+  "GET /api/patient": {
+    "status": 200,
+    "ok": true,
+    "patient_id": "4543e528-7944-4975-aff4-5d21efb5df9f",
+    "medications_count": 4,
+    "variants_count": 3,
+    "conditions_count": 3
+  },
+  "GET /api/evidence": {
+    "status": 200,
+    "ok": true
+  },
+  "GET /api/care/nearby": {
+    "status": 200,
+    "ok": true,
+    "total_found": 3,
+    "first_facility_name": "UCSF Medical Center & Emergency Department",
+    "first_facility_coords": {
+      "x": 29,
+      "y": 30
+    },
+    "all_have_coords": true
+  },
+  "POST /api/risk/evaluate": {
+    "status": 200,
+    "ok": true,
+    "deterministic_check": false
+  },
+  "POST /api/symptoms/adaptive": {
+    "status": 200,
+    "ok": true,
+    "candidate_count": 5,
+    "top_candidate": "Pneumonia",
+    "top_candidate_tier": "HIGHER RELATIVE MATCH"
+  }
+}

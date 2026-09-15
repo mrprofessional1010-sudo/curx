@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+
+    /* Keyframes & Advanced Fluid Animations */
+    @keyframes sonar-wave {
+      0% { transform: scale(0.65); opacity: 0.85; }
+      50% { opacity: 0.35; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+    @keyframes float-slow-1 {
+      0%, 100% { transform: translate(0px, 0px); }
+      50% { transform: translate(-4px, -8px); }
+    }
+    @keyframes float-slow-2 {
+      0%, 100% { transform: translate(0px, 0px); }
+      50% { transform: translate(6px, -6px); }
+    }
+    @keyframes float-slow-3 {
+      0%, 100% { transform: translate(0px, 0px); }
+      50% { transform: translate(-5px, 7px); }
+    }
+    @keyframes beam-dash {
+      to { stroke-dashoffset: -40; }
+    }
+    @keyframes lock-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 25px rgba(0,242,254,0.25); }
+      50% { box-shadow: 0 0 50px rgba(0,242,254,0.6); }
+    }
+    @keyframes checkmark-draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .animate-sonar {
+      animation: sonar-wave 3.5s cubic-bezier(0.15, 0.8, 0.45, 1) infinite;
+    }
+    .animate-sonar-delayed {
+      animation: sonar-wave 3.5s cubic-bezier(0.15, 0.8, 0.45, 1) infinite;
+      animation-delay: 1.75s;
+    }
+    .node-float-1 { animation: float-slow-1 6s ease-in-out infinite; }
+    .node-float-2 { animation: float-slow-2 7s ease-in-out infinite 0.5s; }
+    .node-float-3 { animation: float-slow-3 6.5s ease-in-out infinite 1s; }
+    .node-float-4 { animation: float-slow-1 8s ease-in-out infinite 1.5s; }
+    .node-float-5 { animation: float-slow-2 7.5s ease-in-out infinite 2s; }
+
+    .beam-active {
+      stroke-dasharray: 4 6;
+      animation: beam-dash 1.2s linear infinite;
+    }
+
+    /* Input Focus Glowing Border Sweep */
+    .glow-input-container {
+      position: relative;
+      border-radius: 0.5rem;
+      background: #0a0e14;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glow-input-container::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 0.5625rem;
+      background: linear-gradient(90deg, transparent, rgba(0,242,254,0.6), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-input-container:focus-within::before {
+      opacity: 1;
+      animation: sweep-beam 2.5s linear infinite;
+    }
+    @keyframes sweep-beam {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* Checkbox animated stroke */
+    .custom-check-path {
+      stroke-dasharray: 16;
+      stroke-dashoffset: 16;
+      transition: stroke-dashoffset 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    input:checked + div .custom-check-path {
+      stroke-dashoffset: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-error": "#690005",
+            "on-secondary-fixed": "#002019",
+            "on-primary-container": "#006a70",
+            "on-background": "#dfe2eb",
+            "secondary-fixed": "#5ffbd6",
+            "secondary-container": "#00c7a5",
+            "primary-fixed-dim": "#00dce6",
+            "surface-container-lowest": "#0a0e14",
+            "outline-variant": "#3a494b",
+            "surface-bright": "#353940",
+            "surface-container-low": "#181c22",
+            "on-surface-variant": "#b9cacb",
+            "on-secondary-fixed-variant": "#005142",
+            "secondary": "#41e4c0",
+            "inverse-on-surface": "#2d3137",
+            "surface-container": "#1c2026",
+            "error-container": "#93000a",
+            "on-secondary": "#00382d",
+            "surface-dim": "#10141a",
+            "on-primary-fixed": "#002022",
+            "on-tertiary-fixed": "#2a1700",
+            "error": "#ffb4ab",
+            "on-primary": "#00373a",
+            "secondary-fixed-dim": "#38debb",
+            "on-surface": "#dfe2eb",
+            "background": "#10141a",
+            "inverse-primary": "#00696f",
+            "tertiary-container": "#ffd3a1",
+            "tertiary-fixed-dim": "#ffb95f",
+            "tertiary-fixed": "#ffddb8",
+            "on-secondary-container": "#004d3f",
+            "primary-fixed": "#6ff6ff",
+            "on-error-container": "#ffdad6",
+            "surface-container-highest": "#31353c",
+            "on-tertiary": "#472a00",
+            "surface-container-high": "#262a31",
+            "outline": "#849495",
+            "primary-container": "#00f2fe",
+            "surface": "#10141a",
+            "on-tertiary-fixed-variant": "#653e00",
+            "surface-variant": "#31353c",
+            "on-primary-fixed-variant": "#004f53",
+            "primary": "#e0fdff",
+            "surface-tint": "#00dce6",
+            "on-tertiary-container": "#875400",
+            "inverse-surface": "#dfe2eb",
+            "tertiary": "#fff5ee"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "gutter-sm": "1rem",
+            "space-xl": "2.5rem",
+            "gutter": "1.5rem",
+            "space-xs": "0.25rem",
+            "margin-sm": "1.25rem",
+            "margin": "3rem"
+          },
+          fontFamily: {
+            "label-md": ["JetBrains Mono"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "label-lg": ["JetBrains Mono"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "headline-lg": ["Space Grotesk"],
+            "headline-md": ["Space Grotesk"],
+            "headline-lg-mobile": ["Space Grotesk"],
+            "headline-xl": ["Space Grotesk"],
+            "body-md": ["Plus Jakarta Sans"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-xl-mobile": ["Space Grotesk"]
+          },
+          fontSize: {
+            "label-sm": ["10px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "500" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "500" }],
+            "headline-xl": ["44px", { "lineHeight": "52px", "fontWeight": "600" }]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface-container-lowest font-body-md text-on-surface antialiased min-h-screen relative selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- Interactive Dynamic Ambient Pointer Follower Gradient -->
+<div class="fixed inset-0 pointer-events-none z-0 transition-opacity duration-700 opacity-60" id="cursor-glow" style="background: radial-gradient(750px circle at 50% 50%, rgba(0, 242, 254, 0.07), rgba(0, 199, 165, 0.02) 40%, transparent 75%);"></div>
+<!-- Global Header -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-lowest/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)] border-b border-outline-variant/20">
+<div class="h-16 w-full px-margin-sm md:px-margin flex items-center justify-between">
+<div class="flex items-center gap-space-sm group cursor-pointer">
+<div class="relative flex items-center justify-center w-3 h-3">
+<div class="absolute w-2.5 h-2.5 rounded-full bg-primary-container shadow-[0_0_12px_#00f2fe] group-hover:scale-125 transition-transform duration-300"></div>
+<div class="absolute w-4 h-4 rounded-full border border-primary-container/40 animate-ping" style="animation-duration: 2.5s;"></div>
+</div>
+<span class="font-headline-md text-headline-md tracking-wider text-primary font-bold">CURX</span>
+<span class="hidden sm:inline-block text-outline font-label-sm text-label-sm uppercase tracking-widest pl-space-xs border-l border-outline-variant/40 ml-1">DECISION TELEMETRY</span>
+</div>
+<div class="flex items-center gap-space-md">
+<a class="group flex items-center gap-space-xs px-3 py-1.5 rounded-lg border border-outline-variant/30 bg-surface-container/30 hover:bg-surface-container-high/60 hover:border-primary-container/50 text-on-surface-variant hover:text-primary transition-all duration-200 font-label-md text-label-md" data-path="curx-portal" href="#">
+<span class="material-symbols-outlined text-[16px] transition-transform duration-200 group-hover:-translate-x-1 text-primary-container">arrow_back</span>
+<span>Back to Curx</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Main Grid Canvas -->
+<main class="relative z-10 w-full pt-16 min-h-screen flex flex-col justify-center items-center">
+<div class="w-full min-h-[calc(100vh-4rem)] grid grid-cols-1 lg:grid-cols-12 gap-0 relative">
+<!-- ==================== LEFT PANEL (45% — CURX INTELLIGENCE FIELD) ==================== -->
+<section class="lg:col-span-5 relative z-10 flex flex-col justify-between p-margin-sm lg:p-margin bg-surface-container-lowest/70 backdrop-blur-md border-r border-outline-variant/20 overflow-hidden select-none">
+<!-- Interactive Ambient Particle Constellation Canvas -->
+<canvas class="absolute inset-0 w-full h-full pointer-events-none opacity-45 z-0" id="particle-canvas"></canvas>
+<!-- Top Telemetry Status Header -->
+<div class="relative z-10 flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="relative flex items-center justify-center w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/40 shadow-[0_0_15px_rgba(0,242,254,0.15)]">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container shadow-[0_0_10px_#00f2fe]"></span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md tracking-wider text-primary font-bold leading-none">CURX</span>
+<span class="font-label-sm text-label-sm text-outline tracking-widest uppercase mt-0.5">Intelligence Field</span>
+</div>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high/70 border border-outline-variant/40 backdrop-blur-md">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider" id="sync-telemetry-badge">Sync: Live Active</span>
+</div>
+</div>
+<!-- Center Scientific Core & Interactive Constellation -->
+<div class="relative w-full max-w-[430px] aspect-square mx-auto my-auto py-4 flex items-center justify-center z-10" id="constellation-viewport">
+<!-- Concentric Sonar Soundwave / Luminescence Rings -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="w-32 h-32 rounded-full border border-primary-container/40 animate-sonar"></div>
+<div class="w-32 h-32 rounded-full border border-secondary/35 animate-sonar-delayed"></div>
+</div>
+<!-- SVG Vector Connectors and Energy Beams -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" fill="none" id="network-svg" viewbox="0 0 400 400">
+<defs>
+<lineargradient id="grad-pulse-1" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#00f2fe" stop-opacity="0.9"></stop>
+<stop offset="100%" stop-color="#41e4c0" stop-opacity="0.2"></stop>
+</lineargradient>
+<filter height="140%" id="cyan-bloom" width="140%" x="-20%" y="-20%">
+<fegaussianblur result="blur" stddeviation="3"></fegaussianblur>
+<femerge>
+<femergenode in="blur"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+</defs>
+<!-- Orbit Circles -->
+<circle class="transition-all duration-700" cx="200" cy="200" id="orbit-outer" r="162" stroke="#3a494b" stroke-dasharray="3 4" stroke-opacity="0.4"></circle>
+<circle class="transition-all duration-700" cx="200" cy="200" id="orbit-mid" r="112" stroke="#3a494b" stroke-opacity="0.45"></circle>
+<circle class="animate-[spin_50s_linear_infinite]" cx="200" cy="200" id="orbit-inner" r="64" stroke="#00f2fe" stroke-dasharray="8 6" stroke-opacity="0.3"></circle>
+<!-- Ray Lines between Core (200,200) and Satellite Nodes -->
+<!-- Line 1: Genetics (approx 95, 88) -->
+<line class="transition-all duration-300" id="line-genetics" stroke="#3a494b" stroke-opacity="0.45" stroke-width="1.3" x1="200" x2="100" y1="200" y2="88"></line>
+<!-- Line 2: Medications (approx 305, 85) -->
+<line class="transition-all duration-300" id="line-medications" stroke="#3a494b" stroke-opacity="0.45" stroke-width="1.3" x1="200" x2="305" y1="200" y2="85"></line>
+<!-- Line 3: Symptoms (approx 325, 235) -->
+<line class="transition-all duration-300" id="line-symptoms" stroke="#3a494b" stroke-opacity="0.45" stroke-width="1.3" x1="200" x2="325" y1="200" y2="235"></line>
+<!-- Line 4: Conditions (approx 95, 290) -->
+<line class="transition-all duration-300" id="line-conditions" stroke="#3a494b" stroke-opacity="0.45" stroke-width="1.3" x1="200" x2="95" y1="200" y2="290"></line>
+<!-- Line 5: Evidence (approx 220, 335) -->
+<line class="transition-all duration-300" id="line-evidence" stroke="#3a494b" stroke-opacity="0.45" stroke-width="1.3" x1="200" x2="220" y1="200" y2="335"></line>
+<!-- Traveling Photons on Vector Lines -->
+<circle class="animate-ping" cx="150" cy="144" fill="#00f2fe" id="photon-genetics" opacity="0.8" r="2.5" style="animation-duration: 2.8s;"></circle>
+<circle class="animate-ping" cx="252" cy="142" fill="#41e4c0" id="photon-medications" opacity="0.8" r="2.5" style="animation-duration: 3.2s;"></circle>
+<circle class="animate-ping" cx="210" cy="268" fill="#00f2fe" id="photon-evidence" opacity="0.8" r="2.5" style="animation-duration: 2.4s;"></circle>
+</svg>
+<!-- Central Core Node with Security Locking & Ripple State -->
+<div class="relative z-20 w-28 h-28 rounded-full flex flex-col items-center justify-center bg-surface-container/90 border border-outline-variant/60 shadow-[0_0_35px_rgba(0,242,254,0.25)] hover:shadow-[0_0_50px_rgba(0,242,254,0.6)] cursor-pointer backdrop-blur-xl transition-all duration-500 group" id="core-node" onclick="triggerCoreHarmonicRipple()">
+<!-- Cryptographic Security Ring (activated on Password Focus) -->
+<div class="absolute -inset-2.5 rounded-full border-2 border-dashed border-primary-container/0 transition-all duration-500 pointer-events-none" id="security-ring"></div>
+<div class="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(0,242,254,0.25)_0%,transparent_70%)] animate-pulse"></div>
+<span class="material-symbols-outlined text-primary-container text-[30px] transition-transform duration-300 group-hover:scale-110" id="core-icon">hub</span>
+<span class="font-label-sm text-[9px] uppercase tracking-wider text-on-surface-variant mt-1 group-hover:text-primary transition-colors" id="core-tag">CURX CORE</span>
+<!-- Core Ripple Tooltip -->
+<div class="absolute -bottom-8 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none bg-surface-container-highest px-2 py-0.5 rounded text-[9px] font-label-sm text-primary uppercase whitespace-nowrap shadow-lg">
+              Click to emit pulse
+            </div>
+</div>
+<!-- Satellite Node 1: Genetics (CYP2C9 • VKORC1) -->
+<div class="absolute top-2 left-1 z-20 node-float-1 p-2.5 rounded-lg bg-surface-container/90 border border-outline-variant/40 hover:border-secondary transition-all duration-300 cursor-pointer shadow-lg hover:shadow-[0_0_25px_rgba(65,228,192,0.35)] group" id="node-genetics" onmouseenter="highlightNode('genetics', true)" onmouseleave="highlightNode('genetics', false)">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary group-hover:shadow-[0_0_8px_#41e4c0]"></span>
+<div>
+<div class="font-label-sm text-[10px] uppercase tracking-wider text-outline flex items-center gap-1.5">
+<span>Genetics</span>
+<span class="hidden group-hover:inline-block text-[8px] text-secondary font-mono px-1 rounded bg-secondary/10">Active</span>
+</div>
+<div class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">CYP2C9 • VKORC1</div>
+</div>
+</div>
+<div class="max-h-0 overflow-hidden group-hover:max-h-8 transition-all duration-300 text-[9px] text-on-surface-variant font-label-sm pt-0 group-hover:pt-1 opacity-0 group-hover:opacity-100">
+              Metabolic Pathway: High Confidence
+            </div>
+</div>
+<!-- Satellite Node 2: Medications (Warfarin • Clopidogrel) -->
+<div class="absolute top-2 right-1 z-20 node-float-2 p-2.5 rounded-lg bg-surface-container/90 border border-outline-variant/40 hover:border-primary-container transition-all duration-300 cursor-pointer shadow-lg hover:shadow-[0_0_25px_rgba(0,242,254,0.35)] group" id="node-medications" onmouseenter="highlightNode('medications', true)" onmouseleave="highlightNode('medications', false)">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container group-hover:shadow-[0_0_8px_#00f2fe]"></span>
+<div>
+<div class="font-label-sm text-[10px] uppercase tracking-wider text-outline flex items-center gap-1.5">
+<span>Medications</span>
+<span class="hidden group-hover:inline-block text-[8px] text-primary-container font-mono px-1 rounded bg-primary-container/10">Synchronized</span>
+</div>
+<div class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Warfarin • Clopidogrel</div>
+</div>
+</div>
+<div class="max-h-0 overflow-hidden group-hover:max-h-8 transition-all duration-300 text-[9px] text-on-surface-variant font-label-sm pt-0 group-hover:pt-1 opacity-0 group-hover:opacity-100">
+              Drug Interaction: Monitored
+            </div>
+</div>
+<!-- Satellite Node 3: Symptoms (Hemostasis) -->
+<div class="absolute top-1/2 -right-3 transform -translate-y-1/2 z-20 node-float-3 p-2.5 rounded-lg bg-surface-container/90 border border-outline-variant/40 hover:border-secondary-fixed transition-all duration-300 cursor-pointer shadow-lg hover:shadow-[0_0_25px_rgba(95,251,214,0.35)] group" id="node-symptoms" onmouseenter="highlightNode('symptoms', true)" onmouseleave="highlightNode('symptoms', false)">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed group-hover:shadow-[0_0_8px_#5ffbd6]"></span>
+<div>
+<div class="font-label-sm text-[10px] uppercase tracking-wider text-outline flex items-center gap-1.5">
+<span>Symptoms</span>
+<span class="hidden group-hover:inline-block text-[8px] text-secondary-fixed font-mono px-1 rounded bg-secondary-fixed/10">Telemetry</span>
+</div>
+<div class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Hemostasis</div>
+</div>
+</div>
+<div class="max-h-0 overflow-hidden group-hover:max-h-8 transition-all duration-300 text-[9px] text-on-surface-variant font-label-sm pt-0 group-hover:pt-1 opacity-0 group-hover:opacity-100">
+              Coagulation Index: Stable
+            </div>
+</div>
+<!-- Satellite Node 4: Conditions (Atrial Fibrillation) -->
+<div class="absolute bottom-6 left-1 z-20 node-float-4 p-2.5 rounded-lg bg-surface-container/90 border border-outline-variant/40 hover:border-primary-fixed-dim transition-all duration-300 cursor-pointer shadow-lg hover:shadow-[0_0_25px_rgba(0,220,230,0.35)] group" id="node-conditions" onmouseenter="highlightNode('conditions', true)" onmouseleave="highlightNode('conditions', false)">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-fixed-dim group-hover:shadow-[0_0_8px_#00dce6]"></span>
+<div>
+<div class="font-label-sm text-[10px] uppercase tracking-wider text-outline flex items-center gap-1.5">
+<span>Conditions</span>
+<span class="hidden group-hover:inline-block text-[8px] text-primary-fixed-dim font-mono px-1 rounded bg-primary-fixed-dim/10">Primary</span>
+</div>
+<div class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Atrial Fibrillation</div>
+</div>
+</div>
+<div class="max-h-0 overflow-hidden group-hover:max-h-8 transition-all duration-300 text-[9px] text-on-surface-variant font-label-sm pt-0 group-hover:pt-1 opacity-0 group-hover:opacity-100">
+              Arrhythmia Profile: Monitored
+            </div>
+</div>
+<!-- Satellite Node 5: Evidence (CPIC Level 1A) -->
+<div class="absolute -bottom-1 right-12 z-20 node-float-5 p-2.5 rounded-lg bg-surface-container/90 border border-outline-variant/40 hover:border-primary-container transition-all duration-300 cursor-pointer shadow-lg hover:shadow-[0_0_25px_rgba(0,242,254,0.4)] group" id="node-evidence" onmouseenter="highlightNode('evidence', true)" onmouseleave="highlightNode('evidence', false)">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-container group-hover:shadow-[0_0_8px_#00c7a5]"></span>
+<div>
+<div class="font-label-sm text-[10px] uppercase tracking-wider text-outline flex items-center gap-1.5">
+<span>Evidence</span>
+<span class="hidden group-hover:inline-block text-[8px] text-primary-container font-mono px-1 rounded bg-primary-container/10">Clinical Tier</span>
+</div>
+<div class="font-label-md text-label-md text-primary-container font-semibold group-hover:brightness-125">CPIC Level 1A</div>
+</div>
+</div>
+<div class="max-h-0 overflow-hidden group-hover:max-h-8 transition-all duration-300 text-[9px] text-on-surface-variant font-label-sm pt-0 group-hover:pt-1 opacity-0 group-hover:opacity-100">
+              Guideline Status: Highest Consensus
+            </div>
+</div>
+</div>
+<!-- Lower Editorial Statement -->
+<div class="relative z-10 flex flex-col gap-space-xs mt-auto pt-space-md">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary-container">DECISION TELEMETRY</span>
+<span class="w-10 h-[1px] bg-gradient-to-r from-primary-container/60 to-transparent"></span>
+</div>
+<h2 class="font-headline-lg text-headline-lg lg:text-headline-xl text-primary font-bold tracking-tight">
+            SEE THE WHOLE PICTURE.
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
+            Connected intelligence for a clearer, unified understanding of patient medication risk and therapeutic response.
+          </p>
+</div>
+</section>
+<!-- ==================== RIGHT PANEL (55% — AUTHENTICATION INTERFACE) ==================== -->
+<section class="lg:col-span-7 flex flex-col justify-center items-center p-margin-sm sm:p-space-xl lg:p-margin relative z-10 bg-surface-container-low/80 backdrop-blur-xl">
+<div class="w-full max-w-[460px] flex flex-col">
+<!-- Sliding Tab Switcher with Spring Physics -->
+<div class="relative flex items-center justify-between mb-space-lg p-1 rounded-xl bg-surface-container-lowest border border-outline-variant/30 select-none">
+<!-- Sliding Indicator Pill -->
+<div class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-lg bg-surface-container-high border border-outline-variant/40 shadow-sm transition-transform duration-300 cubic-bezier(0.34, 1.56, 0.64, 1) pointer-events-none" id="tab-slider-pill"></div>
+<button class="relative z-10 flex-1 py-2.5 px-4 text-center font-headline-md text-body-md font-semibold text-primary transition-colors duration-200 focus:outline-none" id="tab-login" onclick="switchAuthMode('login')">
+              Sign In
+            </button>
+<button class="relative z-10 flex-1 py-2.5 px-4 text-center font-headline-md text-body-md font-medium text-on-surface-variant hover:text-primary transition-colors duration-200 focus:outline-none" id="tab-signup" onclick="switchAuthMode('signup')">
+              Create Account
+            </button>
+</div>
+<!-- ==================== TAB 1: SIGN IN ==================== -->
+<div class="flex flex-col transition-all duration-300" id="login-container">
+<div class="flex flex-col mb-space-lg">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary-container font-semibold flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-ping"></span>
+                CURX / SECURE ACCESS
+              </span>
+<h1 class="font-headline-lg text-headline-lg text-primary font-bold mt-1 tracking-tight">Welcome back.</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                Sign in to continue to your Curx intelligence workspace.
+              </p>
+</div>
+<form class="flex flex-col gap-space-md" id="form-login" onsubmit="handleFormSubmit(event, 'login')">
+<!-- Email Address -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline flex items-center justify-between" for="login-email">
+<span>EMAIL ADDRESS</span>
+<span class="text-[9px] text-outline/60 lowercase">institutional credential</span>
+</label>
+<div class="glow-input-container border border-outline-variant/50 focus-within:border-primary-container">
+<div class="relative flex items-center">
+<input class="w-full h-11 px-3.5 pr-10 rounded-lg bg-transparent text-on-surface font-body-md placeholder:text-outline-variant outline-none transition-all duration-200 focus:ring-0 border-none" id="login-email" onblur="handleFieldBlur('email')" onfocus="handleFieldFocus('email')" placeholder="name@institution.org" required="" type="email"/>
+<span class="material-symbols-outlined absolute right-3 text-outline text-[18px] pointer-events-none transition-colors group-focus-within:text-primary-container">alternate_email</span>
+</div>
+</div>
+</div>
+<!-- Password -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline" for="login-password">PASSWORD</label>
+<span class="font-label-sm text-[10px] uppercase text-outline/60 flex items-center gap-1" id="login-lock-badge">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+                    Protected
+                  </span>
+</div>
+<div class="glow-input-container border border-outline-variant/50 focus-within:border-primary-container">
+<div class="relative flex items-center">
+<input class="w-full h-11 px-3.5 pr-11 rounded-lg bg-transparent text-on-surface font-label-md placeholder:text-outline-variant outline-none transition-all duration-200 focus:ring-0 border-none tracking-wider" id="login-password" onblur="handleFieldBlur('password')" onfocus="handleFieldFocus('password')" placeholder="••••••••••••" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-2.5 text-outline hover:text-primary transition-colors flex items-center justify-center p-1.5 rounded-md hover:bg-surface-container" onclick="togglePasswordVisibility('login-password', this)" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Controls Row -->
+<div class="flex items-center justify-between py-1">
+<label class="flex items-center gap-2.5 cursor-pointer select-none group">
+<input class="sr-only peer" id="login-remember" type="checkbox"/>
+<div class="w-4 h-4 rounded bg-surface-container-lowest border border-outline-variant/70 peer-checked:border-primary-container peer-checked:bg-primary-container flex items-center justify-center transition-all group-hover:border-outline">
+<svg class="w-3 h-3 text-on-primary-container stroke-current fill-none stroke-2" viewbox="0 0 16 16">
+<path class="custom-check-path" d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Remember session</span>
+</label>
+<a class="font-label-sm text-label-sm text-primary-container hover:text-primary hover:underline transition-all" href="#">
+                  Forgot password?
+                </a>
+</div>
+<!-- Submit Button with Magnetic Glow State -->
+<button class="relative group h-12 w-full mt-2 rounded-lg bg-primary-container text-on-primary-container font-headline-md text-label-lg font-bold flex items-center justify-center gap-2 shadow-[0_0_24px_rgba(0,242,254,0.25)] hover:shadow-[0_0_36px_rgba(0,242,254,0.55)] hover:brightness-105 active:scale-[0.985] transition-all duration-200 overflow-hidden" id="btn-login-submit" type="submit">
+<!-- Light Sweep Shine Effect -->
+<div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none"></div>
+<span class="flex items-center gap-2" id="btn-login-text">SIGN IN</span>
+<span class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:translate-x-1" id="btn-login-icon">arrow_forward</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="relative my-space-lg flex items-center justify-center">
+<div class="absolute inset-0 flex items-center"><div class="w-full h-[1px] bg-outline-variant/40"></div></div>
+<span class="relative px-3 bg-surface-container-low font-label-sm text-[11px] uppercase tracking-wider text-outline">
+                OR CONTINUE WITH
+              </span>
+</div>
+<!-- Google Workspace SSO -->
+<button class="h-11 w-full rounded-lg bg-surface-container/70 hover:bg-surface-container border border-outline-variant/30 hover:border-outline-variant/70 text-on-surface font-body-md flex items-center justify-center gap-3 transition-all duration-200 hover:shadow-[0_0_20px_rgba(0,242,254,0.08)] active:scale-[0.99]" onclick="mockFederatedLogin('Google Workspace')" type="button">
+<svg class="w-4 h-4" viewbox="0 0 24 24">
+<path d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z" fill="#4285F4"></path>
+<path d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" fill="#34A853"></path>
+<path d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z" fill="#FBBC05"></path>
+<path d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" fill="#EA4335"></path>
+</svg>
+<span>Continue with Google Workspace</span>
+</button>
+<!-- Bottom Prompt -->
+<div class="mt-space-md text-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Don't have an account?</span>
+<button class="ml-1 font-label-md text-label-md text-primary-container font-semibold hover:text-primary hover:underline transition-colors" onclick="switchAuthMode('signup')">
+                Create an account
+              </button>
+</div>
+</div>
+<!-- ==================== TAB 2: SIGN UP ==================== -->
+<div class="hidden flex-col opacity-0 translate-y-2 transition-all duration-300" id="signup-container">
+<div class="flex flex-col mb-space-lg">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary-container font-semibold flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-ping"></span>
+                CURX / CREATE ACCOUNT
+              </span>
+<h1 class="font-headline-lg text-headline-lg text-primary font-bold mt-1 tracking-tight">Start with the whole picture.</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                Create your Curx account and bring medication intelligence into one connected view.
+              </p>
+</div>
+<form class="flex flex-col gap-space-md" id="form-signup" onsubmit="handleFormSubmit(event, 'signup')">
+<!-- Full Name -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline" for="signup-name">FULL NAME &amp; CLINICAL TITLE</label>
+<div class="glow-input-container border border-outline-variant/50 focus-within:border-primary-container">
+<div class="relative flex items-center">
+<input class="w-full h-11 px-3.5 pr-10 rounded-lg bg-transparent text-on-surface font-body-md placeholder:text-outline-variant outline-none transition-all duration-200 focus:ring-0 border-none" id="signup-name" onblur="handleFieldBlur('name')" onfocus="handleFieldFocus('name')" placeholder="Dr. Jordan Hayes, PharmD" required="" type="text"/>
+<span class="material-symbols-outlined absolute right-3 text-outline text-[18px] pointer-events-none">badge</span>
+</div>
+</div>
+</div>
+<!-- Institutional Email -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline" for="signup-email">INSTITUTIONAL EMAIL</label>
+<div class="glow-input-container border border-outline-variant/50 focus-within:border-primary-container">
+<div class="relative flex items-center">
+<input class="w-full h-11 px-3.5 pr-10 rounded-lg bg-transparent text-on-surface font-body-md placeholder:text-outline-variant outline-none transition-all duration-200 focus:ring-0 border-none" id="signup-email" onblur="handleFieldBlur('email')" onfocus="handleFieldFocus('email')" placeholder="name@institution.org" required="" type="email"/>
+<span class="material-symbols-outlined absolute right-3 text-outline text-[18px] pointer-events-none">mail</span>
+</div>
+</div>
+</div>
+<!-- Role / Institution Affiliation Select -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline" for="signup-role">CLINICAL ROLE / DOMAIN</label>
+<div class="glow-input-container border border-outline-variant/50 focus-within:border-primary-container">
+<div class="relative flex items-center">
+<select class="w-full h-11 px-3.5 pr-10 rounded-lg bg-surface-container-lowest text-on-surface font-body-md outline-none transition-all duration-200 focus:ring-0 border-none cursor-pointer" id="signup-role">
+<option value="physician">Attending Physician / Cardiologist</option>
+<option value="pharmacist">Clinical Pharmacist / Pharmacogenomics</option>
+<option value="researcher">Clinical Researcher / Genomic Scientist</option>
+<option value="hospital-admin">Health System Informatics Director</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Password with Entropy Meter -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline" for="signup-password">MASTER PASSWORD</label>
+<span class="font-label-sm text-[10px] uppercase text-outline" id="strength-label">Strength: Idle</span>
+</div>
+<div class="glow-input-container border border-outline-variant/50 focus-within:border-primary-container">
+<div class="relative flex items-center">
+<input class="w-full h-11 px-3.5 pr-11 rounded-lg bg-transparent text-on-surface font-label-md placeholder:text-outline-variant outline-none transition-all duration-200 focus:ring-0 border-none tracking-wider" id="signup-password" onblur="handleFieldBlur('password')" onfocus="handleFieldFocus('password')" oninput="calculatePasswordEntropy(this.value)" placeholder="Minimum 8 characters" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-2.5 text-outline hover:text-primary transition-colors flex items-center justify-center p-1.5 rounded-md hover:bg-surface-container" onclick="togglePasswordVisibility('signup-password', this)" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Entropy Meter Segments -->
+<div class="grid grid-cols-4 gap-1.5 mt-1">
+<div class="h-1 rounded bg-surface-container-highest transition-all duration-300" id="meter-1"></div>
+<div class="h-1 rounded bg-surface-container-highest transition-all duration-300" id="meter-2"></div>
+<div class="h-1 rounded bg-surface-container-highest transition-all duration-300" id="meter-3"></div>
+<div class="h-1 rounded bg-surface-container-highest transition-all duration-300" id="meter-4"></div>
+</div>
+</div>
+<!-- Confirm Password -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-outline" for="signup-confirm-password">CONFIRM PASSWORD</label>
+<div class="glow-input-container border border-outline-variant/50 focus-within:border-primary-container">
+<div class="relative flex items-center">
+<input class="w-full h-11 px-3.5 pr-11 rounded-lg bg-transparent text-on-surface font-label-md placeholder:text-outline-variant outline-none transition-all duration-200 focus:ring-0 border-none tracking-wider" id="signup-confirm-password" onblur="handleFieldBlur('password')" onfocus="handleFieldFocus('password')" placeholder="Repeat master password" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-2.5 text-outline hover:text-primary transition-colors flex items-center justify-center p-1.5 rounded-md hover:bg-surface-container" onclick="togglePasswordVisibility('signup-confirm-password', this)" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Submit Button -->
+<button class="relative group h-12 w-full mt-2 rounded-lg bg-primary-container text-on-primary-container font-headline-md text-label-lg font-bold flex items-center justify-center gap-2 shadow-[0_0_24px_rgba(0,242,254,0.25)] hover:shadow-[0_0_36px_rgba(0,242,254,0.55)] hover:brightness-105 active:scale-[0.985] transition-all duration-200 overflow-hidden" id="btn-signup-submit" type="submit">
+<div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none"></div>
+<span class="flex items-center gap-2" id="btn-signup-text">CREATE CLINICAL ACCOUNT</span>
+<span class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:translate-x-1" id="btn-signup-icon">arrow_forward</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="relative my-space-lg flex items-center justify-center">
+<div class="absolute inset-0 flex items-center"><div class="w-full h-[1px] bg-outline-variant/40"></div></div>
+<span class="relative px-3 bg-surface-container-low font-label-sm text-[11px] uppercase tracking-wider text-outline">
+                OR REGISTER WITH
+              </span>
+</div>
+<!-- Social Auth -->
+<button class="h-11 w-full rounded-lg bg-surface-container/70 hover:bg-surface-container border border-outline-variant/30 hover:border-outline-variant/70 text-on-surface font-body-md flex items-center justify-center gap-3 transition-all duration-200 hover:shadow-[0_0_20px_rgba(0,242,254,0.08)] active:scale-[0.99]" onclick="mockFederatedLogin('Google Workspace')" type="button">
+<svg class="w-4 h-4" viewbox="0 0 24 24">
+<path d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z" fill="#4285F4"></path>
+<path d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" fill="#34A853"></path>
+<path d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z" fill="#FBBC05"></path>
+<path d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" fill="#EA4335"></path>
+</svg>
+<span>Register with Google Workspace</span>
+</button>
+<!-- Bottom Prompt -->
+<div class="mt-space-md text-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Already have an account?</span>
+<button class="ml-1 font-label-md text-label-md text-primary-container font-semibold hover:text-primary hover:underline transition-colors" onclick="switchAuthMode('login')">
+                Sign in
+              </button>
+</div>
+</div>
+<!-- Clinical Trust Disclaimer Footer -->
+<div class="mt-space-xl pt-space-md border-t border-outline-variant/30 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[15px] text-primary-container/80">verified_user</span>
+<p class="font-body-sm text-[11px] text-outline text-center">
+              Curx provides informational decision support and does not diagnose or prescribe.
+            </p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Interactive Logic, Particles, Field Reactivity & Audio-Visual Simulation -->
+<script>
+    // 1. Mouse Tracking Ambient Glow & Particle Field
+    const cursorGlow = document.getElementById('cursor-glow');
+    window.addEventListener('pointermove', (e) => {
+      if (cursorGlow) {
+        cursorGlow.style.background = `radial-gradient(750px circle at ${e.clientX}px ${e.clientY}px, rgba(0, 242, 254, 0.08), rgba(0, 199, 165, 0.02) 40%, transparent 75%)`;
+      }
+    });
+
+    // 2. Ambient Particle Constellation Canvas
+    const canvas = document.getElementById('particle-canvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      let particles = [];
+
+      function resizeCanvas() {
+        width = canvas.width = canvas.parentElement.offsetWidth;
+        height = canvas.height = canvas.parentElement.offsetHeight;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      for (let i = 0; i < 35; i++) {
+        particles.push({
+          x: Math.random() * (width || 400),
+          y: Math.random() * (height || 600),
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          radius: Math.random() * 1.6 + 0.8,
+          alpha: Math.random() * 0.5 + 0.2
+        });
+      }
+
+      function drawParticles() {
+        ctx.clearRect(0, 0, width, height);
+        
+        // Draw links
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 90) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(0, 242, 254, ${0.18 * (1 - dist / 90)})`;
+              ctx.lineWidth = 0.8;
+              ctx.stroke();
+            }
+          }
+        }
+
+        // Draw points
+        for (let p of particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x = width;
+          if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          if (p.y > height) p.y = 0;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(0, 242, 254, ${p.alpha})`;
+          ctx.fill();
+        }
+        requestAnimationFrame(drawParticles);
+      }
+      drawParticles();
+    }
+
+    // 3. Smooth Auth Mode Switcher with Tab Spring Slider
+    function switchAuthMode(mode) {
+      const loginContainer = document.getElementById('login-container');
+      const signupContainer = document.getElementById('signup-container');
+      const tabLogin = document.getElementById('tab-login');
+      const tabSignup = document.getElementById('tab-signup');
+      const sliderPill = document.getElementById('tab-slider-pill');
+      const orbitOuter = document.getElementById('orbit-outer');
+
+      if (mode === 'signup') {
+        // Slide Pill to right
+        sliderPill.style.transform = 'translateX(100%)';
+        
+        tabSignup.classList.add('text-primary', 'font-semibold');
+        tabSignup.classList.remove('text-on-surface-variant', 'font-medium');
+        tabLogin.classList.remove('text-primary', 'font-semibold');
+        tabLogin.classList.add('text-on-surface-variant', 'font-medium');
+
+        // Transition views
+        loginContainer.classList.add('opacity-0', '-translate-y-2');
+        setTimeout(() => {
+          loginContainer.classList.add('hidden');
+          signupContainer.classList.remove('hidden');
+          setTimeout(() => {
+            signupContainer.classList.remove('opacity-0', 'translate-y-2');
+          }, 20);
+        }, 150);
+
+        // Expand field perimeter
+        if (orbitOuter) {
+          orbitOuter.setAttribute('stroke', '#00f2fe');
+          orbitOuter.setAttribute('stroke-opacity', '0.7');
+          orbitOuter.setAttribute('r', '170');
+        }
+      } else {
+        // Slide Pill to left
+        sliderPill.style.transform = 'translateX(0%)';
+
+        tabLogin.classList.add('text-primary', 'font-semibold');
+        tabLogin.classList.remove('text-on-surface-variant', 'font-medium');
+        tabSignup.classList.remove('text-primary', 'font-semibold');
+        tabSignup.classList.add('text-on-surface-variant', 'font-medium');
+
+        signupContainer.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => {
+          signupContainer.classList.add('hidden');
+          loginContainer.classList.remove('hidden');
+          setTimeout(() => {
+            loginContainer.classList.remove('opacity-0', '-translate-y-2');
+          }, 20);
+        }, 150);
+
+        if (orbitOuter) {
+          orbitOuter.setAttribute('stroke', '#3a494b');
+          orbitOuter.setAttribute('stroke-opacity', '0.4');
+          orbitOuter.setAttribute('r', '162');
+        }
+      }
+    }
+
+    // 4. Password Visibility Toggle Helper
+    function togglePasswordVisibility(fieldId, triggerBtn) {
+      const field = document.getElementById(fieldId);
+      const icon = triggerBtn.querySelector('.material-symbols-outlined');
+      if (field.type === 'password') {
+        field.type = 'text';
+        icon.textContent = 'visibility_off';
+        icon.classList.add('text-primary-container');
+      } else {
+        field.type = 'password';
+        icon.textContent = 'visibility';
+        icon.classList.remove('text-primary-container');
+      }
+    }
+
+    // 5. Password Entropy Calculator
+    function calculatePasswordEntropy(val) {
+      const m1 = document.getElementById('meter-1');
+      const m2 = document.getElementById('meter-2');
+      const m3 = document.getElementById('meter-3');
+      const m4 = document.getElementById('meter-4');
+      const label = document.getElementById('strength-label');
+
+      [m1, m2, m3, m4].forEach(m => m.className = 'h-1 rounded bg-surface-container-highest transition-all duration-300');
+
+      if (!val) {
+        label.textContent = 'Strength: Idle';
+        label.className = 'font-label-sm text-[10px] uppercase text-outline';
+        return;
+      }
+
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+
+      if (score === 1) {
+        m1.className = 'h-1 rounded bg-error transition-all duration-300 shadow-[0_0_8px_rgba(255,180,171,0.5)]';
+        label.textContent = 'Strength: Weak';
+        label.className = 'font-label-sm text-[10px] uppercase text-error font-semibold';
+      } else if (score === 2) {
+        m1.className = 'h-1 rounded bg-tertiary-fixed-dim transition-all duration-300';
+        m2.className = 'h-1 rounded bg-tertiary-fixed-dim transition-all duration-300 shadow-[0_0_8px_rgba(255,185,95,0.4)]';
+        label.textContent = 'Strength: Moderate';
+        label.className = 'font-label-sm text-[10px] uppercase text-tertiary-fixed-dim font-semibold';
+      } else if (score === 3) {
+        m1.className = 'h-1 rounded bg-secondary transition-all duration-300';
+        m2.className = 'h-1 rounded bg-secondary transition-all duration-300';
+        m3.className = 'h-1 rounded bg-secondary transition-all duration-300 shadow-[0_0_8px_rgba(65,228,192,0.4)]';
+        label.textContent = 'Strength: Strong';
+        label.className = 'font-label-sm text-[10px] uppercase text-secondary font-semibold';
+      } else if (score === 4) {
+        m1.className = 'h-1 rounded bg-primary-container transition-all duration-300 shadow-[0_0_10px_#00f2fe]';
+        m2.className = 'h-1 rounded bg-primary-container transition-all duration-300 shadow-[0_0_10px_#00f2fe]';
+        m3.className = 'h-1 rounded bg-primary-container transition-all duration-300 shadow-[0_0_10px_#00f2fe]';
+        m4.className = 'h-1 rounded bg-primary-container transition-all duration-300 shadow-[0_0_10px_#00f2fe]';
+        label.textContent = 'Strength: Clinical Grade';
+        label.className = 'font-label-sm text-[10px] uppercase text-primary-container font-semibold';
+      }
+    }
+
+    // 6. Interactive Field Reactivity: Focus / Blur Behaviors
+    function handleFieldFocus(type) {
+      const core = document.getElementById('core-node');
+      const coreIcon = document.getElementById('core-icon');
+      const secRing = document.getElementById('security-ring');
+      const evNode = document.getElementById('node-evidence');
+      const genNode = document.getElementById('node-genetics');
+      const lineEv = document.getElementById('line-evidence');
+      const lineGen = document.getElementById('line-genetics');
+      const syncBadge = document.getElementById('sync-telemetry-badge');
+
+      if (type === 'email') {
+        // Illuminate Evidence & Genetics + Beam Dash
+        evNode.classList.add('scale-105', 'border-primary-container', 'shadow-[0_0_30px_rgba(0,242,254,0.45)]');
+        genNode.classList.add('scale-105', 'border-secondary', 'shadow-[0_0_30px_rgba(65,228,192,0.45)]');
+        lineEv.classList.add('beam-active');
+        lineEv.setAttribute('stroke', '#00f2fe');
+        lineEv.setAttribute('stroke-opacity', '1');
+        lineEv.setAttribute('stroke-width', '2');
+        lineGen.classList.add('beam-active');
+        lineGen.setAttribute('stroke', '#41e4c0');
+        lineGen.setAttribute('stroke-opacity', '1');
+        lineGen.setAttribute('stroke-width', '2');
+        syncBadge.textContent = 'Query: Verifying ID';
+      } else if (type === 'password') {
+        // Enter Security Lock state on CURX Core
+        core.classList.add('shadow-[0_0_60px_rgba(0,242,254,0.7)]', 'border-primary-container');
+        coreIcon.textContent = 'shield_lock';
+        coreIcon.classList.add('text-primary-container');
+        secRing.style.border = '2px dashed #00f2fe';
+        secRing.style.opacity = '1';
+        secRing.classList.add('animate-[spin_12s_linear_infinite]');
+        syncBadge.textContent = 'Enclave: Encrypted';
+      } else if (type === 'name') {
+        core.classList.add('scale-105');
+      }
+    }
+
+    function handleFieldBlur(type) {
+      const core = document.getElementById('core-node');
+      const coreIcon = document.getElementById('core-icon');
+      const secRing = document.getElementById('security-ring');
+      const evNode = document.getElementById('node-evidence');
+      const genNode = document.getElementById('node-genetics');
+      const lineEv = document.getElementById('line-evidence');
+      const lineGen = document.getElementById('line-genetics');
+      const syncBadge = document.getElementById('sync-telemetry-badge');
+
+      if (type === 'email') {
+        evNode.classList.remove('scale-105', 'border-primary-container', 'shadow-[0_0_30px_rgba(0,242,254,0.45)]');
+        genNode.classList.remove('scale-105', 'border-secondary', 'shadow-[0_0_30px_rgba(65,228,192,0.45)]');
+        lineEv.classList.remove('beam-active');
+        lineEv.setAttribute('stroke', '#3a494b');
+        lineEv.setAttribute('stroke-opacity', '0.45');
+        lineEv.setAttribute('stroke-width', '1.3');
+        lineGen.classList.remove('beam-active');
+        lineGen.setAttribute('stroke', '#3a494b');
+        lineGen.setAttribute('stroke-opacity', '0.45');
+        lineGen.setAttribute('stroke-width', '1.3');
+        syncBadge.textContent = 'Sync: Live Active';
+      } else if (type === 'password') {
+        core.classList.remove('shadow-[0_0_60px_rgba(0,242,254,0.7)]', 'border-primary-container');
+        coreIcon.textContent = 'hub';
+        coreIcon.classList.remove('text-primary-container');
+        secRing.style.border = '2px dashed transparent';
+        secRing.style.opacity = '0';
+        secRing.classList.remove('animate-[spin_12s_linear_infinite]');
+        syncBadge.textContent = 'Sync: Live Active';
+      } else if (type === 'name') {
+        core.classList.remove('scale-105');
+      }
+    }
+
+    // 7. Node Hover Highlight Vector Beam
+    function highlightNode(nodeName, isHovered) {
+      const line = document.getElementById(`line-${nodeName}`);
+      if (!line) return;
+
+      if (isHovered) {
+        line.classList.add('beam-active');
+        line.setAttribute('stroke', '#00f2fe');
+        line.setAttribute('stroke-opacity', '1');
+        line.setAttribute('stroke-width', '2.2');
+      } else {
+        line.classList.remove('beam-active');
+        line.setAttribute('stroke', '#3a494b');
+        line.setAttribute('stroke-opacity', '0.45');
+        line.setAttribute('stroke-width', '1.3');
+      }
+    }
+
+    // 8. Core Harmonic Ripple on Click / Core Interaction
+    function triggerCoreHarmonicRipple() {
+      const core = document.getElementById('core-node');
+      const nodes = ['genetics', 'medications', 'symptoms', 'conditions', 'evidence'];
+
+      core.classList.add('scale-115', 'shadow-[0_0_90px_#00f2fe]');
+      
+      nodes.forEach((n, idx) => {
+        setTimeout(() => {
+          const el = document.getElementById(`node-${n}`);
+          const line = document.getElementById(`line-${n}`);
+          if (el && line) {
+            el.classList.add('scale-110', 'border-primary-container');
+            line.classList.add('beam-active');
+            line.setAttribute('stroke', '#00f2fe');
+            line.setAttribute('stroke-opacity', '1');
+            setTimeout(() => {
+              el.classList.remove('scale-110', 'border-primary-container');
+              line.classList.remove('beam-active');
+              line.setAttribute('stroke', '#3a494b');
+              line.setAttribute('stroke-opacity', '0.45');
+            }, 650);
+          }
+        }, idx * 110);
+      });
+
+      setTimeout(() => {
+        core.classList.remove('scale-115', 'shadow-[0_0_90px_#00f2fe]');
+      }, 700);
+    }
+
+    // 9. Realistic Authenticating Verification Sequence
+    function handleFormSubmit(event, mode) {
+      event.preventDefault();
+      const btn = document.getElementById(`btn-${mode}-submit`);
+      const btnText = document.getElementById(`btn-${mode}-text`);
+      const btnIcon = document.getElementById(`btn-${mode}-icon`);
+      const core = document.getElementById('core-node');
+      const syncBadge = document.getElementById('sync-telemetry-badge');
+
+      // Set Authenticating State
+      btn.disabled = true;
+      btnText.innerHTML = 'Verifying Credentials...';
+      btnIcon.outerHTML = '<span id="' + `btn-${mode}-icon` + '" class="material-symbols-outlined text-[18px] animate-spin">progress_activity</span>';
+      core.classList.add('shadow-[0_0_90px_#00f2fe]', 'scale-115');
+      syncBadge.textContent = 'Handshake: Authorizing';
+
+      // Simulate Telemetry Synapse
+      triggerCoreHarmonicRipple();
+
+      setTimeout(() => {
+        const currentIcon = document.getElementById(`btn-${mode}-icon`);
+        btnText.textContent = mode === 'login' ? 'Access Granted' : 'Workspace Created';
+        if (currentIcon) {
+          currentIcon.outerHTML = '<span id="' + `btn-${mode}-icon` + '" class="material-symbols-outlined text-[18px]">check_circle</span>';
+        }
+        btn.classList.remove('bg-primary-container', 'text-on-primary-container');
+        btn.classList.add('bg-secondary-container', 'text-on-secondary');
+        syncBadge.textContent = 'Status: Session Authenticated';
+
+        setTimeout(() => {
+          btnText.textContent = mode === 'login' ? 'SIGN IN' : 'CREATE CLINICAL ACCOUNT';
+          const resetIcon = document.getElementById(`btn-${mode}-icon`);
+          if (resetIcon) {
+            resetIcon.outerHTML = '<span id="' + `btn-${mode}-icon` + '" class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:translate-x-1">arrow_forward</span>';
+          }
+          btn.disabled = false;
+          btn.classList.remove('bg-secondary-container', 'text-on-secondary');
+          btn.classList.add('bg-primary-container', 'text-on-primary-container');
+          core.classList.remove('shadow-[0_0_90px_#00f2fe]', 'scale-115');
+          syncBadge.textContent = 'Sync: Live Active';
+        }, 1800);
+      }, 1400);
+    }
+
+    function mockFederatedLogin(provider) {
+      const core = document.getElementById('core-node');
+      const syncBadge = document.getElementById('sync-telemetry-badge');
+      core.classList.add('shadow-[0_0_75px_#00f2fe]', 'scale-110');
+      syncBadge.textContent = `Federating: ${provider}`;
+      triggerCoreHarmonicRipple();
+
+      setTimeout(() => {
+        core.classList.remove('shadow-[0_0_75px_#00f2fe]', 'scale-110');
+        syncBadge.textContent = 'Sync: Live Active';
+      }, 1000);
+    }
+  </script>
+</body></html>
