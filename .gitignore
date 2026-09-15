@@ -52,7 +52,7 @@ playwright/.cache/
 # Large External Datasets & Temporary Archives
 curx datasets/
 curx-jpg (1).zip
-frames/
+/frames/
 scratch/
 
 # Operating System & IDE Files
