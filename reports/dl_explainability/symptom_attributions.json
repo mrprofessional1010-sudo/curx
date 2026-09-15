@@ -1,0 +1,549 @@
+{
+  "model_name": "curx_symptom_net",
+  "methodology": "Integrated Gradients + Occlusion Ablation",
+  "notice": "Attributions reflect feature gradients and ablation probability changes, not causal medical evidence.",
+  "top_symptoms_cohort": [
+    {
+      "symptom": "vomiting",
+      "importance_score": 4.021412283182144
+    },
+    {
+      "symptom": "burning micturition",
+      "importance_score": 3.548184871673584
+    },
+    {
+      "symptom": "chills",
+      "importance_score": 3.33673757314682
+    },
+    {
+      "symptom": "fatigue",
+      "importance_score": 3.100695725530386
+    },
+    {
+      "symptom": "coma",
+      "importance_score": 2.5665383338928223
+    },
+    {
+      "symptom": "sunken eyes",
+      "importance_score": 2.351168155670166
+    },
+    {
+      "symptom": "nausea",
+      "importance_score": 2.2937349677085876
+    },
+    {
+      "symptom": "watering from eyes",
+      "importance_score": 2.144864082336426
+    },
+    {
+      "symptom": "cough",
+      "importance_score": 2.033134639263153
+    },
+    {
+      "symptom": "bladder discomfort",
+      "importance_score": 1.8793185949325562
+    },
+    {
+      "symptom": "malaise",
+      "importance_score": 1.7755486965179443
+    },
+    {
+      "symptom": "dehydration",
+      "importance_score": 1.5835977792739868
+    },
+    {
+      "symptom": "stomach bleeding",
+      "importance_score": 1.5798828601837158
+    },
+    {
+      "symptom": "yellowing of eyes",
+      "importance_score": 1.579689122736454
+    },
+    {
+      "symptom": "high fever",
+      "importance_score": 1.5785467624664307
+    }
+  ],
+  "sample_explanations": [
+    {
+      "sample_index": 0,
+      "true_condition": "Typhoid",
+      "predicted_condition": "Typhoid",
+      "predicted_probability": 0.7774111032485962,
+      "active_symptoms": [
+        {
+          "symptom": "chills",
+          "integrated_gradient": 0.6419880390167236,
+          "occlusion_impact": -0.0008761882781982422
+        },
+        {
+          "symptom": "vomiting",
+          "integrated_gradient": 0.54203200340271,
+          "occlusion_impact": -0.03376835584640503
+        },
+        {
+          "symptom": "toxic look (typhos)",
+          "integrated_gradient": 0.49875134229660034,
+          "occlusion_impact": 0.16823101043701172
+        },
+        {
+          "symptom": "fatigue",
+          "integrated_gradient": 0.3744529187679291,
+          "occlusion_impact": 0.07215768098831177
+        },
+        {
+          "symptom": "constipation",
+          "integrated_gradient": 0.36118799448013306,
+          "occlusion_impact": 0.0191042423248291
+        },
+        {
+          "symptom": "high fever",
+          "integrated_gradient": -0.257534384727478,
+          "occlusion_impact": 0.6651545166969299
+        },
+        {
+          "symptom": "headache",
+          "integrated_gradient": 0.2536797523498535,
+          "occlusion_impact": 0.014584839344024658
+        },
+        {
+          "symptom": "diarrhoea",
+          "integrated_gradient": 0.22228114306926727,
+          "occlusion_impact": -0.022164523601531982
+        },
+        {
+          "symptom": "belly pain",
+          "integrated_gradient": 0.13099175691604614,
+          "occlusion_impact": 0.0640115737915039
+        },
+        {
+          "symptom": "abdominal pain",
+          "integrated_gradient": 0.11171913146972656,
+          "occlusion_impact": 0.01422584056854248
+        }
+      ]
+    },
+    {
+      "sample_index": 1,
+      "true_condition": "Hypoglycemia",
+      "predicted_condition": "Hypoglycemia",
+      "predicted_probability": 0.852868378162384,
+      "active_symptoms": [
+        {
+          "symptom": "nausea",
+          "integrated_gradient": 1.6453561782836914,
+          "occlusion_impact": 0.06917071342468262
+        },
+        {
+          "symptom": "fatigue",
+          "integrated_gradient": 1.4513942003250122,
+          "occlusion_impact": 0.04477882385253906
+        },
+        {
+          "symptom": "drying and tingling lips",
+          "integrated_gradient": 1.4502654075622559,
+          "occlusion_impact": 0.08653342723846436
+        },
+        {
+          "symptom": "blurred and distorted vision",
+          "integrated_gradient": 1.0972763299942017,
+          "occlusion_impact": 0.027477622032165527
+        },
+        {
+          "symptom": "vomiting",
+          "integrated_gradient": 0.6619993448257446,
+          "occlusion_impact": 0.02018284797668457
+        },
+        {
+          "symptom": "slurred speech",
+          "integrated_gradient": 0.6295166015625,
+          "occlusion_impact": -0.0035135746002197266
+        },
+        {
+          "symptom": "sweating",
+          "integrated_gradient": 0.5627954006195068,
+          "occlusion_impact": 0.012985765933990479
+        },
+        {
+          "symptom": "headache",
+          "integrated_gradient": 0.3275097608566284,
+          "occlusion_impact": -0.0012223124504089355
+        },
+        {
+          "symptom": "irritability",
+          "integrated_gradient": 0.29696470499038696,
+          "occlusion_impact": -0.002056300640106201
+        },
+        {
+          "symptom": "excessive hunger",
+          "integrated_gradient": 0.2629530429840088,
+          "occlusion_impact": 0.226409912109375
+        },
+        {
+          "symptom": "palpitations",
+          "integrated_gradient": 0.2510938048362732,
+          "occlusion_impact": 0.047844529151916504
+        }
+      ]
+    },
+    {
+      "sample_index": 2,
+      "true_condition": "Gastroenteritis",
+      "predicted_condition": "Gastroenteritis",
+      "predicted_probability": 0.20031534135341644,
+      "active_symptoms": [
+        {
+          "symptom": "sunken eyes",
+          "integrated_gradient": 2.351168155670166,
+          "occlusion_impact": -0.07909996807575226
+        },
+        {
+          "symptom": "dehydration",
+          "integrated_gradient": 1.5835977792739868,
+          "occlusion_impact": 0.11843366175889969
+        },
+        {
+          "symptom": "vomiting",
+          "integrated_gradient": 0.9418624043464661,
+          "occlusion_impact": 0.01759527623653412
+        }
+      ]
+    },
+    {
+      "sample_index": 3,
+      "true_condition": "Tuberculosis",
+      "predicted_condition": "Tuberculosis",
+      "predicted_probability": 0.5445998907089233,
+      "active_symptoms": [
+        {
+          "symptom": "swelled lymph nodes",
+          "integrated_gradient": 1.0890531539916992,
+          "occlusion_impact": 0.01316380500793457
+        },
+        {
+          "symptom": "chest pain",
+          "integrated_gradient": 1.0779520273208618,
+          "occlusion_impact": 0.05356040596961975
+        },
+        {
+          "symptom": "fatigue",
+          "integrated_gradient": 0.6842883825302124,
+          "occlusion_impact": -0.006792187690734863
+        },
+        {
+          "symptom": "phlegm",
+          "integrated_gradient": 0.5699635744094849,
+          "occlusion_impact": 0.01893669366836548
+        },
+        {
+          "symptom": "blood in sputum",
+          "integrated_gradient": 0.5651081800460815,
+          "occlusion_impact": 0.011891067028045654
+        },
+        {
+          "symptom": "yellowing of eyes",
+          "integrated_gradient": 0.5633350610733032,
+          "occlusion_impact": 0.009614706039428711
+        },
+        {
+          "symptom": "malaise",
+          "integrated_gradient": 0.5610311031341553,
+          "occlusion_impact": 0.018788158893585205
+        },
+        {
+          "symptom": "mild fever",
+          "integrated_gradient": 0.5388826727867126,
+          "occlusion_impact": 0.03632169961929321
+        },
+        {
+          "symptom": "breathlessness",
+          "integrated_gradient": 0.5388082265853882,
+          "occlusion_impact": -0.01402813196182251
+        },
+        {
+          "symptom": "cough",
+          "integrated_gradient": 0.4815078377723694,
+          "occlusion_impact": -0.009348511695861816
+        },
+        {
+          "symptom": "high fever",
+          "integrated_gradient": 0.4255599081516266,
+          "occlusion_impact": -0.007882475852966309
+        },
+        {
+          "symptom": "loss of appetite",
+          "integrated_gradient": 0.32148510217666626,
+          "occlusion_impact": 0.013224542140960693
+        },
+        {
+          "symptom": "chills",
+          "integrated_gradient": 0.20567864179611206,
+          "occlusion_impact": 0.023156344890594482
+        },
+        {
+          "symptom": "vomiting",
+          "integrated_gradient": 0.20210105180740356,
+          "occlusion_impact": -0.007943034172058105
+        },
+        {
+          "symptom": "sweating",
+          "integrated_gradient": -0.005337417125701904,
+          "occlusion_impact": 0.013126730918884277
+        }
+      ]
+    },
+    {
+      "sample_index": 4,
+      "true_condition": "Allergy",
+      "predicted_condition": "Cervical spondylosis",
+      "predicted_probability": 0.17819979786872864,
+      "active_symptoms": [
+        {
+          "symptom": "chills",
+          "integrated_gradient": 2.4890708923339844,
+          "occlusion_impact": -0.02854953706264496
+        },
+        {
+          "symptom": "watering from eyes",
+          "integrated_gradient": 2.144864082336426,
+          "occlusion_impact": 0.09404296427965164
+        },
+        {
+          "symptom": "continuous sneezing",
+          "integrated_gradient": 1.089682698249817,
+          "occlusion_impact": -0.004373401403427124
+        }
+      ]
+    },
+    {
+      "sample_index": 5,
+      "true_condition": "GERD",
+      "predicted_condition": "GERD",
+      "predicted_probability": 0.28984445333480835,
+      "active_symptoms": [
+        {
+          "symptom": "cough",
+          "integrated_gradient": 1.5516268014907837,
+          "occlusion_impact": 0.03281429409980774
+        },
+        {
+          "symptom": "vomiting",
+          "integrated_gradient": 1.5169475078582764,
+          "occlusion_impact": 0.030062705278396606
+        },
+        {
+          "symptom": "stomach pain",
+          "integrated_gradient": 1.1080734729766846,
+          "occlusion_impact": -0.037026554346084595
+        },
+        {
+          "symptom": "acidity",
+          "integrated_gradient": 0.8216466903686523,
+          "occlusion_impact": 0.03469955921173096
+        },
+        {
+          "symptom": "ulcers on tongue",
+          "integrated_gradient": 0.6986796259880066,
+          "occlusion_impact": 0.020860731601715088
+        }
+      ]
+    },
+    {
+      "sample_index": 6,
+      "true_condition": "Jaundice",
+      "predicted_condition": "Jaundice",
+      "predicted_probability": 0.5417125821113586,
+      "active_symptoms": [
+        {
+          "symptom": "high fever",
+          "integrated_gradient": 0.14739343523979187,
+          "occlusion_impact": 0.36028629541397095
+        },
+        {
+          "symptom": "yellowish skin",
+          "integrated_gradient": -0.09219183772802353,
+          "occlusion_impact": 0.08752444386482239
+        },
+        {
+          "symptom": "abdominal pain",
+          "integrated_gradient": 0.08201774954795837,
+          "occlusion_impact": 0.23894032835960388
+        },
+        {
+          "symptom": "fatigue",
+          "integrated_gradient": -0.0461389385163784,
+          "occlusion_impact": 0.1285375952720642
+        },
+        {
+          "symptom": "dark urine",
+          "integrated_gradient": 0.016064058989286423,
+          "occlusion_impact": 0.08865326642990112
+        },
+        {
+          "symptom": "itching",
+          "integrated_gradient": -0.014763527549803257,
+          "occlusion_impact": 0.4228079319000244
+        },
+        {
+          "symptom": "vomiting",
+          "integrated_gradient": 0.010089337825775146,
+          "occlusion_impact": -0.09859126806259155
+        }
+      ]
+    },
+    {
+      "sample_index": 7,
+      "true_condition": "Hepatitis E",
+      "predicted_condition": "Hepatitis E",
+      "predicted_probability": 0.25176987051963806,
+      "active_symptoms": [
+        {
+          "symptom": "coma",
+          "integrated_gradient": 2.5665383338928223,
+          "occlusion_impact": -0.21740645170211792
+        },
+        {
+          "symptom": "stomach bleeding",
+          "integrated_gradient": 1.5798828601837158,
+          "occlusion_impact": -0.43623086810112
+        },
+        {
+          "symptom": "acute liver failure",
+          "integrated_gradient": 1.2224189043045044,
+          "occlusion_impact": -0.31387266516685486
+        },
+        {
+          "symptom": "yellowing of eyes",
+          "integrated_gradient": 0.9076095819473267,
+          "occlusion_impact": 0.07409223914146423
+        },
+        {
+          "symptom": "high fever",
+          "integrated_gradient": -0.7480590343475342,
+          "occlusion_impact": -0.1292109489440918
+        },
+        {
+          "symptom": "nausea",
+          "integrated_gradient": 0.6483787894248962,
+          "occlusion_impact": 0.171890527009964
+        },
+        {
+          "symptom": "abdominal pain",
+          "integrated_gradient": 0.5063474178314209,
+          "occlusion_impact": 0.05562211573123932
+        },
+        {
+          "symptom": "loss of appetite",
+          "integrated_gradient": 0.45191478729248047,
+          "occlusion_impact": -0.3142644464969635
+        },
+        {
+          "symptom": "joint pain",
+          "integrated_gradient": 0.4159768223762512,
+          "occlusion_impact": -0.17046502232551575
+        },
+        {
+          "symptom": "fatigue",
+          "integrated_gradient": 0.2833484709262848,
+          "occlusion_impact": 0.14787477254867554
+        },
+        {
+          "symptom": "dark urine",
+          "integrated_gradient": -0.24115346372127533,
+          "occlusion_impact": 0.1689036786556244
+        },
+        {
+          "symptom": "vomiting",
+          "integrated_gradient": -0.14638063311576843,
+          "occlusion_impact": -0.12268087267875671
+        }
+      ]
+    },
+    {
+      "sample_index": 8,
+      "true_condition": "Urinary tract infection",
+      "predicted_condition": "Hepatitis D",
+      "predicted_probability": 0.4001135230064392,
+      "active_symptoms": [
+        {
+          "symptom": "burning micturition",
+          "integrated_gradient": 3.548184871673584,
+          "occlusion_impact": 0.39114800095558167
+        },
+        {
+          "symptom": "bladder discomfort",
+          "integrated_gradient": 1.8793185949325562,
+          "occlusion_impact": 0.2615697681903839
+        },
+        {
+          "symptom": "foul smell of urine",
+          "integrated_gradient": 0.9633145928382874,
+          "occlusion_impact": 0.3878784477710724
+        }
+      ]
+    },
+    {
+      "sample_index": 9,
+      "true_condition": "Hepatitis B",
+      "predicted_condition": "Hepatitis B",
+      "predicted_probability": 0.6841162443161011,
+      "active_symptoms": [
+        {
+          "symptom": "malaise",
+          "integrated_gradient": 1.214517593383789,
+          "occlusion_impact": 0.1768445372581482
+        },
+        {
+          "symptom": "yellow urine",
+          "integrated_gradient": 0.673079788684845,
+          "occlusion_impact": 0.07927125692367554
+        },
+        {
+          "symptom": "yellowish skin",
+          "integrated_gradient": 0.5862459540367126,
+          "occlusion_impact": 0.16289371252059937
+        },
+        {
+          "symptom": "fatigue",
+          "integrated_gradient": 0.2610728144645691,
+          "occlusion_impact": -0.05107617378234863
+        },
+        {
+          "symptom": "receiving blood transfusion",
+          "integrated_gradient": 0.113950714468956,
+          "occlusion_impact": 0.04858750104904175
+        },
+        {
+          "symptom": "yellowing of eyes",
+          "integrated_gradient": 0.10874447971582413,
+          "occlusion_impact": -0.008689463138580322
+        },
+        {
+          "symptom": "abdominal pain",
+          "integrated_gradient": 0.08249068260192871,
+          "occlusion_impact": -0.04826003313064575
+        },
+        {
+          "symptom": "lethargy",
+          "integrated_gradient": -0.0709194466471672,
+          "occlusion_impact": -0.05305403470993042
+        },
+        {
+          "symptom": "dark urine",
+          "integrated_gradient": 0.06821820884943008,
+          "occlusion_impact": -0.04977083206176758
+        },
+        {
+          "symptom": "receiving unsterile injections",
+          "integrated_gradient": -0.03589998930692673,
+          "occlusion_impact": 0.017407894134521484
+        },
+        {
+          "symptom": "itching",
+          "integrated_gradient": 0.015665119513869286,
+          "occlusion_impact": -0.09068483114242554
+        }
+      ]
+    }
+  ]
+}

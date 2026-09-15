@@ -1,0 +1,99 @@
+# CURX ML Pipeline Configuration
+# All hyperparameters, paths, and settings for reproducible training
+
+seed: 42
+seeds_for_robustness: [42, 123, 2026]
+
+# Data
+data:
+  source_zip: "curx datasets/curx dataset symptom.zip"
+  dataset_csv: "dataset.csv"
+  severity_csv: "Symptom-severity.csv"
+  output_dir: "ml/data/processed"
+  split_ratio:
+    train: 0.70
+    val: 0.15
+    test: 0.15
+
+# Preprocessing
+preprocessing:
+  deduplicate: true
+  normalize_symptom_names: true
+  binary_encoding: true  # multi-hot symptom vectors
+  use_severity_weights: true  # weight features by clinical severity
+
+# Baseline Models
+baselines:
+  logistic_regression:
+    max_iter: 1000
+    C: 1.0
+    solver: "lbfgs"
+    multi_class: "multinomial"
+  random_forest:
+    n_estimators: 200
+    max_depth: null
+    min_samples_split: 2
+    min_samples_leaf: 1
+  gradient_boosting:
+    n_estimators: 200
+    learning_rate: 0.1
+    max_depth: 5
+    subsample: 0.8
+
+# Deep Learning Model
+model:
+  architecture: "SymptomTransformer"
+  input_dim: 133  # number of unique symptoms
+  hidden_dim: 64
+  num_classes: 41
+  num_layers: 2
+  num_heads: 4
+  dropout: 0.2
+  use_severity_weights: true
+
+# Training
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  epochs: 50
+  early_stopping_patience: 8
+  gradient_clip_norm: 1.0
+  optimizer: "AdamW"
+  scheduler: "cosine"
+  warmup_steps: 0
+  label_smoothing: 0.05
+  mixed_precision: false  # CPU only
+
+# Fine-tuning
+fine_tuning:
+  learning_rate: 0.0001
+  epochs: 30
+  patience: 5
+  freeze_embeddings: true
+  unfreeze_after_epoch: 5
+
+# Hyperparameter Search
+hyperparam_search:
+  n_trials: 20
+  search_space:
+    learning_rate: [0.00001, 0.0001, 0.001, 0.003]
+    hidden_dim: [32, 64, 128]
+    num_layers: [1, 2, 3]
+    num_heads: [2, 4]
+    dropout: [0.1, 0.2, 0.3]
+    weight_decay: [0.000001, 0.0001, 0.001, 0.01]
+    batch_size: [16, 32, 64]
+
+# Calibration
+calibration:
+  method: "temperature_scaling"
+  fallback: "platt_scaling"
+
+# Paths
+paths:
+  checkpoints: "ml/checkpoints"
+  reports: "ml/reports"
+  experiments: "ml/reports/experiments"
+  models: "models"
+  docs: "docs"

@@ -1,0 +1,24 @@
+{
+  "version": "v001",
+  "architecture": "SymptomTransformer",
+  "created": "2026-09-15T12:10:21.526483",
+  "status": "research_only",
+  "pipeline_results": {
+    "data_pipeline": "SUCCESS",
+    "baselines": "{'logistic_regression': {'split': 'val', 'accuracy': 1.0, 'balanced_accuracy': 1.0, 'precision_macro': 1.0, 'recall_macro': 1.0, 'f1_macro': 1.0, 'f1_weighted': 1.0, 'auroc_ovr': 1.0, 'log_loss': 0.09",
+    "dl_training": "{'best_epoch': 47, 'best_val_acc': 0.391304347826087, 'total_epochs': 50}",
+    "fine_tuning": "SUCCESS",
+    "calibration": {
+      "method": "temperature_scaling",
+      "temperature": 0.7828364372253418,
+      "ece_before": 0.23225810897091162,
+      "ece_after": 0.20416363425876782,
+      "improvement": 0.028094474712143797
+    },
+    "val_metrics": "{'accuracy': 0.391304347826087, 'balanced_accuracy': 0.3780487804878049, 'precision_macro': 0.2459349593495935, 'precision_weighted': 0.26268115942028986, 'recall_macro': 0.3780487804878049, 'recall_w",
+    "test_metrics": "{'accuracy': 0.34782608695652173, 'balanced_accuracy': 0.2926829268292683, 'precision_macro': 0.20467479674796746, 'precision_weighted': 0.2418478260869565, 'recall_macro': 0.2926829268292683, 'recall",
+    "bias_audit": "COMPLETE",
+    "error_analysis": "COMPLETE",
+    "robustness": "{'seeds': [{'seed': 42, 'best_val_acc': 0.391304347826087, 'val_f1_macro': 0.2720092915214866}, {'seed': 123, 'best_val_acc': 0.41304347826086957, 'val_f1_macro': 0.3085365853658536}, {'seed': 2026, '"
+  }
+}

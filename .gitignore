@@ -37,6 +37,12 @@ venv/
 ENV/
 env/
 
+# ML Training Checkpoints & Raw Matrices
+ml/checkpoints/
+ml/data/processed/*.npy
+models/*.pkl
+models/*/*.pkl
+
 # Playwright & Testing Artifacts
 playwright-report/
 test-results/

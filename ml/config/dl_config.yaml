@@ -1,0 +1,68 @@
+# CURX Deep Learning Configuration
+
+paths:
+  data_dir: "ml/data/processed"
+  checkpoints: "ml/checkpoints"
+  reports: "ml/reports"
+  experiments: "ml/reports/experiments"
+  explainability: "reports/dl_explainability"
+
+dataset:
+  n_features: 133
+  n_classes: 41
+  train_samples: 212
+  val_samples: 46
+  test_samples: 46
+
+training:
+  epochs: 100
+  batch_size: 32
+  learning_rate: 0.001
+  min_lr: 0.00001
+  weight_decay: 0.0001
+  gradient_clip: 1.0
+  patience: 12
+  optimizer: "AdamW"
+  scheduler: "cosine_with_warmup" # or "reduce_on_plateau"
+  warmup_epochs: 5
+  seed: 42
+
+augmentation:
+  enabled: true # STRICTLY APPLIED ONLY TO TRAINING SPLIT
+  symptom_dropout_p: 0.15 # Probability of dropping an active symptom
+  symptom_noise_std: 0.02
+
+loss:
+  lambda_metric: 0.15 # Weight of prototype metric loss
+  label_smoothing: 0.05
+  margin: 0.15
+
+models:
+  curx_symptom_net:
+    embed_dim: 32
+    hidden_dim: 64
+    num_layers: 2
+    num_heads: 2
+    dropout: 0.20
+    init_temp: 12.0
+    use_prototypes: true
+    use_gating: true
+    use_attention: true
+
+  residual_mlp:
+    hidden_dim: 64
+    num_layers: 2
+    dropout: 0.20
+    use_gating: true
+
+  deep_sets:
+    embed_dim: 32
+    hidden_dim: 64
+    num_heads: 2
+    dropout: 0.20
+
+  prototype_network:
+    embed_dim: 32
+    hidden_dim: 64
+    dropout: 0.20
+    init_temp: 10.0

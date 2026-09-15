@@ -1,0 +1,372 @@
+{
+  "total_samples": 46,
+  "total_correct": 16,
+  "total_errors": 30,
+  "accuracy": 0.34782608695652173,
+  "confusion_pairs": [
+    {
+      "true": "Dengue",
+      "predicted": "Hepatitis E",
+      "count": 2
+    },
+    {
+      "true": "Diabetes",
+      "predicted": "Hepatitis D",
+      "count": 1
+    },
+    {
+      "true": "Gastroenteritis",
+      "predicted": "Hypertension",
+      "count": 1
+    },
+    {
+      "true": "Arthritis",
+      "predicted": "Drug Reaction",
+      "count": 1
+    },
+    {
+      "true": "Varicose veins",
+      "predicted": "Malaria",
+      "count": 1
+    },
+    {
+      "true": "(vertigo) Paroymsal  Positional Vertigo",
+      "predicted": "Malaria",
+      "count": 1
+    },
+    {
+      "true": "hepatitis A",
+      "predicted": "Hepatitis B",
+      "count": 1
+    },
+    {
+      "true": "Impetigo",
+      "predicted": "Hypertension",
+      "count": 1
+    },
+    {
+      "true": "Allergy",
+      "predicted": "Impetigo",
+      "count": 1
+    },
+    {
+      "true": "Hypoglycemia",
+      "predicted": "Hepatitis D",
+      "count": 1
+    },
+    {
+      "true": "Hepatitis E",
+      "predicted": "Tuberculosis",
+      "count": 1
+    },
+    {
+      "true": "Hepatitis C",
+      "predicted": "Jaundice",
+      "count": 1
+    },
+    {
+      "true": "Chronic cholestasis",
+      "predicted": "Malaria",
+      "count": 1
+    },
+    {
+      "true": "Heart attack",
+      "predicted": "Hypertension",
+      "count": 1
+    },
+    {
+      "true": "Alcoholic hepatitis",
+      "predicted": "Malaria",
+      "count": 1
+    },
+    {
+      "true": "Bronchial Asthma",
+      "predicted": "Malaria",
+      "count": 1
+    },
+    {
+      "true": "GERD",
+      "predicted": "Malaria",
+      "count": 1
+    },
+    {
+      "true": "Paralysis (brain hemorrhage)",
+      "predicted": "Drug Reaction",
+      "count": 1
+    },
+    {
+      "true": "Peptic ulcer diseae",
+      "predicted": "Migraine",
+      "count": 1
+    },
+    {
+      "true": "Urinary tract infection",
+      "predicted": "Drug Reaction",
+      "count": 1
+    }
+  ],
+  "low_confidence_count": 45,
+  "low_confidence_incorrect": 30,
+  "per_class_errors": {
+    "(vertigo) Paroymsal  Positional Vertigo": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.09743976593017578
+    },
+    "AIDS": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.11250799894332886
+    },
+    "Acne": {
+      "n_samples": 1,
+      "n_errors": 0,
+      "error_rate": 0.0,
+      "mean_confidence": 0.26476120948791504
+    },
+    "Alcoholic hepatitis": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.13062143325805664
+    },
+    "Allergy": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.1316443383693695
+    },
+    "Arthritis": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.11315655708312988
+    },
+    "Bronchial Asthma": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.12468324601650238
+    },
+    "Cervical spondylosis": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.15062212944030762
+    },
+    "Chicken pox": {
+      "n_samples": 2,
+      "n_errors": 0,
+      "error_rate": 0.0,
+      "mean_confidence": 0.11088962852954865
+    },
+    "Chronic cholestasis": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.10777938365936279
+    },
+    "Common Cold": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.3258602023124695
+    },
+    "Dengue": {
+      "n_samples": 2,
+      "n_errors": 2,
+      "error_rate": 1.0,
+      "mean_confidence": 0.13027355074882507
+    },
+    "Diabetes": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.15261271595954895
+    },
+    "Dimorphic hemmorhoids(piles)": {
+      "n_samples": 1,
+      "n_errors": 0,
+      "error_rate": 0.0,
+      "mean_confidence": 0.11566630750894547
+    },
+    "Drug Reaction": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.11626849323511124
+    },
+    "Fungal infection": {
+      "n_samples": 1,
+      "n_errors": 0,
+      "error_rate": 0.0,
+      "mean_confidence": 0.2621099650859833
+    },
+    "GERD": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.12663134932518005
+    },
+    "Gastroenteritis": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.15345188975334167
+    },
+    "Heart attack": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.12638165056705475
+    },
+    "Hepatitis B": {
+      "n_samples": 2,
+      "n_errors": 0,
+      "error_rate": 0.0,
+      "mean_confidence": 0.11742368340492249
+    },
+    "Hepatitis C": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.0918205976486206
+    },
+    "Hepatitis D": {
+      "n_samples": 2,
+      "n_errors": 0,
+      "error_rate": 0.0,
+      "mean_confidence": 0.15041805803775787
+    },
+    "Hepatitis E": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.2345758080482483
+    },
+    "Hypertension": {
+      "n_samples": 1,
+      "n_errors": 0,
+      "error_rate": 0.0,
+      "mean_confidence": 0.18780507147312164
+    },
+    "Hyperthyroidism": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.1652427315711975
+    },
+    "Hypoglycemia": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.15709130465984344
+    },
+    "Hypothyroidism": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.12898452579975128
+    },
+    "Impetigo": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.1901177167892456
+    },
+    "Jaundice": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.12028253823518753
+    },
+    "Malaria": {
+      "n_samples": 1,
+      "n_errors": 0,
+      "error_rate": 0.0,
+      "mean_confidence": 0.1232190802693367
+    },
+    "Migraine": {
+      "n_samples": 2,
+      "n_errors": 0,
+      "error_rate": 0.0,
+      "mean_confidence": 0.422964870929718
+    },
+    "Osteoarthristis": {
+      "n_samples": 1,
+      "n_errors": 0,
+      "error_rate": 0.0,
+      "mean_confidence": 0.15811298787593842
+    },
+    "Paralysis (brain hemorrhage)": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.10981464385986328
+    },
+    "Peptic ulcer diseae": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.19563937187194824
+    },
+    "Pneumonia": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.15967169404029846
+    },
+    "Psoriasis": {
+      "n_samples": 1,
+      "n_errors": 0,
+      "error_rate": 0.0,
+      "mean_confidence": 0.2609870135784149
+    },
+    "Tuberculosis": {
+      "n_samples": 1,
+      "n_errors": 0,
+      "error_rate": 0.0,
+      "mean_confidence": 0.3290284276008606
+    },
+    "Typhoid": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.12270160019397736
+    },
+    "Urinary tract infection": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.12584997713565826
+    },
+    "Varicose veins": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.13062025606632233
+    },
+    "hepatitis A": {
+      "n_samples": 1,
+      "n_errors": 1,
+      "error_rate": 1.0,
+      "mean_confidence": 0.11663524061441422
+    }
+  },
+  "confidence_stats": {
+    "mean_correct": 0.2065676599740982,
+    "mean_incorrect": 0.14264187216758728,
+    "std_correct": 0.11451251804828644,
+    "std_incorrect": 0.04532851278781891
+  },
+  "failure_modes": [
+    "Confusion between 'Dengue' and 'Hepatitis E' (2 cases) \u2014 likely overlapping symptom profiles",
+    "Confusion between 'Diabetes' and 'Hepatitis D' (1 cases) \u2014 likely overlapping symptom profiles",
+    "Confusion between 'Gastroenteritis' and 'Hypertension' (1 cases) \u2014 likely overlapping symptom profiles",
+    "Confusion between 'Arthritis' and 'Drug Reaction' (1 cases) \u2014 likely overlapping symptom profiles",
+    "Confusion between 'Varicose veins' and 'Malaria' (1 cases) \u2014 likely overlapping symptom profiles",
+    "45 low-confidence predictions \u2014 model uncertainty on ambiguous symptom sets"
+  ]
+}

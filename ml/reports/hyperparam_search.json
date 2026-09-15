@@ -1,0 +1,98 @@
+[
+  {
+    "trial": 1,
+    "params": {
+      "lr": 0.001,
+      "hidden_dim": 64,
+      "dropout": 0.2,
+      "lambda_metric": 0.15,
+      "batch_size": 32
+    },
+    "best_epoch": 38,
+    "val_top1": 1.0,
+    "val_top3": 1.0,
+    "val_top5": 1.0,
+    "val_macro_f1": 1.0,
+    "val_ece": 0.14099199357240097
+  },
+  {
+    "trial": 3,
+    "params": {
+      "lr": 0.001,
+      "hidden_dim": 96,
+      "dropout": 0.2,
+      "lambda_metric": 0.1,
+      "batch_size": 32
+    },
+    "best_epoch": 40,
+    "val_top1": 1.0,
+    "val_top3": 1.0,
+    "val_top5": 1.0,
+    "val_macro_f1": 1.0,
+    "val_ece": 0.1355934544749882
+  },
+  {
+    "trial": 4,
+    "params": {
+      "lr": 0.001,
+      "hidden_dim": 64,
+      "dropout": 0.1,
+      "lambda_metric": 0.2,
+      "batch_size": 32
+    },
+    "best_epoch": 24,
+    "val_top1": 1.0,
+    "val_top3": 1.0,
+    "val_top5": 1.0,
+    "val_macro_f1": 1.0,
+    "val_ece": 0.25755181843819824
+  },
+  {
+    "trial": 5,
+    "params": {
+      "lr": 0.001,
+      "hidden_dim": 64,
+      "dropout": 0.3,
+      "lambda_metric": 0.1,
+      "batch_size": 16
+    },
+    "best_epoch": 35,
+    "val_top1": 1.0,
+    "val_top3": 1.0,
+    "val_top5": 1.0,
+    "val_macro_f1": 1.0,
+    "val_ece": 0.16355811512988547
+  },
+  {
+    "trial": 6,
+    "params": {
+      "lr": 0.0003,
+      "hidden_dim": 96,
+      "dropout": 0.15,
+      "lambda_metric": 0.15,
+      "batch_size": 32
+    },
+    "best_epoch": 74,
+    "val_top1": 0.8913043478260869,
+    "val_top3": 0.9347826242446899,
+    "val_top5": 0.95652174949646,
+    "val_macro_f1": 0.8373983739837397,
+    "val_ece": 0.314446322619915
+  },
+  {
+    "trial": 2,
+    "params": {
+      "lr": 0.0003,
+      "hidden_dim": 64,
+      "dropout": 0.2,
+      "lambda_metric": 0.15,
+      "batch_size": 32
+    },
+    "best_epoch": 75,
+    "val_top1": 0.8695652173913043,
+    "val_top3": 0.9130434989929199,
+    "val_top5": 0.9130434989929199,
+    "val_macro_f1": 0.8089430894308942,
+    "val_ece": 0.5166762772461643
+  }
+]

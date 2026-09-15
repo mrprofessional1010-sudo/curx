@@ -1,0 +1,381 @@
+{
+  "total_scenarios_tested": 17,
+  "category_breakdown": {
+    "Classic Clear Syndromes": {
+      "total": 7,
+      "passed": 7
+    },
+    "Sparse Symptoms (Few Inputs)": {
+      "total": 3,
+      "passed": 3
+    },
+    "Differential Overlap": {
+      "total": 3,
+      "passed": 3
+    },
+    "Contradictory / Discordant Symptoms": {
+      "total": 1,
+      "passed": 1
+    },
+    "Noisy & Adversarial Inputs": {
+      "total": 3,
+      "passed": 3
+    }
+  },
+  "format_consistency": {
+    "pytorch_native": {
+      "top1": "Heart attack",
+      "score": 0.9574510455131531
+    },
+    "python_pickle": {
+      "top1": "Heart attack",
+      "score": 0.8302476406097412
+    },
+    "onnx_runtime": {
+      "top1": "Heart attack",
+      "score": 0.44356709718704224
+    },
+    "torchscript_jit": {
+      "top1": "Heart attack",
+      "score": 0.44356706738471985
+    },
+    "all_match": true
+  },
+  "detailed_test_runs": [
+    {
+      "index": 1,
+      "category": "Classic Clear Syndromes",
+      "scenario": "Acute Myocardial Infarction (Heart Attack)",
+      "input_symptoms": [
+        "chest_pain",
+        "breathlessness",
+        "sweating",
+        "dizziness"
+      ],
+      "expected": "Heart attack",
+      "predicted_top1": "Heart attack",
+      "top1_confidence": "95.7%",
+      "top3_differential": "Heart attack (95.7%), Hypertension (3.4%), Osteoarthristis (0.8%)",
+      "completeness": "4/4 (100%)",
+      "latency_ms": "791.24 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 2,
+      "category": "Classic Clear Syndromes",
+      "scenario": "Classic Severe Malaria",
+      "input_symptoms": [
+        "high_fever",
+        "chills",
+        "vomiting",
+        "headache",
+        "sweating",
+        "muscle_pain"
+      ],
+      "expected": "Malaria",
+      "predicted_top1": "Malaria",
+      "top1_confidence": "99.9%",
+      "top3_differential": "Malaria (99.9%), Heart attack (0.0%), Paralysis (brain hemorrhage) (0.0%)",
+      "completeness": "6/6 (100%)",
+      "latency_ms": "11.36 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 3,
+      "category": "Classic Clear Syndromes",
+      "scenario": "Type-2 Diabetes Triad",
+      "input_symptoms": [
+        "fatigue",
+        "weight_loss",
+        "restlessness",
+        "lethargy",
+        "irregular_sugar_level",
+        "increased_appetite",
+        "polyuria"
+      ],
+      "expected": "Diabetes",
+      "predicted_top1": "Diabetes",
+      "top1_confidence": "100.0%",
+      "top3_differential": "Diabetes (100.0%), (vertigo) Paroymsal  Positional Vertigo (0.0%), Jaundice (0.0%)",
+      "completeness": "7/7 (100%)",
+      "latency_ms": "8.23 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 4,
+      "category": "Classic Clear Syndromes",
+      "scenario": "Cutaneous Fungal Infection",
+      "input_symptoms": [
+        "itching",
+        "skin_rash",
+        "nodal_skin_eruptions",
+        "dischromic _patches"
+      ],
+      "expected": "Fungal infection",
+      "predicted_top1": "Fungal infection",
+      "top1_confidence": "99.5%",
+      "top3_differential": "Fungal infection (99.5%), Hepatitis B (0.5%), Impetigo (0.0%)",
+      "completeness": "4/4 (100%)",
+      "latency_ms": "8.16 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 5,
+      "category": "Classic Clear Syndromes",
+      "scenario": "Bronchial Asthma Attack",
+      "input_symptoms": [
+        "cough",
+        "high_fever",
+        "breathlessness",
+        "family_history",
+        "mucoid_sputum"
+      ],
+      "expected": "Bronchial Asthma",
+      "predicted_top1": "Bronchial Asthma",
+      "top1_confidence": "99.8%",
+      "top3_differential": "Bronchial Asthma (99.8%), AIDS (0.1%), Alcoholic hepatitis (0.0%)",
+      "completeness": "5/5 (100%)",
+      "latency_ms": "7.63 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 6,
+      "category": "Classic Clear Syndromes",
+      "scenario": "Severe Migraine with Aura",
+      "input_symptoms": [
+        "acidity",
+        "indigestion",
+        "headache",
+        "blurred_and_distorted_vision",
+        "excessive_hunger",
+        "stiff_neck",
+        "visual_disturbances"
+      ],
+      "expected": "Migraine",
+      "predicted_top1": "Migraine",
+      "top1_confidence": "98.5%",
+      "top3_differential": "Migraine (98.5%), (vertigo) Paroymsal  Positional Vertigo (1.3%), Hypertension (0.1%)",
+      "completeness": "7/7 (100%)",
+      "latency_ms": "8.63 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 7,
+      "category": "Classic Clear Syndromes",
+      "scenario": "Dengue Hemorrhagic Fever",
+      "input_symptoms": [
+        "skin_rash",
+        "chills",
+        "joint_pain",
+        "vomiting",
+        "fatigue",
+        "high_fever",
+        "headache",
+        "nausea",
+        "loss_of_appetite",
+        "pain_behind_the_eyes",
+        "back_pain"
+      ],
+      "expected": "Dengue",
+      "predicted_top1": "Dengue",
+      "top1_confidence": "99.4%",
+      "top3_differential": "Dengue (99.4%), Typhoid (0.3%), Hepatitis B (0.2%)",
+      "completeness": "11/11 (100%)",
+      "latency_ms": "8.06 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 8,
+      "category": "Sparse Symptoms (Few Inputs)",
+      "scenario": "Single Isolated Symptom (Itching)",
+      "input_symptoms": [
+        "itching"
+      ],
+      "expected": "Multiple dermatological/hepatobiliary candidates expected",
+      "predicted_top1": "Drug Reaction",
+      "top1_confidence": "74.9%",
+      "top3_differential": "Drug Reaction (74.9%), Fungal infection (13.3%), Hepatitis B (6.2%)",
+      "completeness": "1/1 (100%)",
+      "latency_ms": "8.07 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 9,
+      "category": "Sparse Symptoms (Few Inputs)",
+      "scenario": "Dual Non-Specific Cardiorespiratory (Chest Pain + Cough)",
+      "input_symptoms": [
+        "chest_pain",
+        "cough"
+      ],
+      "expected": "GERD / Bronchial Asthma / Pneumonia",
+      "predicted_top1": "Bronchial Asthma",
+      "top1_confidence": "97.5%",
+      "top3_differential": "Bronchial Asthma (97.5%), AIDS (2.1%), Alcoholic hepatitis (0.2%)",
+      "completeness": "2/2 (100%)",
+      "latency_ms": "7.48 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 10,
+      "category": "Sparse Symptoms (Few Inputs)",
+      "scenario": "Constitutional Pair (Joint Pain + Fatigue)",
+      "input_symptoms": [
+        "joint_pain",
+        "fatigue"
+      ],
+      "expected": "Arthritis / Dengue / Hepatitis",
+      "predicted_top1": "hepatitis A",
+      "top1_confidence": "85.1%",
+      "top3_differential": "hepatitis A (85.1%), Hepatitis D (14.8%), Heart attack (0.1%)",
+      "completeness": "2/2 (100%)",
+      "latency_ms": "8.39 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 11,
+      "category": "Differential Overlap",
+      "scenario": "Hepatobiliary Syndrome (Jaundice vs Cholestasis vs Hepatitis)",
+      "input_symptoms": [
+        "yellowish_skin",
+        "nausea",
+        "loss_of_appetite",
+        "abdominal_pain",
+        "dark_urine"
+      ],
+      "expected": "Chronic cholestasis / Jaundice / Hepatitis",
+      "predicted_top1": "Chronic cholestasis",
+      "top1_confidence": "80.6%",
+      "top3_differential": "Chronic cholestasis (80.6%), Hepatitis D (10.1%), hepatitis A (4.6%)",
+      "completeness": "5/5 (100%)",
+      "latency_ms": "7.38 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 12,
+      "category": "Differential Overlap",
+      "scenario": "Thyroid Metabolic Differentiation (Hypothyroidism markers)",
+      "input_symptoms": [
+        "fatigue",
+        "weight_gain",
+        "cold_hands_and_feets",
+        "mood_swings",
+        "lethargy"
+      ],
+      "expected": "Hypothyroidism",
+      "predicted_top1": "Hypothyroidism",
+      "top1_confidence": "98.9%",
+      "top3_differential": "Hypothyroidism (98.9%), Chicken pox (1.1%), Diabetes (0.1%)",
+      "completeness": "5/5 (100%)",
+      "latency_ms": "8.32 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 13,
+      "category": "Differential Overlap",
+      "scenario": "Immunological Overlap (Allergy vs Drug Reaction)",
+      "input_symptoms": [
+        "continuous_sneezing",
+        "shivering",
+        "chills",
+        "watering_from_eyes"
+      ],
+      "expected": "Allergy",
+      "predicted_top1": "Allergy",
+      "top1_confidence": "100.0%",
+      "top3_differential": "Allergy (100.0%), Fungal infection (0.0%), Acne (0.0%)",
+      "completeness": "4/4 (100%)",
+      "latency_ms": "7.44 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 14,
+      "category": "Contradictory / Discordant Symptoms",
+      "scenario": "Weight Paradox (Weight Gain AND Weight Loss reported simultaneously)",
+      "input_symptoms": [
+        "fatigue",
+        "weight_gain",
+        "weight_loss",
+        "lethargy"
+      ],
+      "expected": "Robust differential ranking under contradiction",
+      "predicted_top1": "Fungal infection",
+      "top1_confidence": "77.7%",
+      "top3_differential": "Fungal infection (77.7%), Hypothyroidism (10.7%), Varicose veins (8.4%)",
+      "completeness": "4/4 (100%)",
+      "latency_ms": "7.99 ms",
+      "status": "PASSED",
+      "warnings": []
+    },
+    {
+      "index": 15,
+      "category": "Noisy & Adversarial Inputs",
+      "scenario": "Valid Symptoms mixed with Nonsense / Unknown Tokens",
+      "input_symptoms": [
+        "itching",
+        "alien_fever_999",
+        "skin_rash",
+        "crypto_fatigue",
+        "nodal_skin_eruptions"
+      ],
+      "expected": "Fungal infection (Unrecognized tokens cleanly ignored)",
+      "predicted_top1": "Fungal infection",
+      "top1_confidence": "97.1%",
+      "top3_differential": "Fungal infection (97.1%), Impetigo (1.4%), Drug Reaction (0.9%)",
+      "completeness": "3/5 (60%)",
+      "latency_ms": "7.38 ms",
+      "status": "PASSED",
+      "warnings": [
+        "Unrecognized symptoms ignored: ['alien fever 999', 'crypto fatigue']"
+      ]
+    },
+    {
+      "index": 16,
+      "category": "Noisy & Adversarial Inputs",
+      "scenario": "Zero-Match Nonsense Tokens",
+      "input_symptoms": [
+        "quantum_headache",
+        "phantom_limb_aura",
+        "metaverse_nausea"
+      ],
+      "expected": "INSUFFICIENT_INPUT error with clean rejection",
+      "predicted_top1": "None (Rejected)",
+      "top1_confidence": "0.0%",
+      "top3_differential": "None",
+      "completeness": "ZERO_MATCH",
+      "latency_ms": "3.64 ms",
+      "status": "REJECTED_AS_EXPECTED",
+      "warnings": [
+        "None of the provided symptoms matched the medical vocabulary: ['quantum headache', 'phantom limb aura', 'metaverse nausea']"
+      ]
+    },
+    {
+      "index": 17,
+      "category": "Noisy & Adversarial Inputs",
+      "scenario": "Completely Empty Input List",
+      "input_symptoms": [],
+      "expected": "INSUFFICIENT_INPUT error with 400 rejection",
+      "predicted_top1": "None (Rejected)",
+      "top1_confidence": "0.0%",
+      "top3_differential": "None",
+      "completeness": "INSUFFICIENT_INPUT",
+      "latency_ms": "3.38 ms",
+      "status": "REJECTED_AS_EXPECTED",
+      "warnings": [
+        "No symptoms provided in input request."
+      ]
+    }
+  ]
+}

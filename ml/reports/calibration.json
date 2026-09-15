@@ -1,0 +1,7 @@
+{
+  "method": "temperature_scaling",
+  "temperature": 0.7828364372253418,
+  "ece_before": 0.23225810897091162,
+  "ece_after": 0.20416363425876782,
+  "improvement": 0.028094474712143797
+}

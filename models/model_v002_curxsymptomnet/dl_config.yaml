@@ -1,0 +1,51 @@
+augmentation:
+  enabled: true
+  symptom_dropout_p: 0.15
+  symptom_noise_std: 0.02
+dataset:
+  n_classes: 41
+  n_features: 133
+  test_samples: 46
+  train_samples: 212
+  val_samples: 46
+loss:
+  label_smoothing: 0.05
+  lambda_metric: 0.15
+  margin: 0.15
+models:
+  curx_symptom_net:
+    dropout: 0.15
+    hidden_dim: 96
+  deep_sets:
+    dropout: 0.2
+    embed_dim: 32
+    hidden_dim: 64
+    num_heads: 2
+  prototype_network:
+    dropout: 0.2
+    embed_dim: 32
+    hidden_dim: 64
+    init_temp: 10.0
+  residual_mlp:
+    dropout: 0.2
+    hidden_dim: 64
+    num_layers: 2
+    use_gating: true
+paths:
+  checkpoints: ml/checkpoints
+  data_dir: ml/data/processed
+  experiments: ml/reports/experiments
+  explainability: reports/dl_explainability
+  reports: ml/reports
+training:
+  batch_size: 32
+  epochs: 100
+  gradient_clip: 1.0
+  learning_rate: 0.0003
+  min_lr: 1.0e-05
+  optimizer: AdamW
+  patience: 12
+  scheduler: cosine_with_warmup
+  seed: 42
+  warmup_epochs: 5
+  weight_decay: 0.0001

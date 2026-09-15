@@ -1,0 +1,1034 @@
+{
+  "baseline_accuracy": 0.43478260869565216,
+  "top_features": [
+    {
+      "symptom": "high fever",
+      "mean_importance": 0.11739130434782608,
+      "std_importance": 0.010649955403405114
+    },
+    {
+      "symptom": "vomiting",
+      "mean_importance": 0.09565217391304345,
+      "std_importance": 0.03532190610711286
+    },
+    {
+      "symptom": "chest pain",
+      "mean_importance": 0.07826086956521738,
+      "std_importance": 0.022169650059099065
+    },
+    {
+      "symptom": "fatigue",
+      "mean_importance": 0.06521739130434781,
+      "std_importance": 0.023814024239355053
+    },
+    {
+      "symptom": "blurred and distorted vision",
+      "mean_importance": 0.0608695652173913,
+      "std_importance": 0.016268075594669324
+    },
+    {
+      "symptom": "malaise",
+      "mean_importance": 0.05217391304347825,
+      "std_importance": 0.04476360930863913
+    },
+    {
+      "symptom": "abdominal pain",
+      "mean_importance": 0.04782608695652173,
+      "std_importance": 0.016268075594669324
+    },
+    {
+      "symptom": "excessive hunger",
+      "mean_importance": 0.04347826086956521,
+      "std_importance": 0.030743773095067286
+    },
+    {
+      "symptom": "obesity",
+      "mean_importance": 0.0434782608695652,
+      "std_importance": 0.013749033305079919
+    },
+    {
+      "symptom": "prominent veins on calf",
+      "mean_importance": 0.03913043478260867,
+      "std_importance": 0.008695652173913038
+    },
+    {
+      "symptom": "phlegm",
+      "mean_importance": 0.034782608695652174,
+      "std_importance": 0.026086956521739136
+    },
+    {
+      "symptom": "breathlessness",
+      "mean_importance": 0.03478260869565216,
+      "std_importance": 0.017391304347826094
+    },
+    {
+      "symptom": "abnormal menstruation",
+      "mean_importance": 0.03478260869565216,
+      "std_importance": 0.017391304347826094
+    },
+    {
+      "symptom": "burning micturition",
+      "mean_importance": 0.034782608695652154,
+      "std_importance": 0.010649955403405116
+    },
+    {
+      "symptom": "irregular sugar level",
+      "mean_importance": 0.034782608695652154,
+      "std_importance": 0.010649955403405116
+    },
+    {
+      "symptom": "fast heart rate",
+      "mean_importance": 0.030434782608695643,
+      "std_importance": 0.02216965005909907
+    },
+    {
+      "symptom": "enlarged thyroid",
+      "mean_importance": 0.030434782608695633,
+      "std_importance": 0.017391304347826077
+    },
+    {
+      "symptom": "yellowing of eyes",
+      "mean_importance": 0.030434782608695633,
+      "std_importance": 0.017391304347826077
+    },
+    {
+      "symptom": "loss of balance",
+      "mean_importance": 0.030434782608695633,
+      "std_importance": 0.010649955403405116
+    },
+    {
+      "symptom": "puffy face and eyes",
+      "mean_importance": 0.030434782608695633,
+      "std_importance": 0.017391304347826077
+    },
+    {
+      "symptom": "swelled lymph nodes",
+      "mean_importance": 0.030434782608695633,
+      "std_importance": 0.010649955403405116
+    },
+    {
+      "symptom": "chills",
+      "mean_importance": 0.030434782608695633,
+      "std_importance": 0.010649955403405114
+    },
+    {
+      "symptom": "brittle nails",
+      "mean_importance": 0.030434782608695633,
+      "std_importance": 0.010649955403405116
+    },
+    {
+      "symptom": "nausea",
+      "mean_importance": 0.026086956521739126,
+      "std_importance": 0.021299910806810252
+    },
+    {
+      "symptom": "loss of appetite",
+      "mean_importance": 0.026086956521739126,
+      "std_importance": 0.021299910806810252
+    }
+  ],
+  "class_symptom_affinities": {
+    "(vertigo) Paroymsal  Positional Vertigo": [
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.0014052296755835414
+      },
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.0014048966113477945
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.0014040595851838589
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.0014023595722392201
+      },
+      {
+        "symptom": "fluid overload",
+        "activation_score": 0.0014015864580869675
+      }
+    ],
+    "AIDS": [
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.0023188721388578415
+      },
+      {
+        "symptom": "high fever",
+        "activation_score": 0.0023183769080787897
+      },
+      {
+        "symptom": "toxic look (typhos)",
+        "activation_score": 0.002317636040970683
+      },
+      {
+        "symptom": "belly pain",
+        "activation_score": 0.002316940575838089
+      },
+      {
+        "symptom": "skin rash",
+        "activation_score": 0.0023169401101768017
+      }
+    ],
+    "Acne": [
+      {
+        "symptom": "prominent veins on calf",
+        "activation_score": 0.18913359940052032
+      },
+      {
+        "symptom": "diarrhoea",
+        "activation_score": 0.18912367522716522
+      },
+      {
+        "symptom": "indigestion",
+        "activation_score": 0.1891147643327713
+      },
+      {
+        "symptom": "swollen blood vessels",
+        "activation_score": 0.18910813331604004
+      },
+      {
+        "symptom": "swollen legs",
+        "activation_score": 0.1891007125377655
+      }
+    ],
+    "Alcoholic hepatitis": [
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.000875310564879328
+      },
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.0008748436230234802
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.0008746505482122302
+      },
+      {
+        "symptom": "fluid overload",
+        "activation_score": 0.000874261895660311
+      },
+      {
+        "symptom": "swelling of stomach",
+        "activation_score": 0.0008740762714296579
+      }
+    ],
+    "Allergy": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.01406245119869709
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.014058517292141914
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.014055385254323483
+      },
+      {
+        "symptom": "yellowish skin",
+        "activation_score": 0.01404260378330946
+      },
+      {
+        "symptom": "stomach bleeding",
+        "activation_score": 0.01403666939586401
+      }
+    ],
+    "Arthritis": [
+      {
+        "symptom": "yellowing of eyes",
+        "activation_score": 0.06776807457208633
+      },
+      {
+        "symptom": "malaise",
+        "activation_score": 0.06776012480258942
+      },
+      {
+        "symptom": "stiff neck",
+        "activation_score": 0.06774574518203735
+      },
+      {
+        "symptom": "loss of appetite",
+        "activation_score": 0.06774234026670456
+      },
+      {
+        "symptom": "yellowish skin",
+        "activation_score": 0.06773950159549713
+      }
+    ],
+    "Bronchial Asthma": [
+      {
+        "symptom": "breathlessness",
+        "activation_score": 0.0005799890495836735
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.0005799887585453689
+      },
+      {
+        "symptom": "family history",
+        "activation_score": 0.0005799554055556655
+      },
+      {
+        "symptom": "burning micturition",
+        "activation_score": 0.0005798912607133389
+      },
+      {
+        "symptom": "prominent veins on calf",
+        "activation_score": 0.0005798267084173858
+      }
+    ],
+    "Cervical spondylosis": [
+      {
+        "symptom": "family history",
+        "activation_score": 0.0014516297960653901
+      },
+      {
+        "symptom": "dehydration",
+        "activation_score": 0.0014514817157760262
+      },
+      {
+        "symptom": "prominent veins on calf",
+        "activation_score": 0.0014514017384499311
+      },
+      {
+        "symptom": "indigestion",
+        "activation_score": 0.0014507279265671968
+      },
+      {
+        "symptom": "sunken eyes",
+        "activation_score": 0.0014507155865430832
+      }
+    ],
+    "Chicken pox": [
+      {
+        "symptom": "swelled lymph nodes",
+        "activation_score": 0.0013994640903547406
+      },
+      {
+        "symptom": "headache",
+        "activation_score": 0.001399174565449357
+      },
+      {
+        "symptom": "mild fever",
+        "activation_score": 0.001399054192006588
+      },
+      {
+        "symptom": "burning micturition",
+        "activation_score": 0.0013990015722811222
+      },
+      {
+        "symptom": "skin rash",
+        "activation_score": 0.001398983527906239
+      }
+    ],
+    "Chronic cholestasis": [
+      {
+        "symptom": "yellowish skin",
+        "activation_score": 0.0012384695000946522
+      },
+      {
+        "symptom": "excessive hunger",
+        "activation_score": 0.0012384490109980106
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.001238422584719956
+      },
+      {
+        "symptom": "weight loss",
+        "activation_score": 0.001238302094861865
+      },
+      {
+        "symptom": "yellowing of eyes",
+        "activation_score": 0.001238224096596241
+      }
+    ],
+    "Common Cold": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.005245494190603495
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.005242975894361734
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.005233901087194681
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.0052321129478514194
+      },
+      {
+        "symptom": "restlessness",
+        "activation_score": 0.00522908940911293
+      }
+    ],
+    "Dengue": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.00041945165139622986
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.0004192417545709759
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.00041912434971891344
+      },
+      {
+        "symptom": "restlessness",
+        "activation_score": 0.0004190690233372152
+      },
+      {
+        "symptom": "stomach bleeding",
+        "activation_score": 0.0004190575855318457
+      }
+    ],
+    "Diabetes": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.00499187083914876
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.004988441243767738
+      },
+      {
+        "symptom": "restlessness",
+        "activation_score": 0.0049843695014715195
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.004981366451829672
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.004978409502655268
+      }
+    ],
+    "Dimorphic hemmorhoids(piles)": [
+      {
+        "symptom": "diarrhoea",
+        "activation_score": 0.00020094297360628843
+      },
+      {
+        "symptom": "constipation",
+        "activation_score": 0.00020093345665372908
+      },
+      {
+        "symptom": "continuous feel of urine",
+        "activation_score": 0.00020092964405193925
+      },
+      {
+        "symptom": "sunken eyes",
+        "activation_score": 0.00020090266480110586
+      },
+      {
+        "symptom": "dehydration",
+        "activation_score": 0.00020089953613933176
+      }
+    ],
+    "Drug Reaction": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.027354806661605835
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.027328556403517723
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.027323011308908463
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.027261439710855484
+      },
+      {
+        "symptom": "fluid overload",
+        "activation_score": 0.027238722890615463
+      }
+    ],
+    "Fungal infection": [
+      {
+        "symptom": "prominent veins on calf",
+        "activation_score": 0.181984081864357
+      },
+      {
+        "symptom": "diarrhoea",
+        "activation_score": 0.18196217715740204
+      },
+      {
+        "symptom": "dehydration",
+        "activation_score": 0.18196122348308563
+      },
+      {
+        "symptom": "swollen legs",
+        "activation_score": 0.18195609748363495
+      },
+      {
+        "symptom": "swollen blood vessels",
+        "activation_score": 0.18194995820522308
+      }
+    ],
+    "GERD": [
+      {
+        "symptom": "prominent veins on calf",
+        "activation_score": 0.0011766168754547834
+      },
+      {
+        "symptom": "dehydration",
+        "activation_score": 0.001176411285996437
+      },
+      {
+        "symptom": "diarrhoea",
+        "activation_score": 0.00117634073831141
+      },
+      {
+        "symptom": "indigestion",
+        "activation_score": 0.0011761620407924056
+      },
+      {
+        "symptom": "lack of concentration",
+        "activation_score": 0.0011761341011151671
+      }
+    ],
+    "Gastroenteritis": [
+      {
+        "symptom": "abnormal menstruation",
+        "activation_score": 0.045591507107019424
+      },
+      {
+        "symptom": "diarrhoea",
+        "activation_score": 0.04559081047773361
+      },
+      {
+        "symptom": "receiving blood transfusion",
+        "activation_score": 0.045585379004478455
+      },
+      {
+        "symptom": "dehydration",
+        "activation_score": 0.04558533802628517
+      },
+      {
+        "symptom": "yellow urine",
+        "activation_score": 0.045579973608255386
+      }
+    ],
+    "Heart attack": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.00442881416529417
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.004424652084708214
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.004422422964125872
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.004418631084263325
+      },
+      {
+        "symptom": "fluid overload",
+        "activation_score": 0.004411905072629452
+      }
+    ],
+    "Hepatitis B": [
+      {
+        "symptom": "yellowish skin",
+        "activation_score": 0.0002649325761012733
+      },
+      {
+        "symptom": "yellowing of eyes",
+        "activation_score": 0.0002648025401867926
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.00026473694015294313
+      },
+      {
+        "symptom": "stomach bleeding",
+        "activation_score": 0.0002646339125931263
+      },
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.0002646053908392787
+      }
+    ],
+    "Hepatitis C": [
+      {
+        "symptom": "yellowing of eyes",
+        "activation_score": 0.011578940786421299
+      },
+      {
+        "symptom": "yellowish skin",
+        "activation_score": 0.011568402871489525
+      },
+      {
+        "symptom": "dark urine",
+        "activation_score": 0.011564571410417557
+      },
+      {
+        "symptom": "fatigue",
+        "activation_score": 0.01156136579811573
+      },
+      {
+        "symptom": "loss of appetite",
+        "activation_score": 0.01155793759971857
+      }
+    ],
+    "Hepatitis D": [
+      {
+        "symptom": "dark urine",
+        "activation_score": 0.002542428905144334
+      },
+      {
+        "symptom": "cramps",
+        "activation_score": 0.0025402794126421213
+      },
+      {
+        "symptom": "swollen legs",
+        "activation_score": 0.0025402680039405823
+      },
+      {
+        "symptom": "fatigue",
+        "activation_score": 0.002540264278650284
+      },
+      {
+        "symptom": "joint pain",
+        "activation_score": 0.002540207700803876
+      }
+    ],
+    "Hepatitis E": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.002725392347201705
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.002722168806940317
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.0027218833565711975
+      },
+      {
+        "symptom": "coma",
+        "activation_score": 0.0027186342049390078
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.002717941999435425
+      }
+    ],
+    "Hypertension": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.021681517362594604
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.02166624739766121
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.02165886200964451
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.021635841578245163
+      },
+      {
+        "symptom": "coma",
+        "activation_score": 0.0216012354940176
+      }
+    ],
+    "Hyperthyroidism": [
+      {
+        "symptom": "restlessness",
+        "activation_score": 0.0019017534796148539
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.0019011965487152338
+      },
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.0019008249510079622
+      },
+      {
+        "symptom": "weight loss",
+        "activation_score": 0.001900457195006311
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.0018996184226125479
+      }
+    ],
+    "Hypoglycemia": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.002307109534740448
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.0023060711100697517
+      },
+      {
+        "symptom": "restlessness",
+        "activation_score": 0.0023042820394039154
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.002303862012922764
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.002303487854078412
+      }
+    ],
+    "Hypothyroidism": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.0004337854334153235
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.0004334709083195776
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.00043324410216882825
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.0004327431379351765
+      },
+      {
+        "symptom": "stomach bleeding",
+        "activation_score": 0.00043265504064038396
+      }
+    ],
+    "Impetigo": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.004222792573273182
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.004220409318804741
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.004217417910695076
+      },
+      {
+        "symptom": "high fever",
+        "activation_score": 0.0042124041356146336
+      },
+      {
+        "symptom": "constipation",
+        "activation_score": 0.00421141879633069
+      }
+    ],
+    "Jaundice": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.0010727389017120004
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.0010725659085437655
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.001072427025064826
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.0010724201565608382
+      },
+      {
+        "symptom": "weight loss",
+        "activation_score": 0.0010717485565692186
+      }
+    ],
+    "Malaria": [
+      {
+        "symptom": "diarrhoea",
+        "activation_score": 0.001568864332512021
+      },
+      {
+        "symptom": "dehydration",
+        "activation_score": 0.0015687040286138654
+      },
+      {
+        "symptom": "sunken eyes",
+        "activation_score": 0.001568575855344534
+      },
+      {
+        "symptom": "blister",
+        "activation_score": 0.0015685131074860692
+      },
+      {
+        "symptom": "family history",
+        "activation_score": 0.001568386796861887
+      }
+    ],
+    "Migraine": [
+      {
+        "symptom": "yellowing of eyes",
+        "activation_score": 0.0020721335895359516
+      },
+      {
+        "symptom": "yellowish skin",
+        "activation_score": 0.0020712153054773808
+      },
+      {
+        "symptom": "dark urine",
+        "activation_score": 0.0020709638483822346
+      },
+      {
+        "symptom": "fatigue",
+        "activation_score": 0.002069327747449279
+      },
+      {
+        "symptom": "loss of appetite",
+        "activation_score": 0.002069295383989811
+      }
+    ],
+    "Osteoarthristis": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.05312671512365341
+      },
+      {
+        "symptom": "restlessness",
+        "activation_score": 0.053096551448106766
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.053090132772922516
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.05307227000594139
+      },
+      {
+        "symptom": "weight loss",
+        "activation_score": 0.05303974449634552
+      }
+    ],
+    "Paralysis (brain hemorrhage)": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.09071917086839676
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.0906306579709053
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.09054429084062576
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.09053563326597214
+      },
+      {
+        "symptom": "acute liver failure",
+        "activation_score": 0.09043923765420914
+      }
+    ],
+    "Peptic ulcer diseae": [
+      {
+        "symptom": "yellowing of eyes",
+        "activation_score": 0.0014963085995987058
+      },
+      {
+        "symptom": "yellowish skin",
+        "activation_score": 0.0014961662236601114
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.0014958186075091362
+      },
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.001494743162766099
+      },
+      {
+        "symptom": "abdominal pain",
+        "activation_score": 0.001494674594141543
+      }
+    ],
+    "Pneumonia": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.0005574184469878674
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.0005571466172114015
+      },
+      {
+        "symptom": "constipation",
+        "activation_score": 0.0005569840432144701
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.0005569503409788013
+      },
+      {
+        "symptom": "weakness of one body side",
+        "activation_score": 0.0005568990018218756
+      }
+    ],
+    "Psoriasis": [
+      {
+        "symptom": "high fever",
+        "activation_score": 0.23551592230796814
+      },
+      {
+        "symptom": "coma",
+        "activation_score": 0.2354147732257843
+      },
+      {
+        "symptom": "skin rash",
+        "activation_score": 0.23538126051425934
+      },
+      {
+        "symptom": "toxic look (typhos)",
+        "activation_score": 0.23537284135818481
+      },
+      {
+        "symptom": "phlegm",
+        "activation_score": 0.2353709191083908
+      }
+    ],
+    "Tuberculosis": [
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.0010445339139550924
+      },
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.001044506556354463
+      },
+      {
+        "symptom": "restlessness",
+        "activation_score": 0.0010436094598844647
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.0010434656869620085
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.0010433344868943095
+      }
+    ],
+    "Typhoid": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.002440899843350053
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.0024387717712670565
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.0024381906259804964
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.002433536574244499
+      },
+      {
+        "symptom": "distention of abdomen",
+        "activation_score": 0.0024321693927049637
+      }
+    ],
+    "Urinary tract infection": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.006037469021975994
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.006036533508449793
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.006032057572156191
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.006022058427333832
+      },
+      {
+        "symptom": "fluid overload",
+        "activation_score": 0.0060187592171132565
+      }
+    ],
+    "Varicose veins": [
+      {
+        "symptom": "yellowing of eyes",
+        "activation_score": 0.005180510692298412
+      },
+      {
+        "symptom": "yellowish skin",
+        "activation_score": 0.005180440843105316
+      },
+      {
+        "symptom": "dark urine",
+        "activation_score": 0.005170854739844799
+      },
+      {
+        "symptom": "stomach bleeding",
+        "activation_score": 0.005168637726455927
+      },
+      {
+        "symptom": "polyuria",
+        "activation_score": 0.005167333874851465
+      }
+    ],
+    "hepatitis A": [
+      {
+        "symptom": "increased appetite",
+        "activation_score": 0.0024290403816848993
+      },
+      {
+        "symptom": "irregular sugar level",
+        "activation_score": 0.0024277688935399055
+      },
+      {
+        "symptom": "history of alcohol consumption",
+        "activation_score": 0.0024268499109894037
+      },
+      {
+        "symptom": "spinning movements",
+        "activation_score": 0.002426047110930085
+      },
+      {
+        "symptom": "mild fever",
+        "activation_score": 0.0024256426841020584
+      }
+    ]
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "model_name": "curx_symptom_net",
+  "split": "val",
+  "temperature": 0.4353,
+  "subgroup_results": {
+    "Dermatological": {
+      "n_samples": 4,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "represented_diseases": [
+        "Acne",
+        "Psoriasis",
+        "Impetigo",
+        "Fungal infection"
+      ]
+    },
+    "Infectious_Systemic": {
+      "n_samples": 11,
+      "accuracy": 0.9090909090909091,
+      "macro_f1": 0.7777777777777778,
+      "represented_diseases": [
+        "Chicken pox",
+        "Dengue",
+        "Typhoid",
+        "Malaria",
+        "Tuberculosis",
+        "Common Cold",
+        "Pneumonia",
+        "AIDS"
+      ]
+    },
+    "Hepatobiliary": {
+      "n_samples": 8,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "represented_diseases": [
+        "Jaundice",
+        "Chronic cholestasis",
+        "Alcoholic hepatitis",
+        "hepatitis A",
+        "Hepatitis B",
+        "Hepatitis C",
+        "Hepatitis D",
+        "Hepatitis E"
+      ]
+    },
+    "Gastrointestinal": {
+      "n_samples": 4,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "represented_diseases": [
+        "GERD",
+        "Peptic ulcer diseae",
+        "Gastroenteritis",
+        "Dimorphic hemmorhoids(piles)"
+      ]
+    },
+    "Cardiovascular": {
+      "n_samples": 3,
+      "accuracy": 0.6666666666666666,
+      "macro_f1": 0.5,
+      "represented_diseases": [
+        "Hypertension",
+        "Heart attack",
+        "Varicose veins"
+      ]
+    },
+    "Endocrine_Metabolic": {
+      "n_samples": 5,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "represented_diseases": [
+        "Diabetes",
+        "Hypothyroidism",
+        "Hyperthyroidism",
+        "Hypoglycemia"
+      ]
+    },
+    "Musculoskeletal": {
+      "n_samples": 3,
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "represented_diseases": [
+        "Osteoarthristis",
+        "Arthritis",
+        "Cervical spondylosis"
+      ]
+    },
+    "Neurological": {
+      "n_samples": 4,
+      "accuracy": 0.75,
+      "macro_f1": 0.5555555555555555,
+      "represented_diseases": [
+        "Migraine",
+        "Paralysis (brain hemorrhage)",
+        "(vertigo) Paroymsal  Positional Vertigo"
+      ]
+    }
+  },
+  "disparity": {
+    "max_accuracy": 1.0,
+    "min_accuracy": 0.6666666666666666,
+    "accuracy_gap": 0.33333333333333337
+  }
+}

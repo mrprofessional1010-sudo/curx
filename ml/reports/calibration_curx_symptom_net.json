@@ -1,0 +1,7 @@
+{
+  "model_name": "curx_symptom_net",
+  "temperature": 0.43525388836860657,
+  "ece_before": 0.14099199357240097,
+  "ece_after": 0.02734722391418789,
+  "improvement": 0.11364476965821307
+}

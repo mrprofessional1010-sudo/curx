@@ -1,0 +1,17 @@
+{
+  "model_name": "curx_symptom_net",
+  "split": "test",
+  "temperature": 0.4353,
+  "top1_accuracy": 0.8695652173913043,
+  "top3_accuracy": 0.9347826242446899,
+  "top5_accuracy": 1.0,
+  "balanced_accuracy": 0.8536585365853658,
+  "macro_f1": 0.808130081300813,
+  "weighted_f1": 0.8246376811594204,
+  "sensitivity": 0.8536585365853658,
+  "specificity": 0.9967356491746736,
+  "auroc_macro": 0.9994579945799457,
+  "auprc_macro": 0.9878048780487805,
+  "ece": 0.05408873571001965,
+  "brier_score": 0.1802266389131546
+}

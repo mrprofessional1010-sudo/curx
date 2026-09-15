@@ -1,0 +1,82 @@
+{
+  "split": "test",
+  "subgroup_results": {
+    "Cardiovascular": {
+      "n_samples": 3,
+      "accuracy": 0.3333333333333333,
+      "f1_macro": 0.16666666666666666,
+      "precision_macro": 0.125,
+      "recall_macro": 0.25
+    },
+    "Dermatological": {
+      "n_samples": 2,
+      "accuracy": 1.0,
+      "f1_macro": 1.0,
+      "precision_macro": 1.0,
+      "recall_macro": 1.0
+    },
+    "Endocrine_Metabolic": {
+      "n_samples": 4,
+      "accuracy": 0.0,
+      "f1_macro": 0.0,
+      "precision_macro": 0.0,
+      "recall_macro": 0.0
+    },
+    "Gastrointestinal": {
+      "n_samples": 7,
+      "accuracy": 0.14285714285714285,
+      "f1_macro": 0.1,
+      "precision_macro": 0.1,
+      "recall_macro": 0.1
+    },
+    "Infectious": {
+      "n_samples": 19,
+      "accuracy": 0.47368421052631576,
+      "f1_macro": 0.29444444444444445,
+      "precision_macro": 0.2777777777777778,
+      "recall_macro": 0.3333333333333333
+    },
+    "Musculoskeletal": {
+      "n_samples": 3,
+      "accuracy": 0.3333333333333333,
+      "f1_macro": 0.2,
+      "precision_macro": 0.2,
+      "recall_macro": 0.2
+    },
+    "Neurological": {
+      "n_samples": 4,
+      "accuracy": 0.5,
+      "f1_macro": 0.2,
+      "precision_macro": 0.2,
+      "recall_macro": 0.2
+    },
+    "Other": {
+      "n_samples": 3,
+      "accuracy": 0.0,
+      "f1_macro": 0.0,
+      "precision_macro": 0.0,
+      "recall_macro": 0.0
+    }
+  },
+  "disparity": {
+    "max_accuracy": 1.0,
+    "min_accuracy": 0.0,
+    "accuracy_gap": 1.0
+  },
+  "known_biases": [
+    "No demographic/patient-level data available \u2014 bias audit limited to disease category subgroups",
+    "Dataset is perfectly balanced (120 rows/disease) \u2014 class imbalance bias is minimal",
+    "Symptom vocabulary may underrepresent rare conditions",
+    "All data sourced from a single clinical symptom benchmark \u2014 no geographic diversity"
+  ],
+  "mitigations": [
+    "Class-weighted loss used during training",
+    "Stratified splitting ensures proportional representation",
+    "Per-subgroup metrics reported transparently"
+  ],
+  "remaining_limitations": [
+    "Cannot audit for age, sex, or ethnic bias \u2014 data does not contain these attributes",
+    "Small sample size per disease limits subgroup reliability",
+    "Knowledge-base data, not real patient encounters"
+  ]
+}
