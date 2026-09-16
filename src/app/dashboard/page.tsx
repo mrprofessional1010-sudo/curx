@@ -41,6 +41,38 @@ export default function DashboardPage() {
   const { user, profile, loading: authLoading, signOut } = useAuth();
 
   const [activeTab, setActiveTab] = useState<DashboardTab>("overview");
+
+  // Synchronize active tab with URL hash for persistent routing and back/forward navigation
+  useEffect(() => {
+    const syncTabFromHash = () => {
+      if (typeof window !== "undefined") {
+        const hash = window.location.hash.replace("#", "").toLowerCase();
+        const validTabs: DashboardTab[] = [
+          "overview",
+          "medications",
+          "genetics",
+          "symptoms",
+          "risk",
+          "evidence",
+          "care",
+        ];
+        if (validTabs.includes(hash as DashboardTab)) {
+          setActiveTab(hash as DashboardTab);
+        }
+      }
+    };
+
+    syncTabFromHash();
+    window.addEventListener("hashchange", syncTabFromHash);
+    return () => window.removeEventListener("hashchange", syncTabFromHash);
+  }, []);
+
+  const handleTabChange = (tabId: DashboardTab) => {
+    setActiveTab(tabId);
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", `#${tabId}`);
+    }
+  };
   const [patientData, setPatientData] = useState<any>(null);
   const [dataLoading, setDataLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -432,36 +464,12 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <div className="bg-[#06090E] border-b border-white/[0.06] px-6 lg:px-10 flex overflow-x-auto gap-2 no-scrollbar">
-        {[
-          { id: "overview", label: "OVERVIEW", icon: <Activity className="w-3.5 h-3.5" /> },
-          { id: "medications", label: `MEDICATIONS (${(patientData.medications || []).length})`, icon: <Pill className="w-3.5 h-3.5" /> },
-          { id: "genetics", label: `GENETICS (${(patientData.variants || []).length})`, icon: <Dna className="w-3.5 h-3.5" /> },
-          { id: "symptoms", label: `SYMPTOMS (${reportedSymptoms.length})`, icon: <HeartPulse className="w-3.5 h-3.5" /> },
-          { id: "risk", label: "RISK ENGINE & TRACE", icon: <Shield className="w-3.5 h-3.5" /> },
-          { id: "evidence", label: "EVIDENCE & GUIDELINES", icon: <FileText className="w-3.5 h-3.5" /> },
-          { id: "care", label: "CARE FINDER (OSM)", icon: <Building2 className="w-3.5 h-3.5" /> },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id as DashboardTab)}
-            className={`py-3 px-4 font-mono text-xs font-semibold tracking-wider flex items-center gap-2 border-b-2 whitespace-nowrap transition-colors ${
-              activeTab === tab.id
-                ? "border-curx-cyan text-curx-cyan bg-curx-cyan/[0.04]"
-                : "border-transparent text-slate-400 hover:text-white hover:border-white/20"
-            }`}
-          >
-            {tab.icon}
-            <span>{tab.label}</span>
-          </button>
-        ))}
-      </div>
-
-      {/* Main Tab Content Workspace */}
-      <main className="flex-1 p-6 lg:p-10 max-w-7xl w-full mx-auto">
-        {/* ================= TAB 1: OVERVIEW ================= */}
-        {activeTab === "overview" && (
+      {/* Dashboard Body: Main Content Workspace + Right Navigation Sidebar */}
+      <div className="flex-1 flex flex-col lg:flex-row relative items-start w-full">
+        {/* Main Tab Content Workspace */}
+        <main className="flex-1 p-6 lg:p-10 w-full min-w-0 max-w-6xl mx-auto">
+          {/* ================= TAB 1: OVERVIEW ================= */}
+          {activeTab === "overview" && (
           <div className="space-y-8">
             {/* Top Collision / Status Alert Banner */}
             {topCollision ? (
@@ -550,7 +558,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <button
-                  onClick={() => setActiveTab("medications")}
+                  onClick={() => handleTabChange("medications")}
                   className="mt-6 pt-3 border-t border-white/[0.06] text-xs font-mono text-curx-cyan hover:text-white flex items-center gap-1.5 transition-colors"
                 >
                   <span>Explore Medications</span>
@@ -586,8 +594,8 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <button
-                  onClick={() => setActiveTab("genetics")}
-                  className="mt-6 pt-3 border-t border-white/[0.06] text-xs font-mono text-curx-amber hover:text-white flex items-center gap-1.5 transition-colors"
+                  onClick={() => handleTabChange("genetics")}
+                  className="mt-6 pt-3 border-t border-white/[0.06] text-xs font-mono text-curx-cyan hover:text-white flex items-center gap-1.5 transition-colors"
                 >
                   <span>View Genomic Profiles</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -632,8 +640,8 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <button
-                  onClick={() => setActiveTab("symptoms")}
-                  className="mt-6 pt-3 border-t border-white/[0.06] text-xs font-mono text-curx-orange hover:text-white flex items-center gap-1.5 transition-colors"
+                  onClick={() => handleTabChange("symptoms")}
+                  className="mt-6 pt-3 border-t border-white/[0.06] text-xs font-mono text-curx-cyan hover:text-white flex items-center gap-1.5 transition-colors"
                 >
                   <span>Launch Symptom Differential</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -1065,14 +1073,179 @@ export default function DashboardPage() {
             </div>
           </div>
         )}
-      </main>
+        </main>
+
+        {/* Right Sidebar for Primary Navigation (Desktop) */}
+        <aside className="hidden lg:flex flex-col w-64 xl:w-72 shrink-0 border-l border-white/[0.08] bg-[#0A0F19]/90 backdrop-blur-2xl sticky top-[57px] h-[calc(100vh-57px)] overflow-y-auto p-4 z-20">
+          {/* Sidebar Header */}
+          <div className="px-3 py-2.5 mb-3 flex items-center justify-between border-b border-white/[0.06]">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-curx-cyan shadow-[0_0_8px_#00F0D0]" />
+              <span className="font-mono text-[11px] font-bold tracking-[0.2em] text-slate-300 uppercase">
+                YOUR HEALTH
+              </span>
+            </div>
+            <span className="text-[9px] font-mono font-semibold px-2 py-0.5 rounded bg-curx-cyan/10 text-curx-cyan border border-curx-cyan/30">
+              WORKSPACE
+            </span>
+          </div>
+
+          {/* Navigation Section Groups */}
+          <div className="space-y-6 flex-1 py-1">
+            {[
+              {
+                group: "EXPLORE",
+                items: [
+                  {
+                    id: "overview",
+                    label: "OVERVIEW",
+                    icon: Activity,
+                  },
+                  {
+                    id: "medications",
+                    label: "MEDICATIONS",
+                    count: (patientData?.medications || []).length,
+                    icon: Pill,
+                  },
+                  {
+                    id: "genetics",
+                    label: "GENETICS",
+                    count: (patientData?.variants || []).length,
+                    icon: Dna,
+                  },
+                  {
+                    id: "symptoms",
+                    label: "SYMPTOMS",
+                    count: reportedSymptoms.length,
+                    icon: HeartPulse,
+                  },
+                ],
+              },
+              {
+                group: "UNDERSTAND",
+                items: [
+                  {
+                    id: "risk",
+                    label: "RISK ENGINE & TRACE",
+                    icon: Shield,
+                  },
+                  {
+                    id: "evidence",
+                    label: "EVIDENCE & GUIDELINES",
+                    icon: FileText,
+                  },
+                ],
+              },
+              {
+                group: "FIND CARE",
+                items: [
+                  {
+                    id: "care",
+                    label: "CARE FINDER (OSM)",
+                    icon: Building2,
+                  },
+                ],
+              },
+            ].map((section) => (
+              <div key={section.group} className="space-y-1.5">
+                <div className="px-3 text-[10px] font-mono tracking-widest text-slate-500 uppercase font-semibold">
+                  {section.group}
+                </div>
+                <div className="space-y-1">
+                  {section.items.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = activeTab === item.id;
+                    return (
+                      <button
+                        key={item.id}
+                        id={`nav-item-${item.id}`}
+                        onClick={() => handleTabChange(item.id as DashboardTab)}
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl font-mono text-xs tracking-wider transition-all text-left group ${
+                          isActive
+                            ? "bg-curx-cyan/[0.10] text-curx-cyan border border-curx-cyan/40 font-bold shadow-[0_0_15px_rgba(0,240,208,0.12)]"
+                            : "text-slate-400 hover:text-white hover:bg-white/[0.04] border border-transparent"
+                        }`}
+                      >
+                        <div className="flex items-center justify-center shrink-0">
+                          {isActive ? (
+                            <div className="w-4 h-4 rounded-full bg-curx-cyan/20 flex items-center justify-center text-curx-cyan">
+                              <span className="w-1.5 h-1.5 rounded-full bg-curx-cyan shadow-[0_0_6px_#00F0D0]" />
+                            </div>
+                          ) : (
+                            <Icon className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
+                          )}
+                        </div>
+
+                        <span className="truncate flex-1">{item.label}</span>
+
+                        {typeof item.count === "number" && (
+                          <span
+                            className={`text-[10px] font-mono px-2 py-0.5 rounded font-semibold shrink-0 ${
+                              isActive
+                                ? "bg-curx-cyan/20 text-curx-cyan"
+                                : "bg-white/[0.06] text-slate-400 group-hover:text-slate-200"
+                            }`}
+                          >
+                            {item.count}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Sidebar Footer Status */}
+          <div className="mt-auto pt-4 border-t border-white/[0.06] px-3">
+            <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
+              <span>DECISION ENGINE</span>
+              <span className="text-curx-cyan font-bold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-curx-cyan animate-pulse" />
+                ONLINE
+              </span>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      {/* Mobile & Tablet Compact Bottom Bar */}
+      <nav className="lg:hidden sticky bottom-0 z-30 bg-[#080C14]/95 backdrop-blur-2xl border-t border-white/[0.08] px-2 py-2 flex items-center justify-around overflow-x-auto no-scrollbar shadow-[0_-10px_25px_rgba(0,0,0,0.5)]">
+        {[
+          { id: "overview", label: "Overview", icon: Activity },
+          { id: "medications", label: "Meds", icon: Pill },
+          { id: "genetics", label: "Genetics", icon: Dna },
+          { id: "symptoms", label: "Symptoms", icon: HeartPulse },
+          { id: "risk", label: "Risk", icon: Shield },
+          { id: "evidence", label: "Evidence", icon: FileText },
+          { id: "care", label: "Care", icon: Building2 },
+        ].map((tab) => {
+          const Icon = tab.icon;
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => handleTabChange(tab.id as DashboardTab)}
+              className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg font-mono text-[10px] transition-colors shrink-0 ${
+                isActive
+                  ? "text-curx-cyan bg-curx-cyan/[0.12] font-bold"
+                  : "text-slate-400 hover:text-white"
+              }`}
+            >
+              <Icon className="w-4 h-4" />
+              <span>{tab.label}</span>
+            </button>
+          );
+        })}
+      </nav>
 
       {/* Floating AI Assistant Trigger Pill */}
       {!isChatOpen && (
         <button
           onClick={() => setIsChatOpen(true)}
           id="floating-ai-chat-btn"
-          className="fixed bottom-6 right-6 z-40 px-4 py-3 rounded-full bg-[#090D13] border border-curx-cyan/50 hover:border-curx-cyan text-white shadow-[0_0_25px_rgba(0,240,208,0.25)] flex items-center gap-2.5 group transition-all transform hover:scale-105"
+          className="fixed bottom-6 right-6 lg:right-72 xl:right-80 z-40 px-4 py-3 rounded-full bg-[#090D13] border border-curx-cyan/50 hover:border-curx-cyan text-white shadow-[0_0_25px_rgba(0,240,208,0.25)] flex items-center gap-2.5 group transition-all transform hover:scale-105"
         >
           <div className="w-6 h-6 rounded-full bg-curx-cyan/20 flex items-center justify-center text-curx-cyan group-hover:bg-curx-cyan group-hover:text-graphite transition-colors">
             <Sparkles className="w-3.5 h-3.5 animate-pulse" />
