@@ -18,7 +18,7 @@ export default function HomePage() {
       {/* Sticky Navigation */}
       <Navbar />
 
-      {/* SECTION 01: 240-Frame Interactive Cinematic Hero */}
+      {/* SECTION 01: Direct Looped Cinematic Video Hero */}
       <CurxHero />
 
       {/* SECTION 02: The Disconnect */}

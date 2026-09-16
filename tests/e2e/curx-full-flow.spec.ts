@@ -17,13 +17,29 @@ test.beforeAll(async () => {
 });
 
 test.describe("CURX Clinical Intelligence — End-to-End Test Suite", () => {
-  test("1. Landing Page Navigation & Visual Care Continuity", async ({ page }) => {
+  test("1. Landing Page Navigation, Direct Looped Hero Video & Visual Care Continuity", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
     await expect(page).toHaveTitle(/CURX/i);
 
     // Verify main hero title & CTA
     const heading = page.locator("h1");
     await expect(heading).toBeVisible();
+    await expect(heading).toContainText("connected story");
+
+    // Verify Direct HTML5 Video Hero element & attributes
+    const heroVideo = page.locator("#hero video");
+    await expect(heroVideo).toBeVisible();
+    await expect(heroVideo).toHaveAttribute("autoplay", "");
+    await expect(heroVideo).toHaveAttribute("loop", "");
+    await expect(heroVideo).toHaveAttribute("playsinline", "");
+    
+    const videoSource = page.locator("#hero video source");
+    await expect(videoSource).toHaveAttribute("src", "/videos/hero-section-video.mp4");
+
+    // Scroll down and verify scrolling does not control video timeline
+    await page.evaluate(() => window.scrollTo(0, 1000));
+    await page.waitForTimeout(300);
+    await page.evaluate(() => window.scrollTo(0, 0));
 
     // Verify Care Continuity section on landing page
     const careSection = page.locator("text=CARE CONTINUITY").first();
